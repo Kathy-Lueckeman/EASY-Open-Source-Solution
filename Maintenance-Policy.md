@@ -79,7 +79,7 @@ The Power of US Hub
 
 You can find the EASY Open Source Solution community in the the Salesforce.org Power of US Hub. Here you can connect with other community members who are using the EASY Open Source Solution. 
 
-Click <a href="https://powerofus.force.com/_ui/core/chatter/groups/GroupProfilePage?g=0F9800000008jcN" target="_blank">here</a> to join the EASY Open Source Solution chatter group!
+Click <a href="https://powerofus.force.com/_ui/core/chatter/groups/GroupProfilePage?g=0F980000000PSPa" target="_blank">here</a> to join the EASY Open Source Solution chatter group!
 
 ## Acknowledgements
 
