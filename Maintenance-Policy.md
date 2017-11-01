@@ -18,9 +18,9 @@ It is intended to be short, flexible, and clear.
 
 * Collaborators of this repo that are associated with <a href="http://salesforce.org/" target="_blank">Salesforce.org</a> are excluded from the Roles identified under the sections: Collaborator (<a href="http://www.maryville.edu/" target="_blank">Maryville University of Saint Louis</a> and/or <a href="http://www.huronconsultinggroup.com/" target="_blank">Huron Consulting Group</a>) & Collaborator (Everyone else).
 
-#### Collaborator (<a href="http://welcome.miami.edu/" target="_blank">University of Miami</a> and/or <a href="https://www.sierra-cedar.com/" target="_blank">Sierra-Cedar</a>)
+#### Collaborator (<a href="http://www.maryville.edu/" target="_blank">Maryville University of Saint Louis</a> and/or <a href="http://www.huronconsultinggroup.com/" target="_blank">Huron Consulting Group</a>)
 
-* Collaborators associated with the <a href="http://www.maryville.edu/" target="_blank">Maryville University of Saint Louis</a> and/or <a href="http://www.huronconsultinggroup.com/" target="_blank">Huron Consulting Group</a>) are listed as such solely for the purpose of documenting the project and pushing the final version of the project code to the EASY Open Source Solution repo which is housed under the <a href="https://github.com/SalesforceFoundation" target="_blank"> SalesforceFoundation Github Org</a>.
+* Collaborators associated with the <a href="http://www.maryville.edu/" target="_blank">Maryville University of Saint Louis</a> and/or <a href="http://www.huronconsultinggroup.com/" target="_blank">Huron Consulting Group</a> are listed as such solely for the purpose of documenting the project and pushing the final version of the project code to the EASY Open Source Solution repo which is housed under the <a href="https://github.com/SalesforceFoundation" target="_blank"> SalesforceFoundation Github Org</a>.
 * Collaborators of this repo that are associated with the <a href="http://www.maryville.edu/" target="_blank">Maryville University of Saint Louis</a> and/or <a href="http://www.huronconsultinggroup.com/" target="_blank">Huron Consulting Group</a> have the option of participating in the Role identified under the section: Collaborator (Everyone else).
 
 #### Collaborator (Everyone else)
