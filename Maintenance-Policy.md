@@ -31,7 +31,7 @@ It is intended to be short, flexible, and clear.
 
 ## Roadmap
 
-This section should outline the roadmap for the EASY Open Source Solution as it pertains to the University of Miami's vision for this project outside of it's currently delivered state.
+This section should outline the roadmap for the EASY Open Source Solution as it pertains to Maryville University of Saint Louis's vision for this project outside of it's currently delivered state.
 
 Considerations surrounding Phase 2, Phase 3, etc. should be included. Specifically the roadmap should help drive open source contributions that support a vision for the future state of this project.
 
