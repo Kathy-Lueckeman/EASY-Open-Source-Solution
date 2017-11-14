@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Domestic</fullName>
+        <default>false</default>
+        <label>Domestic</label>
+    </customValue>
+    <customValue>
+        <fullName>International</fullName>
+        <default>false</default>
+        <label>International</label>
+    </customValue>
+    <description>Citizenship types for admissions.</description>
+    <masterLabel>Citizenship Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

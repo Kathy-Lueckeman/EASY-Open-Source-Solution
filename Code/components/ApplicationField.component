@@ -1,0 +1,70 @@
+<apex:component allowDML="true">
+    <apex:attribute name="question" description="The ApplicationQuestion for this field" type="ApplicationQuestion" required="true"/>
+    <apex:attribute name="obj" description="The SObject for this field" type="SObject" required="false"/>
+    <apex:attribute name="objType" description="The SObject Type for this field" type="String" required="false"/>
+    <apex:attribute name="preventUpdates" description="" type="Boolean" default="false" required="false"/>
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+    <div class="row" >
+        <div class="col-xs-12">
+            <apex:outputPanel rendered="{!question.showQuestion}" >
+                <apex:outputPanel rendered="{!question.fieldType == 'Address'}" >
+                    <c:ApplicationAddressField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Checkbox'}" >
+                    <c:ApplicationCheckboxField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Currency'}" >
+                    <c:ApplicationCurrencyField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Date'}" >
+                    <c:ApplicationDateField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'DateTime'}" >
+                    <c:ApplicationDateTimeField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'}" >
+                    <c:ApplicationNumberField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Email'}" >
+                    <c:ApplicationEmailField question="{!question}" object="{!obj}" appControl="{!appControl}" preventUpdates="{!preventUpdates}" questionSendReminder="{!question.sendReminder}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'TextEncrypted'}" >
+                    <c:ApplicationTextEncryptedField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" >
+                    <c:ApplicationMultiPicklistField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Percent'}" >
+                    <c:ApplicationPercentField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" >
+                    <c:ApplicationPhoneField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" >
+                    <c:ApplicationPicklistField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!(question.fieldType == 'Picklist' && question.radio) || question.fieldType == 'Radio'}" >
+                    <c:ApplicationRadioField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Reference'}" >
+                    <c:ApplicationReferenceField question="{!question}" object="{!obj}" objectType="{!objType}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Static'}" >
+                    <c:ApplicationStaticField question="{!question}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'Text'}" >
+                    <c:ApplicationTextField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'TextArea'}" >
+                    <c:ApplicationTextAreaField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'LongTextArea'}" >
+                    <c:ApplicationLongTextAreaField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!question.fieldType == 'URL'}" >
+                    <c:ApplicationUrlField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </div>
+    </div>
+</apex:component>

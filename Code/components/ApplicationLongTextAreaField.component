@@ -1,0 +1,22 @@
+<apex:component >
+    <apex:attribute name="question" description="The ApplicationQuestion for this field" type="ApplicationQuestion" required="true" />
+    <apex:attribute name="object" description="The object for this field" type="SObject" />
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+
+    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+        <div class="form-group" >
+            <label for="field" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+            <apex:inputField id="field" value="{!question.response.ValueLongTextArea__c}" html-placeholder="{!question.placeholder}" html-maxlength="{!question.length}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;" />
+            <c:ApplicationQuestionHelpText question="{!question}" />
+        </div>
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(object))}">
+        <div class="form-group" >
+            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                <label for="field1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+            </apex:outputPanel>
+            <apex:inputField id="field1" value="{!object[question.question.Related_Object_Field__c]}" html-placeholder="{!question.placeholder}" html-maxlength="{!question.length}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;" />
+        	<c:ApplicationQuestionHelpText question="{!question}" />
+        </div>
+    </apex:outputPanel>
+</apex:component>

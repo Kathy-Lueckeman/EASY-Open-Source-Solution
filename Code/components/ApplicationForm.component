@@ -1,0 +1,78 @@
+<apex:component >
+
+    <apex:attribute name="section" description="ApplicationQuestionSection for this page" type="ApplicationQuestionSection" required="false" />
+    <apex:attribute name="hidePaging" description="Hide carousel paging" type="Boolean" default="false" required="false" />
+    <apex:attribute name="preventUpdates" description="Set the page to output only" type="Boolean" default="false" required="false" />
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+    
+    <script>
+        if({!hidePaging} == false){
+    var checkitem = function() {
+
+            if($("#myCarousel .carousel-inner .item:first").hasClass("active") && $("#myCarousel .carousel-inner .item:last").hasClass("active")){
+                $("#myCarousel").find(".left").hide();
+                $("#myCarousel").find(".right").hide();
+            }else if ($("#myCarousel .carousel-inner .item:first").hasClass("active")) {
+            $("#myCarousel").find(".left").hide();
+            $("#myCarousel").find(".right").show();
+            } else if ($("#myCarousel .carousel-inner .item:last").hasClass("active")) {
+            $("#myCarousel").find(".right").hide();
+            $("#myCarousel").find(".left").show();
+            } else {
+            $("#myCarousel").find(".carousel-control").show();
+            }
+            };
+            jQuery(function(){
+                checkitem();
+                $("#myCarousel").on("slid.bs.carousel", "", checkitem);
+            })
+        }
+
+    </script>
+    <apex:form id="theForm" >
+        <apex:outputPanel id="formPageMessages">
+            <apex:pageMessages />
+        </apex:outputPanel>
+        <div class="row" >
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                <div id="myCarousel" class="{!if(hidePaging,'','carousel')} slide" data-interval="false" data-wrap="false" >
+                    <div class="row" style="display:flex;" >
+                        <apex:outputPanel styleClass="col-lg-2 col-xs-1" rendered="{!!hidePaging}">
+                            <center>
+                                <a class="carousel-control left" href="#myCarousel" role="button" data-slide="prev" style="color:#{!appControl.Arrow_Color__c};width:initial;left:auto;" >
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" ></span>
+                                    <span class="sr-only" >Previous</span>
+                                </a>
+                            </center>
+                        </apex:outputPanel>
+                        <div class="col-lg-8 col-xs-10" >
+                            <div class="{!if(hidePaging,'','carousel-inner')}" role="listbox">
+                                <apex:variable var="itemCount" value="0"/>
+                                <apex:repeat value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}" >
+                                    <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
+                                        <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appControl="{!appControl}"/>
+                                    </div>
+                                    <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
+                                </apex:repeat>
+                            </div>
+                        </div>
+                        <apex:outputPanel styleClass="col-lg-2 col-xs-1" rendered="{!!hidePaging}">
+                            <center>
+                                <a class="carousel-control right" href="#myCarousel" role="button" data-slide="next" style="color:#{!appControl.Arrow_Color__c};width:initial;left:auto;" >
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ></span>
+                                    <span class="sr-only" >Next</span>
+                                </a>
+                            </center>
+                        </apex:outputPanel>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
+            </div>
+        </div>
+        <apex:componentBody />
+    </apex:form>
+</apex:component>

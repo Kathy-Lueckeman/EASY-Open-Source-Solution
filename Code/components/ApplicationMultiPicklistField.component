@@ -1,0 +1,35 @@
+<apex:component >
+    <apex:attribute name="question" description="The ApplicationQuestion for this field" type="ApplicationQuestion" required="true" />
+    <apex:attribute name="object" description="The object for this field" type="SObject" />
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+    
+    <style>
+    	.selectCheckboxes label {
+        	margin-left:10px;
+        	font-weight:400;
+        }
+    </style>
+
+    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+        <div class="form-group" >
+            <label for="field" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+            <apex:selectCheckboxes id="field" value="{!question.multiPicklistValues}" layout="pageDirection" styleClass="selectCheckboxes {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" >
+                <apex:selectOptions value="{!question.options}" />
+                <apex:actionSupport event="onchange" reRender="questionGroup" />
+            </apex:selectCheckboxes>
+            <c:ApplicationQuestionHelpText question="{!question}" />
+        </div>
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(object))}">
+        <div class="form-group" >
+            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                <label for="field1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+            </apex:outputPanel>
+            <apex:selectCheckboxes id="field1" value="{!object[question.question.Related_Object_Field__c]}" layout="pageDirection" styleClass="selectCheckboxes {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" >
+                <apex:selectOptions value="{!question.options}" />
+                <apex:actionSupport event="onchange" reRender="questionGroup" />
+            </apex:selectCheckboxes>
+            <c:ApplicationQuestionHelpText question="{!question}" />
+        </div>
+    </apex:outputPanel>
+</apex:component>

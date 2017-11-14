@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Completed</fullName>
+        <default>false</default>
+        <label>Completed</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Decision Made</fullName>
+        <default>false</default>
+        <label>Complete-Decision Made</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Pending Additional Review</fullName>
+        <default>false</default>
+        <label>Complete-Pending Additional Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Pending Review</fullName>
+        <default>false</default>
+        <label>Complete-Pending Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Deferred</fullName>
+        <default>false</default>
+        <label>Deferred</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Paid</fullName>
+        <default>false</default>
+        <label>Deposit Paid</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Waived</fullName>
+        <default>false</default>
+        <label>Deposit Waived</label>
+    </customValue>
+    <customValue>
+        <fullName>Incomplete</fullName>
+        <default>false</default>
+        <label>Incomplete</label>
+    </customValue>
+    <customValue>
+        <fullName>Started</fullName>
+        <default>false</default>
+        <label>Started</label>
+    </customValue>
+    <customValue>
+        <fullName>Submitted</fullName>
+        <default>false</default>
+        <label>Submitted</label>
+    </customValue>
+    <customValue>
+        <fullName>Withdrawn</fullName>
+        <default>false</default>
+        <label>Withdrawn</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+        <label>Cancelled</label>
+    </customValue>
+    <masterLabel>Application Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

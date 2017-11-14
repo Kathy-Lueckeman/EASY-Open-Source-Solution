@@ -1,0 +1,58 @@
+<apex:page controller="ApplicationRequirementPreview" action="{!init}" showHeader="false" standardStylesheets="false" docType="html-5.0" >
+    <apex:outputPanel id="thePreviewPage">
+        <apex:form >
+        <apex:actionFunction name="previewPageRefresh" action="{!init}" reRender="thePreviewPage"/>
+            <div class="container-fluid" >
+                <div class="row" >
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                        <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                        <div>
+                            <div class="row" style="display:flex;" >
+                                <div class="col-lg-8 col-xs-10" >
+                                    <div role="listbox">
+                                        <div class="item active" >
+                                            <apex:repeat value="{!$ObjectType.Application__c.FieldSets.Application_Preview_Filters}" var="f">
+                                                <c:ApplicationField question="{!questionHolderMap[f.fieldPath]}" obj="{!app}" appControl="{!appControl}"/>
+                                            </apex:repeat>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <apex:outputPanel >
+                <script>
+                    jQuery('[id$=thePreviewPage] input, [id$=thePreviewPage] select').on('change',function(){
+                        previewPageRefresh();
+                    })
+                </script>
+            </apex:outputPanel>
+        </apex:form>
+        <c:ApplicationHead />
+            <!-- <apex:form id="previewForm"> -->
+        <apex:outputPanel id="themessages">
+            <apex:pageMessages />
+        </apex:outputPanel>
+        <c:ApplicationBody title="{!req.title+' PREVIEW'}" appControl="{!appControl}">
+            <c:ApplicationForm section="{!req.section}" appControl="{!appControl}">
+            </c:ApplicationForm>
+        </c:ApplicationBody>
+        <div class="row" >
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                <apex:outputLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="/{!requirementId}">Back to Requirement</apex:outputLink>
+            </div>
+        </div>
+        <apex:outputPanel >
+            <script>
+                afterRerenderRTF();
+            </script>
+        </apex:outputPanel>
+        <!-- </apex:form> -->
+    </apex:outputPanel>
+</apex:page>

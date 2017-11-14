@@ -1,0 +1,170 @@
+<apex:component >
+    <apex:attribute name="group" description="The ApplicationQuestionGroup for this section" type="ApplicationQuestionGroup" required="true" />
+    <apex:attribute name="preventUpdates" description="" type="Boolean" default="false" required="false"/>
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+    <style>
+        .ui-menu { overflow-y:scroll !important;}
+    </style>
+    <div class="container-fluid" >
+        <div class="row" >
+            <div class="col-lg-8 col-md-10 col-xs-12" >
+                <h2 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >{!group.item.Name}</h2>
+            </div>
+        </div>
+        <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
+            <apex:pageMessages />
+            <table class="table">
+            <tr>
+                <th>
+
+                </th>
+                <apex:repeat value="{!group.questions}" var="q" >
+                    <apex:outputPanel layout="none" rendered="{!ISBLANK(q.question.Hardcoded_Value__c)}">
+                        <th>
+                            {!q.question.Label__c}{!if(CONTAINS(q.question.Required__c,q.application.Application_Status__c),'*','')}
+                        </th>
+                    </apex:outputPanel>
+                </apex:repeat>
+                <apex:outputPanel layout="none" rendered="{!ISPICKVAL($User.UserType,'Standard')}">
+                    <th class="ui-front">
+                        View
+                    </th>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!ISPICKVAL($User.UserType,'Standard') && preventUpdates==false}">
+                    <th class="ui-front">
+                        Upload
+                    </th>
+                </apex:outputPanel>
+            </tr>
+            <apex:repeat value="{!group.relatedObjects}" var="rr">
+                <tr data-recid="{!rr.idx}">
+                    <td>
+                        <apex:outputPanel layout="none" rendered="{!rr.obj['User_Created__c'] && !rr.isEditMode && !preventUpdates}">
+                            <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" value="Edit">
+                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
+                            </apex:commandLink>&nbsp;|&nbsp;
+                            <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" value="Del">
+                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
+                            </apex:commandLink>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}">
+                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" value="Ok">
+                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
+                            </apex:commandLink>&nbsp;|&nbsp;
+                            <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" value="Cancel">
+                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
+                            </apex:commandLink>
+                        </apex:outputPanel>
+                    </td>
+                    <apex:repeat value="{!group.questions}" var="q" >
+                        <apex:outputPanel layout="none" rendered="{!ISBLANK(q.question.Hardcoded_Value__c)}">
+                            <td class="ui-front">
+                                <apex:outputPanel styleClass="appReferenceField">
+                                    <apex:outputField value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',q.question.Related_Object_Field__c)]}" style="{!IF(rr.isEditMode,'display:none','')}" rendered="{!!rr.isEditMode && group.fieldResultMap[lower(q.question.Related_Object_Field__c)].isReference}"/>
+                                </apex:outputPanel>
+                                <apex:outputField value="{!rr.obj[q.question.Related_Object_Field__c]}" rendered="{!!rr.isEditMode && !group.fieldResultMap[lower(q.question.Related_Object_Field__c)].isReference}"/>
+                                <c:ApplicationField question="{!q}" obj="{!rr.obj}" objType="{!group.item.Related_List_Object__c}" rendered="{!rr.isEditMode}" appControl="{!appControl}"/>
+                            </td>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                    <apex:outputPanel layout="none" rendered="{!ISPICKVAL($User.UserType,'Standard')}">
+                        <td class="ui-front">
+                            <apex:outputLink value="/{!rr.att.ContentDocumentId}" rendered="{!rr.att != null}" target="_blank">View
+                            </apex:outputLink>
+                        </td>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!ISPICKVAL($User.UserType,'Standard') && preventUpdates==false}">
+                        <td class="ui-front">
+                            <apex:commandLink action="{!group.RelatedUpload}" reRender="theTable" oncomplete="if('{!group.selectedRelatedId}')window.open('{!$Page.RelatedDocumentUpload+'?Id='+group.selectedRelatedId}','_blank');">Upload
+                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
+                            </apex:commandLink>
+                        </td>
+                    </apex:outputPanel>
+                </tr>
+            </apex:repeat>
+            </table>
+            <div class="col-lg-8 col-md-10 col-xs-12" >
+                <apex:commandLink styleClass="btn" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="New Row" action="{!group.newRow}" reRender="theTable" rendered="{!!preventUpdates}"/>
+            </div>
+            <apex:outputPanel >
+            <script>
+                jQuery(function(){
+                    jQuery('.appReferenceField').find('[id^=lookup]').each(function(idx,lookup){
+                        var lookupJQ = jQuery(lookup);
+                        lookupJQ.closest('td').html(lookupJQ.html());
+                    });
+                    jQuery('.bind-autocomplete').each(function(idx,autocompleteItem){
+                        var objType = jQuery(autocompleteItem).attr('data-objtype');
+                        var objTypeFilter = jQuery(autocompleteItem).attr('data-objtypefilter');
+                        jQuery(autocompleteItem).autocomplete({
+                            delay:300,
+                            // appendTo: jQuery(autocompleteItem).closest('td'),
+                            minLength:3,
+                            source: function(request, response){lookupSearchJS(objType,objTypeFilter,request.term,function(results){
+                                var retResults = jQuery.map(results, function(item){
+                                    return {
+                                        label: item.Name,
+                                        value: item.Id
+                                    }
+                                });
+                                retResults.push({label:"Create as New",value:'**createnew**'});
+                                response(retResults);
+                            })},
+                            open: function(event, ui){
+                                var carHeight = jQuery(this).closest('.carousel-inner').height();
+                                var uiDrop = jQuery(this).closest('.ui-front').find('ul.ui-front');
+                                var uiDropPos = uiDrop.position().top;
+                                uiDrop.css('max-height',(carHeight-uiDropPos)+'px');
+                            },
+                            select: function( event, ui ) {
+                                if(ui.item.value == '**createnew**'){
+                                    lookupCreateOpenJS{!group.item.Id}(jQuery(autocompleteItem));//.attr('data-objtype'),jQuery(autocompleteItem).val());
+                                    /*,function(retVal){
+                                        if(retVal && retVal.isSuccess){
+                                            jQuery(autocompleteItem).closest('.form-group').find('.inputHidden').val(retVal.message);
+                                        }else{
+                                            jQUery(autocompleteItem).val('');
+                                            jQuery(autocompleteItem).closest('.form-group').find('.inputHidden').val('');
+                                        }
+                                    });*/
+
+                                }else{
+                                    jQuery(autocompleteItem).val(ui.item.label);
+                                    jQuery(autocompleteItem).closest('.form-group').find('.inputHidden').val(ui.item.value);
+                                }
+                                event.preventDefault();
+                            }
+                        })
+                    });
+                    jQuery('.bind-autocomplete').each(function(item){
+                        if(jQuery(this).closest('.form-group').find('.lookupPanel a').length>0){
+                            jQuery(this).val(jQuery(this).closest('.form-group').find('.lookupPanel a').html())
+                        }else{
+                            var lookupVal = jQuery(this).closest('.form-group').find('.lookupPanel span').html();
+                            if(lookupVal == jQuery('<div/>').html("&nbsp;").html()){
+                                lookupVal = '';
+                            }
+                            console.log(lookupVal);
+                            jQuery(this).val(lookupVal);
+                        }
+                        jQuery(this).closest('.form-group').find('.lookupPanel').remove();
+                    });
+                });
+            </script>
+            </apex:outputPanel>
+        </apex:outputPanel>
+         <apex:outputPanel rendered="{!group.creatingNewRelatedRecord == true}">
+            <apex:repeat value="{!group.relatedReferenceQuestions}" var="q" >
+                <c:ApplicationField question="{!q}" obj="{!group.newReferenceObject}" objType="{!group.newReferenceObjectType}" appControl="{!appControl}" rendered="{!ISBLANK(q.question.Hardcoded_Value__c)}"/>
+            </apex:repeat>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" action="{!group.addNewReferenceObject}" value="Create" reRender="theSection"/>
+                    <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" immediate="true" value="Cancel" reRender="theSection">
+                        <apex:param value="false" assignTo="{!group.creatingNewRelatedRecord}" name="p1"/>
+                    </apex:commandLink>
+                </div>
+            </div>
+        </apex:outputPanel>
+    </div>
+</apex:component>
