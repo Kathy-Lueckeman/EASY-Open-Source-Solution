@@ -1,6 +1,0 @@
-<messaging:emailTemplate subject="Request for Information for {!relatedTo.Application__r.Contact__r.Name}" recipientType="Contact" relatedToType="Requirement_Response__c">
-<messaging:plainTextEmailBody >
-Please follow the link below to complete this request 
-{!$Setup.Application_Setting__c.Community_URL__c+"/apex/ApplicationRequirement?contactId="+relatedTo.Application__r.Contact__c+"&applicationId="+relatedTo.Application__c+"&requirementId="+relatedTo.Requirement_Item__r.Requirement__c+"&r="+relatedTo.Requirement_Item__r.Id+"&h="+relatedTo.Hashcode__c}
-</messaging:plainTextEmailBody>
-</messaging:emailTemplate>

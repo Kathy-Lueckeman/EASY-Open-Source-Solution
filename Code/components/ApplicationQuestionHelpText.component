@@ -1,9 +1,0 @@
-<apex:component >
-    <apex:attribute name="question" description="The ApplicationQuestion for this field" type="ApplicationQuestion" required="true" />
-    
-    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
-        <p class="help-block">
-            <apex:outputText value="{!question.helpText}" escape="false" />
-        </p>
-    </apex:outputPanel>
-</apex:component>
