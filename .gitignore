@@ -1,0 +1,8 @@
+.project
+.settings
+salesforce.schema
+Referenced Packages
+.gitignore
+build.properties
+.*.swp
+.DS_Store
