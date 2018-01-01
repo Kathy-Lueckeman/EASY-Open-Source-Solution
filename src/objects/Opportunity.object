@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <businessProcesses>
+        <fullName>Applicant</fullName>
+        <isActive>true</isActive>
+        <values>
+            <fullName>Closed Lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed Won</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prospecting</fullName>
+            <default>false</default>
+        </values>
+    </businessProcesses>
+    <businessProcesses>
+        <fullName>Inquiry</fullName>
+        <isActive>true</isActive>
+        <values>
+            <fullName>Closed Lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed Won</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prospecting</fullName>
+            <default>false</default>
+        </values>
+    </businessProcesses>
+    <compactLayouts>
+        <fullName>Applicant_Opportunity</fullName>
+        <fields>Name</fields>
+        <fields>Academic_Program__c</fields>
+        <fields>OwnerId</fields>
+        <label>Applicant Opportunity</label>
+    </compactLayouts>
+    <compactLayouts>
+        <fullName>Inquiry_Opportunity</fullName>
+        <fields>Name</fields>
+        <fields>Recruitment_Program__c</fields>
+        <fields>OwnerId</fields>
+        <label>Inquiry Opportunity</label>
+    </compactLayouts>
+    <fields>
+        <fullName>Academic_Program__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The official plan or program the individual applies for. A lookup to Program with a filter criteria of Record Type = Academic Program.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The official plan or program the individual applies for.</inlineHelpText>
+        <label>Academic Program</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Program__c.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Academic Program</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Program__c</referenceTo>
+        <relationshipLabel>Opportunities with Academic Program</relationshipLabel>
+        <relationshipName>Opportunities1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Admit_Type__c</fullName>
+        <description>The category the potential applicant falls into for recruitment segmentation (Ex: New student, Transfer student, etc.)</description>
+        <externalId>false</externalId>
+        <label>Admit Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New Freshman</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Transfer</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Affiliated_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The organizational account (Ex: business, high school, college, etc.) a student is affiliated with. Filtered to exclude the Administrative Account Record Type.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The organizational account (Ex: business, high school, college, etc.) a student is affiliated with.</inlineHelpText>
+        <label>Affiliated Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Opportunities (Affiliated Account)</relationshipLabel>
+        <relationshipName>Affiliated_Opportunities</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Application_Number__c</fullName>
+        <description>The external ID used by the application collection tool or database for matching to Applicant Opportunities. Only displays on the Applicant Opportunity page layout.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The external ID used by the application collection tool or database for matching to Applicant Opportunities.</inlineHelpText>
+        <label>Application Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Application_Submitted_Date__c</fullName>
+        <description>A date stamp (set by the Opportunity: Set Application Submitted Date workflow rule) to record when an Opportunity is converted from an Inquiry to an Applicant record type.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when the Opportunity was converted from an Inquiry to an Applicant record type.</inlineHelpText>
+        <label>Application Submitted Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Career__c</fullName>
+        <description>Returns the Career from the Academic Program if there is one, otherwise it returns the Career from the Recruitment Program if there is one. Used in building the Opportunity Key for the Interaction Processor to determine whether to create a new Opportunity or update an existing Opportunity.</description>
+        <externalId>false</externalId>
+        <formula>/*If an Academic Program exists for the Opportunity, retrieve the associated Career from the Academic Program Account*/ 
+IF(NOT(ISBLANK(Academic_Program__c)),TEXT(Academic_Program__r.Career__c), 
+
+/*IF not, retrieve the associated Career from the Recruitment Program Account on the Opportunity*/ 
+TEXT(Recruitment_Program__r.Career__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Career</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Connects this Opportunity to a Contact.</description>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Opportunities</relationshipLabel>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Department__c</fullName>
+        <description>Returns the Department from the Academic Program if there is one, otherwise it returns the Department from the Recruitment Program if there is one.</description>
+        <externalId>false</externalId>
+        <formula>/*If an Academic Program exists for the Opportunity, retrieve the associated School/College from the Academic Program Account*/ 
+IF(NOT(ISBLANK(Academic_Program__c)),(  Academic_Program__r.Department__r.Name  ), 
+
+/*IF not, retrieve the associated School/College from the Recruitment Program Account on the Opportunity*/ 
+(  Recruitment_Program__r.Department__r.Name  ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Department</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>First_Inquiry_Source__c</fullName>
+        <description>Captures the first lead source when the opportunity record is created. This is set by the Opportunity: Set First Inquiry Source workflow rule.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The first Lead Source of the Opportunity.</inlineHelpText>
+        <label>First Inquiry Source</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>First_Recruitment_Program__c</fullName>
+        <description>Captures the first Recruitment Program when the Opportunity record is created. This is set by the Opportunity: Set First Recruitment Program workflow rule.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The first Recruitment Program on the Opportunity.</inlineHelpText>
+        <label>First Recruitment Program</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Inquiry_Date__c</fullName>
+        <description>A date stamp (set by the Opportunity: Set Inquiry Date workflow rule) to capture when an Opportunity is created.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when the Opportunity was created.</inlineHelpText>
+        <label>Inquiry Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Last_Campaign_Source__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Last Campaign Source</label>
+        <referenceTo>Campaign</referenceTo>
+        <relationshipLabel>Opportunities from Latest Campaign Source</relationshipLabel>
+        <relationshipName>Campaigns2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>A unique external ID text field which determines whether an Interaction will create a new Opportunity or edit an existing Opportunity. Built using the Contact’s 18-digit ID, Career, Term’s 15-digit ID, and Recruitment/Academic Program’s 15-digit ID (if applicable) to ensure uniqueness and support of both a central and decentral recruitment process. Set by the Interactions Processor.</description>
+        <externalId>true</externalId>
+        <label>Opportunity Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Recruitment_Program__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The marketable name for an official Academic Program (or group of Programs) that the individual is interested in. A lookup to Program with a filter criteria of Record Type = Recruitment Program. Used in building the Opportunity Key for the Interaction Processor to determine whether to create a new Opportunity or update an existing Opportunity for a decentralized recruitment process.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The marketable name for an official Academic Program (or group of Programs) that the individual is interested in.</inlineHelpText>
+        <label>Recruitment Program</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Program__c.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Recruitment Program</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Program__c</referenceTo>
+        <relationshipLabel>Opportunities with Recruitment Program</relationshipLabel>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <listViews>
+        <fullName>Applicant_Opportunities</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.Applicant_Opportunity</value>
+        </filters>
+        <label>Applicant Opportunities</label>
+    </listViews>
+    <listViews>
+        <fullName>Inquiry_Opportunities</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>OPPORTUNITY.LEAD_SOURCE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.Inquiry_Opportunity</value>
+        </filters>
+        <label>Inquiry Opportunities</label>
+    </listViews>
+    <recordTypes>
+        <fullName>Applicant_Opportunity</fullName>
+        <active>true</active>
+        <businessProcess>Applicant</businessProcess>
+        <compactLayoutAssignment>Applicant_Opportunity</compactLayoutAssignment>
+        <label>Applicant Opportunity</label>
+        <picklistValues>
+            <picklist>Admit_Type__c</picklist>
+            <values>
+                <fullName>New Freshman</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ForecastCategoryName</picklist>
+            <values>
+                <fullName>Best Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Omitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pipeline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>LeadSource</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Existing Business</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Inquiry_Opportunity</fullName>
+        <active>true</active>
+        <businessProcess>Inquiry</businessProcess>
+        <compactLayoutAssignment>Inquiry_Opportunity</compactLayoutAssignment>
+        <label>Inquiry Opportunity</label>
+        <picklistValues>
+            <picklist>Admit_Type__c</picklist>
+            <values>
+                <fullName>New Freshman</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ForecastCategoryName</picklist>
+            <values>
+                <fullName>Best Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Omitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pipeline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>LeadSource</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Existing Business</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+</CustomObject>

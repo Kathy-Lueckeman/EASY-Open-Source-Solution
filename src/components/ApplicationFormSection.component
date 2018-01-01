@@ -1,0 +1,52 @@
+<apex:component >
+    <script>
+        function makeNonEditable(){
+            //Not Editable
+            jQuery('.fieldNotEditable,.fieldNotEditable input,.fieldNotEditable select,.fieldNotEditable textarea').attr('disabled','disabled');
+        }
+        function lookupCreateOpenJS{!group.item.Id}(item){
+            setCreatingNewRelatedRecordAF{!group.item.Id}(jQuery(item).closest('tr').attr('data-recid'),jQuery(item).val());
+        }
+        jQuery('.statePicklist').on('DOMNodeInserted',function(){
+            jQuery('.statePicklist select:not(.form-control)').addClass('form-control');
+            makeNonEditable();
+        });
+        jQuery(function(){
+            makeNonEditable();
+        });
+    </script>
+    <apex:actionFunction name="setCreatingNewRelatedRecordAF{!group.item.Id}" action="{!groupNewRelatedRecord}" rerender="theSection">
+        <apex:param name="p1" assignTo="{!group.newReferenceObjectSelectedWrapper}" value=""/>
+        <apex:param name="p2" assignTo="{!group.newReferenceObjectSelectedWrapperName}" value=""/>
+    </apex:actionFunction>
+    <apex:attribute name="group" description="The ApplicationQuestionGroup for this section" type="ApplicationQuestionGroup" required="true" />
+    <apex:attribute name="preventUpdates" description="" type="Boolean" default="false" required="false" />
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+    <apex:attribute name="groupNewRelatedRecord" description="" type="ApexPages.Action" required="true"/>
+    <apex:outputPanel styleClass="{!if(group.isEditable,'','fieldNotEditable')}" id="theSection">
+        <apex:outputPanel rendered="{!group.instructions != null && group.instructions != ''}" >
+            <p><apex:outputText value="{!group.instructions}" escape="false" /></p>
+            <br />
+        </apex:outputPanel>
+        <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup}" >
+            <apex:actionRegion >
+            <apex:repeat value="{!group.questions}" var="q" >
+                <c:ApplicationField question="{!q}" preventUpdates="{!preventUpdates}" appControl="{!appControl}"/>
+            </apex:repeat>
+            <apex:outputPanel >
+                <script>
+                    jQuery(function(){
+                        makeNonEditable();
+                    });
+                </script>
+            </apex:outputPanel>
+            </apex:actionRegion>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!group.documentUpload}" >
+            <c:ApplicationDocumentUpload group="{!group}" preventUpdates="{!preventUpdates}"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!group.relatedObject}" >
+            <c:ApplicationRelatedObject group="{!group}" preventUpdates="{!preventUpdates}" appControl="{!appControl}"/>
+        </apex:outputPanel>
+    </apex:outputPanel>
+</apex:component>

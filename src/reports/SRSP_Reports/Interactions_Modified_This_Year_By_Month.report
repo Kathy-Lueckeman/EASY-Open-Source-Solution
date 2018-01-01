@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Interaction__c.First_Name__c</field>
+    </columns>
+    <columns>
+        <field>Interaction__c.Last_Name__c</field>
+    </columns>
+    <columns>
+        <field>Interaction__c.Email__c</field>
+    </columns>
+    <columns>
+        <field>Interaction__c.Contact__c</field>
+    </columns>
+    <columns>
+        <field>Interaction__c.Opportunity__c</field>
+    </columns>
+    <columns>
+        <field>Interaction__c.Lead__c</field>
+    </columns>
+    <description>A matrix of Interactions last modified this year by Source, Status, and Month.</description>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>CUST_LAST_UPDATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Interaction__c.Interaction_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Interaction__c.Interaction_Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Interactions Modified This Year By Month</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Interaction__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CUST_LAST_UPDATE</dateColumn>
+        <interval>INTERVAL_CURY</interval>
+    </timeFrameFilter>
+</Report>

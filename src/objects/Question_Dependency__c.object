@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Controlling_Question__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Question that controls this dependency</inlineHelpText>
+        <label>Controlling Question</label>
+        <referenceTo>Question__c</referenceTo>
+        <relationshipLabel>Dependent Questions</relationshipLabel>
+        <relationshipName>Question_Dependencies1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Question__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Question that is dependent on this dependency</inlineHelpText>
+        <label>Question</label>
+        <referenceTo>Question__c</referenceTo>
+        <relationshipLabel>Question Dependencies</relationshipLabel>
+        <relationshipName>Question_Dependencies</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>ValueCheckbox__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Checkbox value that the controlling question has to equal</inlineHelpText>
+        <label>Value</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>True</fullName>
+                    <default>true</default>
+                </value>
+                <value>
+                    <fullName>False</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Value__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Value that the controlling question has to be</inlineHelpText>
+        <label>Value</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Question Dependency</label>
+    <nameField>
+        <displayFormat>QD-{000000}</displayFormat>
+        <label>Question Dependency Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Question Dependencies</pluralLabel>
+    <recordTypes>
+        <fullName>Checkbox</fullName>
+        <active>true</active>
+        <description>Checkbox question dependency.</description>
+        <label>Checkbox</label>
+        <picklistValues>
+            <picklist>ValueCheckbox__c</picklist>
+            <values>
+                <fullName>False</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>True</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Multi_Select_Picklist</fullName>
+        <active>true</active>
+        <description>Multi-Select picklist question dependency.</description>
+        <label>Multi-Select Picklist</label>
+        <picklistValues>
+            <picklist>ValueCheckbox__c</picklist>
+            <values>
+                <fullName>False</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>True</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Picklist</fullName>
+        <active>true</active>
+        <description>Picklist question dependency.</description>
+        <label>Picklist</label>
+        <picklistValues>
+            <picklist>ValueCheckbox__c</picklist>
+            <values>
+                <fullName>False</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>True</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

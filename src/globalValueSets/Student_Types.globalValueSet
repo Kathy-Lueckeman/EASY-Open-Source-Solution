@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Traditional</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Adult</fullName>
+        <default>false</default>
+    </customValue>
+    <description>Student types for admissions.</description>
+    <masterLabel>Student Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

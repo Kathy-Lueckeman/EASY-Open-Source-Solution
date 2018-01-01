@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Academic_Term__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Academic Term that this record is associated with.</inlineHelpText>
+        <label>Academic Term</label>
+        <referenceTo>Academic_Term__c</referenceTo>
+        <relationshipLabel>Intended Program Terms</relationshipLabel>
+        <relationshipName>Academic_Terms</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Activate_Application_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date that this record causes the application to open</inlineHelpText>
+        <label>Activate Application Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Applicant_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Applicant type(s) this record applies to (applies to all if blank)</inlineHelpText>
+        <label>Applicant Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Applicant_Types</valueSetName>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Application_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK(Activate_Application_Date__c), ISBLANK(End_Application_Date__c)),
+&quot;Inactive&quot;,
+IF(
+Activate_Application_Date__c  &lt;=  TODAY() &amp;&amp; End_Application_Date__c  &gt;=  TODAY(), &quot;Active&quot;, &quot;Inactive&quot;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Active&quot; if this record is currently causing the application to be open. &quot;Inactive&quot; otherwise.</inlineHelpText>
+        <label>Application Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Citizenship__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Citizenship type(s) this record applies to (applies to all if blank)</inlineHelpText>
+        <label>Citizenship</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Citizenship_Types</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Degree_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Degree type(s) this record applies to (applies to all if blank)</inlineHelpText>
+        <label>Degree Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Degree_Types</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Delivery_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Delivery type(s) this record applies to (applies to all if blank)</inlineHelpText>
+        <label>Delivery Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Delivery_Types</valueSetName>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>End_Application_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date that this record causes the application to close</inlineHelpText>
+        <label>End Application Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Intended_Program__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Program that this record applies to</inlineHelpText>
+        <label>Intended Program</label>
+        <referenceTo>Program__c</referenceTo>
+        <relationshipLabel>Intended Program Terms</relationshipLabel>
+        <relationshipName>Intended_Program_Periods</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Period_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <inlineHelpText>External ID of the term that this record is associated with (used for integration with external systems)</inlineHelpText>
+        <label>Period Id</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Residency__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Residency type this record applies to (applies to all if blank)</inlineHelpText>
+        <label>Residency</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Residency_Types</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>School_College__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>School/college this record applies to (applies to all if blank)</inlineHelpText>
+        <label>School / College</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>School_College</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Student_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Student type(s) this record applies to (applies to all if blank)</inlineHelpText>
+        <label>Student Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Student_Types</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <label>Intended Program Term</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Academic_Term__c</columns>
+        <columns>Activate_Application_Date__c</columns>
+        <columns>End_Application_Date__c</columns>
+        <columns>Application_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Intended Program Term Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Intended Program Terms</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked if the requirement is active. If unchecked, this requirement will not display on any applications.</inlineHelpText>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Applicant_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Applicant type(s) that this requirement applies to (applies to all if blank)</inlineHelpText>
+        <label>Applicant Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Applicant_Types</valueSetName>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Application_Control__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Application Control that this requirement is a part of</inlineHelpText>
+        <label>Application Control</label>
+        <referenceTo>Application_Control__c</referenceTo>
+        <relationshipLabel>Requirements</relationshipLabel>
+        <relationshipName>Requirements</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Application_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Application status(es) that this requirement applies to (applies to all if blank)</inlineHelpText>
+        <label>Application Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Application_Status</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Citizenship__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Citizenship type(s) that this requirement applies to (applies to all if blank)</inlineHelpText>
+        <label>Citizenship</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Citizenship_Types</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Degree_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Degree type(s) that this requirement applies to (applies to all if blank)</inlineHelpText>
+        <label>Degree Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Degree_Types</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Delivery_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Delivery type(s) that this requirement applies to (applies to all if blank)</inlineHelpText>
+        <label>Delivery Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Delivery_Types</valueSetName>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Display_Order__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Order this requirement is displayed relative to other requirements</inlineHelpText>
+        <label>Display Order</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Intended_Program__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Intended program that this requirement applies to (applies to all if blank)</inlineHelpText>
+        <label>Intended Program</label>
+        <referenceTo>Program__c</referenceTo>
+        <relationshipLabel>Requirements</relationshipLabel>
+        <relationshipName>Requirements</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Internal_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked if this requirement can only be fulfilled by an internal user</inlineHelpText>
+        <label>Internal Only</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Residency__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Residency type that this requirement applies to (applies to all if blank)</inlineHelpText>
+        <label>Residency</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Residency_Types</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>School_College__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>School/College that this requirement applies to (applies to all if blank)</inlineHelpText>
+        <label>School / College</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>School_College</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Show_on_Application_Creation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked if this requirement should display when creating a new application and not on the checklist</inlineHelpText>
+        <label>Show on Application Creation</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Student_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Student type(s) that this requirement applies to (applies to all if blank)</inlineHelpText>
+        <label>Student Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Student_Types</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>URL_Parameter__c</fullName>
+        <externalId>false</externalId>
+        <formula>Application_Control__r.URL_Parameter__c</formula>
+        <label>URL Parameter</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Requirement</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>Degree_Type__c</columns>
+        <columns>Residency__c</columns>
+        <columns>Citizenship__c</columns>
+        <columns>Student_Type__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Application_Control__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Requirement Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Requirements</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <webLinks>
+        <fullName>Preview</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Preview</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/ApplicationRequirementPreview?Id={!Requirement__c.Id}&amp;at={!Requirement__c.URL_Parameter__c}</url>
+    </webLinks>
+</CustomObject>

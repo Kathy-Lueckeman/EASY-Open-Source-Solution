@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Activate_Application_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date in which applications for this term open.</inlineHelpText>
+        <label>Activate Application Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Application_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+Activate_Application_Date__c &lt;=  TODAY() &amp;&amp; End_Application_Date__c  &gt;=  TODAY(), &quot;Active&quot;, &quot;Inactive&quot;
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Active&quot; if applications for this term are currently open. &quot;Inactive&quot; otherwise.</inlineHelpText>
+        <label>Application Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>End_Application_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date in which applications for this term close.</inlineHelpText>
+        <label>End Application Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Term_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>End date for this term.</inlineHelpText>
+        <label>Term End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Term_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Start date for this term.</inlineHelpText>
+        <label>Term Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Term_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+Term_Start_Date__c &lt;= TODAY() &amp;&amp; Term_End_Date__c &gt;= TODAY(), &quot;Active&quot;, &quot;Inactive&quot;
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Active&quot; if this term is currently in session. &quot;Inactive&quot; otherwise.</inlineHelpText>
+        <label>Term Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Academic Term</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Activate_Application_Date__c</columns>
+        <columns>End_Application_Date__c</columns>
+        <columns>Application_Status__c</columns>
+        <columns>Term_Start_Date__c</columns>
+        <columns>Term_End_Date__c</columns>
+        <columns>Term_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Academic Term Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Academic Terms</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

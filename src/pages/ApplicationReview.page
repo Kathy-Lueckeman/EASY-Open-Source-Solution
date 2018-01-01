@@ -1,0 +1,60 @@
+<apex:page controller="ApplicationReview" action="{!init}" showHeader="false" standardStylesheets="false" docType="html-5.0" >
+   <c:ApplicationHead />
+     <apex:variable value="0" var="reqIndex"/>
+    <div class="appBodyReview">
+        <apex:repeat value="{!arLst}" var="req">
+            <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appControl="{!appControl}">
+                <c:ApplicationForm section="{!req.section}" hidePaging="true" preventUpdates="true" appControl="{!appControl}">
+                </c:ApplicationForm>
+            </c:ApplicationBody>
+            <apex:variable var="reqIndex" value="{!VALUE(reqIndex) + 1}"/>
+        </apex:repeat>
+    </div>
+  <apex:form id="appReviewForm">
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <h1 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:600;font-size:36px;margin-bottom:20px;margin-top:30px;" >Application Review</h1>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <div>
+                        <div class="row" style="display:flex;" >
+                            <div class="col-lg-8 col-xs-10" >
+                                <div role="listbox">
+                                    <div class="item active" >
+                                        <apex:repeat value="{!$ObjectType.Application_Review__c.FieldSets.Application_Review_Header}" var="f">
+	                                        <c:ApplicationField question="{!questionHolderMap[f.fieldPath]}" obj="{!review}" appControl="{!appControl}"/>
+                                        </apex:repeat>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" rerender="themessages" action="{!submit}" onclick="appShowLoadingSpinner();"/>
+                </div>
+            </div> 
+        </div>
+        <apex:outputPanel id="themessages"><apex:pageMessages ></apex:pageMessages></apex:outputPanel>
+    </apex:form>
+    <script>
+        jQuery(function(){
+            jQuery('.appBodyReview .statePicklist select').addClass('form-control');
+            jQuery('.appBodyReview .statePicklist').on('DOMNodeInserted',function(){
+                jQuery('.appBodyReview .statePicklist select:not(.form-control)').addClass('form-control');
+                jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
+            });
+            jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
+        });
+    </script>
+</apex:page>

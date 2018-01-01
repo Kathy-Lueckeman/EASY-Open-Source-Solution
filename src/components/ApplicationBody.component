@@ -1,0 +1,119 @@
+<apex:component >
+    <apex:attribute name="title" description="The title for this page" type="String" required="true" />
+    <apex:attribute name="subtitle" description="The subtitle for this page" type="String" required="false" />
+    <apex:attribute name="hideLogo" description="Should the logo be hidden" type="Boolean" required="false" />
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+    <style>
+        .glyphicon.spinning {
+            animation: spin 1s infinite linear;
+            -webkit-animation: spin2 1s infinite linear;
+        }
+
+        @keyframes spin {
+            from { transform: scale(1) rotate(0deg); }
+            to { transform: scale(1) rotate(360deg); }
+        }
+
+        @-webkit-keyframes spin2 {
+            from { -webkit-transform: rotate(0deg); }
+            to { -webkit-transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        function appShowLoadingSpinner(){
+            jQuery('#apploadingspinner').show();
+        }
+        function appHideLoadingSpinner(){
+            jQuery('#apploadingspinner').hide();
+        }
+        // By default, replaceAll runs on ALL textarea fields. 
+        // modified to run only on the class defined 'ckeditor'
+        //CKEDITOR.replaceAll = function(){for(var a=document.getElementsByClassName("ckeditor"),b=0;b<a.length;b++){var d=null,k=a[b];if(k.name||k.id){if("string"==typeof arguments[0]){if(!(new RegExp("(?:^|\\s)"+arguments[0]+"(?:$|\\s)")).test(k.className))continue}else if("function"==typeof arguments[0]&&(d={},!1===arguments[0](k,d)))continue;this.replace(k,d)}}};
+
+        // destroys and rebuilds the rich text fields after rerender
+        function afterRerenderRTF() {
+           for(name in CKEDITOR.instances){
+                delete CKEDITOR.instances[name];
+           }
+
+           CKEDITOR.replaceAll('ckeditor');
+        }
+
+        // I use this before save as I've observed situations where changes are lost, 
+        // particularly after the fields have already been rerendered. 
+        // More of a safeguard than anything
+        function ensureRichTextContent(){
+            jQuery('.ckeditor').each(function(index, el){
+                var id = jQuery(el).attr('id') || jQuery(el).attr('name');
+                var data = CKEDITOR.instances[id].getData().trim();
+
+                if(CKEDITOR.instances[id].checkDirty())
+                    jQuery(el).text(data);
+            });
+        }
+        function performDocUploadSave(){
+            var docUploadPromiseArr = [];
+            ensureRichTextContent();
+            jQuery('.docUploadInput').each(function(idx,docUpload){
+                if(docUpload.files){
+                    var fbody= docUpload.files[0];
+                    if(fbody){
+                        docUploadPromiseArr.push(getAsText(fbody,jQuery(docUpload).attr('data-respid')));
+                    }
+                }else{
+                }
+            });
+            Promise.all(docUploadPromiseArr).then(docUploads => {
+                var docUploadObj = {};
+                docUploads.forEach(function(docUpload){
+                    docUploadObj[docUpload.itemId] = {"attData":docUpload};
+                });
+                saveWithDocs(JSON.stringify(docUploadObj));
+            }).catch(function(){});
+        }
+        function getAsText(readFile, respId) {
+            return new Promise((resolve,reject)=>{
+                var reader = new FileReader();
+                var reader = new FileReader();
+                reader.onload = (function(theFile){
+                    var fileName = theFile.name;
+                    return function(e){
+                        resolve({"fileName":fileName,"data":e.target.result,"itemId":respId});
+                    };
+                })(readFile);  
+                reader.readAsDataURL(readFile); 
+            });
+        }
+    </script>
+    <body style="font-size:initial;" >
+        <div style="display:none" id="apploadingspinner">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 50%; top: 50%; z-index: 1001;font-size:30px;" >
+                    <span class='glyphicon glyphicon-refresh spinning'></span> Processing...
+                </div>
+        </div>
+        <div class="container-fluid" >
+            <apex:outputPanel styleClass="row" style="padding:10px;padding-left:15px;" rendered="{!!hideLogo}">
+                <div class="col-xs-12" >
+                    <img src="{!URLFOR($Resource[appControl.Logo_Static_Resource__c], appControl.Logo_Static_Resource_Path__c)}" />
+                </div>
+            </apex:outputPanel>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <h1 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:600;font-size:36px;margin-bottom:20px;margin-top:30px;" >{!title}</h1>
+                    <apex:outputPanel rendered="{!subtitle != null}" >
+                    	<h2 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >{!subtitle}</h2>
+                    </apex:outputPanel>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
+                </div>
+            </div>
+            <apex:componentBody />
+        </div>
+    </body>
+</apex:component>

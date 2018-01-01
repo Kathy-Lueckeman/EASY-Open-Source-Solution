@@ -1,0 +1,37 @@
+<apex:page controller="ApplicationRegistration" showHeader="false" standardStylesheets="false" docType="html-5.0" >
+    <script>
+        function lookupSearchJS(sObj,sObjFilter,searchTerm,callback){
+            console.log(sObj);
+            console.log(searchTerm);
+            Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ApplicationRegistration.lookupSearch}',
+                sObj, sObjFilter,searchTerm,
+                function(result, event){
+                    if (event.status) {
+                        console.log(result);
+                        callback(result)
+                    } else if (event.type === 'exception') {
+                    } else {
+                    }
+                },
+                {escape: true}
+            );
+        }
+    </script>
+    <c:ApplicationHead />
+    <c:ApplicationBody title="New Application" rendered="{!NOT(ISBLANK(appControl))}" appControl="{!appControl}">
+        <apex:outputPanel id="regMessages">
+            <apex:pageMessages />
+        </apex:outputPanel>
+        <c:ApplicationForm section="{!section}" appControl="{!appControl}">
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
+                        <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
+                    </apex:actionFunction>
+                    <apex:commandLink styleClass="btn btn-lg appCreateSave" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                </div>
+            </div>
+        </c:ApplicationForm>
+    </c:ApplicationBody>
+</apex:page>

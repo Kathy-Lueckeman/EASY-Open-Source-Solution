@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked if this Application Control is currently active for applications.</inlineHelpText>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Allow_Cancel_From__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Application status(es) that the &quot;Cancel&quot; button shows-up for.</inlineHelpText>
+        <label>Allow Cancel From</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Application_Status</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Allow_Submit_From__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Application status(es) that the &quot;Submit&quot; button shows-up for.</inlineHelpText>
+        <label>Allow Submit From</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Application_Status</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Allow_Withdraw_From__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Application status(es) that the &quot;Withdraw&quot; button shows-up for.</inlineHelpText>
+        <label>Allow Withdraw From</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Application_Status</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Application_Start_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Application status that new applications are set to.</inlineHelpText>
+        <label>Application Start Status</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Application_Status</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Arrow_Color__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Hex color code for the arrow buttons (e.g. &quot;FFFFFF&quot;)</inlineHelpText>
+        <label>Arrow Color</label>
+        <length>7</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Button_Color__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Hex color code for buttons (e.g. &quot;FFFFFF&quot;)</inlineHelpText>
+        <label>Button Color</label>
+        <length>7</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Button_Text_Color__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Hex color code for the text that&apos;s displayed on the buttons (e.g. &quot;FFFFFF&quot;)</inlineHelpText>
+        <label>Button Text Color</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cancel_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Application status that the &quot;Cancel&quot; button sets an application to</inlineHelpText>
+        <label>Cancel Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Application_Status</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Default__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked if this is the default Application Control when no URL Parameter is specified</inlineHelpText>
+        <label>Default</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Hide_Term_Program__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, the intended term and intended program fields won&apos;t be displayed when creating new applications</inlineHelpText>
+        <label>Hide Term/Program</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Line_Color__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Hex color code for the lines in-between sections of the page  (e.g. &quot;FFFFFF&quot;)</inlineHelpText>
+        <label>Line Color</label>
+        <length>7</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_Color__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Hex color code for links  (e.g. &quot;FFFFFF&quot;)</inlineHelpText>
+        <label>Link Color</label>
+        <length>7</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Logo_Static_Resource_Path__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Path to the logo within the static resource. This is used when the static resource is in a compressed format (e.g. .zip file).</inlineHelpText>
+        <label>Logo Static Resource Path</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Logo_Static_Resource__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of the static resource that holds the logo  (e.g. &quot;FFFFFF&quot;)</inlineHelpText>
+        <label>Logo Static Resource</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Submit_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Application status that the &quot;Submit&quot; button sets an application to</inlineHelpText>
+        <label>Submit Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Application_Status</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Text_Color__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Hex color code for the text on the page  (e.g. &quot;FFFFFF&quot;)</inlineHelpText>
+        <label>Text Color</label>
+        <length>7</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>URL_Parameter__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <inlineHelpText>Text to be included at the end of a link to reference this Application Control. Format is &quot;?at=[URL_PARAMETER]&quot;</inlineHelpText>
+        <label>URL Parameter</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Withdraw_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Application status that the &quot;Withdraw&quot; button sets an application to</inlineHelpText>
+        <label>Withdraw Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Application_Status</valueSetName>
+        </valueSet>
+    </fields>
+    <label>Application Control</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Application Control Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Application Controls</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

@@ -1,0 +1,56 @@
+<apex:page controller="ApplicationChecklist" showHeader="false" standardStylesheets="false" docType="html-5.0" action="{!init}">
+    <c:ApplicationHead />
+    <c:ApplicationBody title="Application Checklist" subtitle="{!app.Intended_Program__r.Name + ' - ' + app.Intended_Term_of_Entry__r.Name}" appControl="{!appControl}">
+        <apex:form id="theForm" >
+            <apex:pageMessages />
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <apex:repeat value="{!reqs}" var="r" >
+                        <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
+                            <div class="col-lg-7 col-lg-offset-2 col-xs-9 col-xs-offset-1" >
+                                <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!app.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}" style="color:#{!appControl.Link_Color__c};" >{!r.req.Name}</a>
+                            </div>
+                            <div class="col-xs-1" >
+                                <apex:outputPanel rendered="{!!r.reqStatus}" >
+                                    <span class="glyphicon glyphicon-remove" style="color:red;float:right;" ></span>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!r.reqStatus}" >
+                                    <span class="glyphicon glyphicon-ok" style="color:green;float:right;" ></span>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        <apex:repeat value="{!r.reqItems}" var="ri" >
+                            <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
+                                <div class="col-lg-6 col-lg-offset-3 col-xs-8 col-xs-offset-2" >
+                                    <apex:outputText style="color:#{!appControl.Text_Color__c};" >{!ri.reqItem.Name}</apex:outputText>
+                                </div>
+                                <div class="col-xs-1" >
+                                    <apex:outputPanel rendered="{!!ri.reqItemStatus}" >
+                                        <span class="glyphicon glyphicon-remove" style="color:red;float:right;" ></span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!ri.reqItemStatus}" >
+                                        <span class="glyphicon glyphicon-ok" style="color:green;float:right;" ></span>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                        </apex:repeat>
+                    </apex:repeat>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Submit" action="{!submit}" onclick="appShowLoadingSpinner();" disabled="{!!allowSubmit}"/>
+                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Cancel" action="{!cancelApp}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner()" rendered="{!allowCancel}"/>
+                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Withdraw" action="{!withdrawApp}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner()" rendered="{!allowWithdraw}"/>
+                    <a class="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" href="{!$Site.BaseUrl}/apex/ApplicationPortal?contactId={!contactId}&at={!$CurrentPage.parameters.at}" >Back</a>
+                </div>
+            </div>
+        </apex:form>
+    </c:ApplicationBody>
+
+</apex:page>

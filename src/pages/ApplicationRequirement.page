@@ -1,0 +1,58 @@
+<apex:page controller="ApplicationRequirement" action="{!init}" showHeader="false" standardStylesheets="false" docType="html-5.0" >
+    <script>
+        function lookupSearchJS(sObj,sObjFilter,searchTerm,callback){
+            console.log(sObj);
+            console.log(searchTerm);
+            Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
+                sObj, sObjFilter,searchTerm,
+                function(result, event){
+                    if (event.status) {
+                        console.log(result);
+                        callback(result)
+                    } else if (event.type === 'exception') {
+                    } else {
+                    }
+                },
+                {escape: true}
+            );
+        }
+    </script>
+    <c:ApplicationHead />
+    <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occured and you do not have access to this page.','')}" appControl="{!appControl}">
+        <c:ApplicationForm section="{!section}" rendered="{!!showSuccess && !isInvalid}" appControl="{!appControl}">
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
+                        <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
+                    </apex:actionFunction>
+                    <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                </div>
+            </div>
+        </c:ApplicationForm>
+        <apex:outputPanel rendered="{!showSuccess}">
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <div>
+                        <div class="row" style="display:flex;" >
+                            <div class="col-lg-8 col-xs-10" >
+                                <div role="listbox">
+                                    <div class="item active" >
+                                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                                            <h1 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:600;font-size:36px;margin-bottom:20px;margin-top:30px;" >Thank you for your submission.</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
+                </div>
+            </div>
+        </apex:outputPanel>
+    </c:ApplicationBody>
+</apex:page>

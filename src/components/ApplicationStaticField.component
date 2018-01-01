@@ -1,0 +1,9 @@
+<apex:component >
+    <apex:attribute name="question" description="The ApplicationQuestion for this field" type="ApplicationQuestion" required="true" />
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+
+    <div class="form-group" >
+        <label for="field" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" rendered="{!NOT(ISBLANK(question.label))}">{!question.label}</label>
+        <p><apex:outputText value="{!question.question.Static_Text__c}" escape="false" /></p>
+    </div>
+</apex:component>
