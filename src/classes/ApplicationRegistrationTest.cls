@@ -36,7 +36,10 @@ public class ApplicationRegistrationTest {
 		insert req;
 		Requirement_Item__c riQG = new Requirement_Item__c(Requirement__c=req.Id,Name='Test RI',Active__c = true,RecordTypeId=rtMap.get('Question_Group'));
 		insert riQG;
-		insert new Question__c(Requirement_Item__c=riQG.Id,Name='Test',RecordTypeId=rtQMap.get('Text'));
+		Question__c q1 = new Question__c(Requirement_Item__c=riQG.Id,Name='Test',RecordTypeId=rtQMap.get('Text'));
+        Question__c q2 = new Question__c(Requirement_Item__c=riQG.Id,Name='TestAddress',RecordTypeId=rtQMap.get('Address'));
+        insert new List<Question__c>{q1, q2};
+        insert new Question_Dependency__c(Question__c = q2.Id, Controlling_Question__c = q1.Id, Value__c = 'test');
 
 		insert new Program__c(Name='Test');
 		insert new Academic_Term__c(Activate_Application_Date__c=Date.today().addDays(-2),End_Application_Date__c=Date.today().addDays(2));

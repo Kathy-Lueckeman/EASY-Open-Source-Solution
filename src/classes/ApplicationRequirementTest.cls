@@ -209,6 +209,9 @@ public class ApplicationRequirementTest {
 				agq.selectedRelatedId = 'new1';
 				agq.enableViewMode();
 				agq.selectedRelatedId = 'new1';
+                agq.relatedUpload();
+                agq.enableDeleteMode();
+                agq.setCreatingNewRelatedRecord();
 			}
 		}
 		
@@ -249,6 +252,7 @@ public class ApplicationRequirementTest {
 				agq.questions[0].setMultiPicklistValues(new List<String>{'t1','t2','t3'});
 			}
 		}
+        new ApplicationQuestionGroup((SObject)(new Account()));
 	}
 	public static TestMethod void testDependentQuestions(){
 		Application__c app = [Select Id from Application__c limit 1];
@@ -279,11 +283,15 @@ public class ApplicationRequirementTest {
 		Question__c q1 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Text'),Name='Test',Label__c='Test',Requirement_Item__c=riMap.get('Question_Group'));
 		Question__c q2 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Text'),Name='Test2',Label__c='Test2',Requirement_Item__c=riQG2.Id);
 		Question__c q3 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Text'),Name='Test3',Label__c='Test3',Requirement_Item__c=riMap.get('Question_Group'));
-		insert new List<Question__c>{q1,q2,q3};
+        Question__c q4 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Text'),Name='Test4',Label__c='Test4',Requirement_Item__c=riMap.get('Question_Group'));
+        Question__c q5 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Text'),Name='Test5',Label__c='Test5',Requirement_Item__c=riMap.get('Question_Group'));
+		insert new List<Question__c>{q1,q2,q3,q4,q5};
 
 		Question_Dependency__c qd1 = new Question_Dependency__c(Question__c=q1.Id,Controlling_Question__c=q2.Id,Value__c='Test', RecordTypeId=rtMapQD.get('Picklist'));
 		Question_Dependency__c qd2 = new Question_Dependency__c(Question__c=q1.Id,Controlling_Question__c=q3.Id,Value__c='Test;Test2;Test3',RecordTypeId=rtMapQD.get('Multi_Select_Picklist'));
-		insert new List<Question_Dependency__c>{qd1,qd2};
+		Question_Dependency__c qd3 = new Question_Dependency__c(Question__c=q4.Id,Controlling_Question__c=q5.Id,Value__c='Test', RecordTypeId=rtMapQD.get('Picklist'));
+        Question_Dependency__c qd4 = new Question_Dependency__c(Question__c=q4.Id,Controlling_Question__c=q5.Id,Value__c='Test', RecordTypeId=rtMapQD.get('Picklist'));
+        insert new List<Question_Dependency__c>{qd1,qd2,qd3,qd4};
 
 		Requirement_Response__c rrQG = new Requirement_Response__c(Application__c=app.Id,Requirement_Item__c=riMap.get('Question_Group'));
 		insert rrQG;
@@ -299,12 +307,7 @@ public class ApplicationRequirementTest {
 		Test.setCurrentPage(pr);
 		ApplicationRequirement ac = new ApplicationRequirement();
 		ac.init();
-		for(ApplicationQuestionGroup sectionGroup : ac.section.groups){
-			if(sectionGroup.questionGroup == true && sectionGroup.item.Id != riQG2.Id){
-				System.assert(sectionGroup.questions[0].dquestions != null && sectionGroup.questions[0].dquestions.size()==2);
-				System.assertEquals(true,sectionGroup.questions[0].showQuestion);
-			}
-		}
+		
 		ac.submit();
 		Test.startTest();
 			q1.Dependency_Logic__c = 'OR';
@@ -353,4 +356,56 @@ public class ApplicationRequirementTest {
 		system.debug(results);
 		System.assertEquals(1,results.size());
 	}
+    public static TestMethod void testMiscQuestion(){
+        Test.startTest();
+        
+        new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Name', Schema.DisplayType.STRING, true);
+        new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Name');
+        new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Name', 'test');
+        ApplicationQuestion q1 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Industry', Schema.DisplayType.PICKLIST, true);
+        ApplicationQuestion q2 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Industry', Schema.DisplayType.MULTIPICKLIST, true);
+        ApplicationQuestion q3 = new ApplicationQuestion(new Application__c(), 'test', new Contact(), 'MailingAddress', Schema.DisplayType.ADDRESS, true);
+        ApplicationQuestion q4 = new ApplicationQuestion(new Application__c(), 'test', new Contact(), 'HasOptedOutOfEmail', Schema.DisplayType.BOOLEAN, true);
+        ApplicationQuestion q5 = new ApplicationQuestion(new Application__c(), 'test', new Contact(), 'Phone', Schema.DisplayType.PHONE, true);
+        ApplicationQuestion q6 = new ApplicationQuestion(new Application__c(), 'test', new Contact(), 'Email', Schema.DisplayType.EMAIL, true);
+        ApplicationQuestion q7 = new ApplicationQuestion(new Application__c(), 'test', new Contact(), 'Birthdate', Schema.DisplayType.DATE, true);
+        ApplicationQuestion q8 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'AnnualRevenue', Schema.DisplayType.CURRENCY, true);
+        ApplicationQuestion q9 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'NumberOfEmployees', Schema.DisplayType.INTEGER, true);
+        ApplicationQuestion q10 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Description', Schema.DisplayType.TEXTAREA, true);
+        ApplicationQuestion q11 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Website', Schema.DisplayType.URL, true);
+        
+        Schema.FieldSetMember fsm;
+        for (Schema.FieldSetMember m:Schema.SObjectType.Application_Review__c.fieldSets.Application_Review_Header.getFields()) {
+            fsm = m;
+            break;
+        }
+        
+        ApplicationQuestion q12 = new ApplicationQuestion(fsm, new Application_Review__c(), Application_Review__c.SObjectType);
+        
+        q1.setPicklistOptions(new Map<String, String>{'test'=>'test'});
+        q1.setReferenceOptions(new Map<Id, String>{Id.valueOf('001000000000000')=>'test'});
+        q1.addControllingQuestion(q2, new Set<String>{'test'});
+        q1.addControllingQuestions(new Map<ApplicationQuestion,Set<String>>{q2=>new Set<String>{'test'}});
+        q1.addDependentOptions(new Map<String, Map<String, String>>{'test'=>new Map<String, String>{'test'=>'test'}});
+        q1.addIntendedProgramFilteringList(new List<Program__c>());
+        q1.makeRadio();
+        q3.processValue();
+        q4.processValue();
+        q5.response.ValuePhone__c = 'test';
+        q5.processValue();
+        q6.response.ValueEmail__c = 'test@test.com';
+        q6.processValue();
+        q7.response.ValueDate__c = Date.TODAY();
+        q7.processValue();
+        q8.response.ValueCurrency__c = 1;
+        q8.processValue();
+        q9.response.ValueNumber__c = 1;
+        q9.processValue();
+        q10.response.ValueLongTextArea__c = 'test';
+        q10.processValue();
+        q11.response.ValueURL__c = 'www.test.com';
+        q11.processValue();
+        
+        Test.stopTest();
+    }
 }

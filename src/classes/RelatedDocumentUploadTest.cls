@@ -27,6 +27,7 @@ public class RelatedDocumentUploadTest {
 		pr.getParameters().put('Id',con.Id);
 		Test.setCurrentPage(pr);
 		RelatedDocumentUpload rdu = new RelatedDocumentUpload();
+        rdu.additionalDataString = '{"":{"attData":{"fileName":"test","data":"test"}}}';
 		Application_Control__c appControl = rdu.appControl;
 		String objName = rdu.objName;
 		rdu.aqg.att.Title = 'Test123';

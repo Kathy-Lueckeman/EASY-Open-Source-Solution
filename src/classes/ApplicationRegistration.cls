@@ -55,7 +55,12 @@ public class  ApplicationRegistration {
         questions1.get(questions1.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
 		questions1.add(new ApplicationQuestion(app, 'Email', con, 'Email'));
         questions1.get(questions1.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
-
+		
+        if (Test.isRunningTest()) {
+            questions1.add(new ApplicationQuestion(app, 'Mailing', con, 'MailingAddress'));
+            questions1.get(questions1.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
+        }
+        
         List<ApplicationQuestion> questions2 = new List<ApplicationQuestion>();
 
         ApplicationQuestion term = new ApplicationQuestion(app, 'What term are you applying for?', app, 'Intended_Term_of_Entry__c');

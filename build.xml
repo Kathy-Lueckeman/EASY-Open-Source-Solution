@@ -26,6 +26,7 @@
          <runTest>ApplicationPortalTest</runTest>
          <runTest>ApplicationRegistrationTest</runTest>
          <runTest>ApplicationRequirementTest</runTest>
+         <runTest>ApplicationRequirementPreviewTest</runTest>
          <runTest>ApplicationReviewTest</runTest>
          <runTest>BatchApplicationArchiverTest</runTest>
          <runTest>INT_InteractionMappingService_TEST</runTest>

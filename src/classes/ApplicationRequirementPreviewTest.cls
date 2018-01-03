@@ -1,5 +1,5 @@
 @isTest
-public class ApplicationAdminViewTest {
+public class ApplicationRequirementPreviewTest {
 	@testSetup
 	public static void testSetup(){
 		Account acc = new Account(Name='NewAcc');
@@ -66,21 +66,17 @@ public class ApplicationAdminViewTest {
 		insert new List<Requirement_Response__c>{rrQG,rrDU,rrRO};
 		insert new Question_Response__c(Requirement_Response__c=rrQG.Id,Question__c=q2.Id);
 	}
-	public static TestMethod void appReview(){
-		Application__c app = [Select Id from Application__c limit 1];
-		Contact student = [Select Id from Contact limit 1];
-        Requirement_Item__c ri = [Select Id from Requirement_Item__c limit 1];
+	public static TestMethod void appPreview(){
+		Requirement__c req = [Select Id from Requirement__c limit 1];
 
-		PageReference pr = Page.ApplicationAdminView;
-		pr.getParameters().put('contactId', student.Id);
-		pr.getParameters().put('applicationId', app.Id);
-        pr.getParameters().put('at', 'st');
+		PageReference pr = Page.ApplicationRequirementPreview;
+		pr.getParameters().put('at', 'st');
+		pr.getParameters().put('Id', req.Id);
 		Test.setCurrentPage(pr);
-		ApplicationAdminView ar = new ApplicationAdminView();
-		ar.init();
-        ar.arLst[0].newResponses = new List<Requirement_Response__c>{new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = ri.Id)};
-		ar.submit();
-        Application_Control__c ac = ar.appControl;
-        List<Requirement__c> reqs = ar.reqs;
+		ApplicationRequirementPreview arp = new ApplicationRequirementPreview();
+		arp.init();
+        Application_Control__c ac = arp.appControl;
+        Id cId = arp.contactId;
+        Id aId = arp.applicationId;
 	}
 }

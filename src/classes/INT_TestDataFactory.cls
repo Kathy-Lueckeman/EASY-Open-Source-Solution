@@ -57,7 +57,7 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'First_Name__c',
             Target_Field_API_Name__c = 'FirstName',
-			Skip_Mapping__c = 'Webform',            
+			Skip_Mapping__c = 'Webform',
             Active__c = true
         );
         testMappingsToInsert.add(contactFirstNameMapping);
@@ -85,7 +85,7 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'Last_Name__c',
             Target_Field_API_Name__c = 'LastName',
-			Skip_Mapping__c = 'Webform',            
+			Skip_Mapping__c = 'Webform',
             Active__c = true
         );
         testMappingsToInsert.add(contactLastNameMapping);
