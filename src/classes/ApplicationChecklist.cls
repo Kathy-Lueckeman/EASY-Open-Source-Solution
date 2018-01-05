@@ -47,16 +47,16 @@ public class ApplicationChecklist {
 
         app = [SELECT Id, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c,School_College__c FROM Application__c WHERE Id = :applicationId];
         
-        if(new Set<String>(appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c)){
+        if(String.isNotBlank(appControl.Allow_Cancel_From__c) && new Set<String>(appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c)){
             allowCancel = true;
         }
-        if(new Set<String>(appControl.Allow_Withdraw_From__c.split(';')).contains(app.Application_Status__c)){
+        if(String.isNotBlank(appControl.Allow_Withdraw_From__c) && new Set<String>(appControl.Allow_Withdraw_From__c.split(';')).contains(app.Application_Status__c)){
             allowWithdraw = true;
         }
         
         reqMap = new Map<Id,RequirementWrapper>();
         Set<Id> reqIds = new Set<Id>();
-        for (Requirement__c r:[SELECT Id, Internal_Only__c, Name, Active__c,Intended_Program__c,Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c FROM Requirement__c WHERE Active__c = :true and Show_On_Application_Creation__c = false ORDER BY Display_Order__c ASC NULLS LAST]){
+        for (Requirement__c r:[SELECT Id, Internal_Only__c, Name, Active__c,Intended_Program__c,Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c FROM Requirement__c WHERE Application_Control__c = :appControl.Id AND Active__c = :true and Show_On_Application_Creation__c = false ORDER BY Display_Order__c ASC NULLS LAST]){
             if(r.Internal_Only__c == true && UserInfo.getUserType() != 'Standard'){
                 continue;
             }
