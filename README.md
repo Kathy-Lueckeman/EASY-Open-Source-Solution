@@ -45,7 +45,7 @@ Thank you for your interest in EASY. This project's code is provided as-is, and 
 If you are interested in learning about the project roles, roadmap, how to become a collaborator, and/or where to find the community surrounding this project, then please review our <a href="https://github.com/SalesforceFoundation/EASY-Open-Source-Solution/blob/master/Maintenance-Policy.md" target="_blank">Maintenance Policy</a>.
 
 ## Documentation and Other Resources
-*EASY* comes with a wealth of documentation and other resources to help admins, developers, and users implement, use, and customize the solution. It is important to read through these materials before downloading the EASY package, as they contain important information necessary for a successful implementation.
+EASY comes with a wealth of documentation and other resources to help admins, developers, and users implement, use, and customize the solution. It is important to read through these materials before downloading the EASY package, as they contain important information necessary for a successful implementation.
 
 ### Documentation Guides
 * <a href="https://github.com/SalesforceFoundation/EASY-Open-Source-Solution/blob/master/Docs/User%20Guide%20-%20EASY.pdf" target="_blank">User Guide</a> – This guide is both for admins and end users (e.g. application administrators) to learn about best practices for using EASY and all its features.
