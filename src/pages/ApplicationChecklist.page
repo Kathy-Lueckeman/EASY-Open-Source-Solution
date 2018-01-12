@@ -43,11 +43,14 @@
                 </div>
             </div>
             <div class="row" >
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Submit" action="{!submit}" onclick="appShowLoadingSpinner();" disabled="{!!allowSubmit}"/>
-                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Cancel" action="{!cancelApp}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner()" rendered="{!allowCancel}"/>
-                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Withdraw" action="{!withdrawApp}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner()" rendered="{!allowWithdraw}"/>
-                    <a class="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" href="{!$Site.BaseUrl}/apex/ApplicationPortal?contactId={!contactId}&at={!$CurrentPage.parameters.at}" >Back</a>
+                <div class="col-lg-3 col-lg-offset-2 col-md-4 col-md-offset-1 col-xs-6" >
+                    <a class="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" href="{!$Site.BaseUrl}/apex/ApplicationPortal?contactId={!contactId}&at={!$CurrentPage.parameters.at}" >Back to Portal</a>
+                </div>
+                <div class="col-lg-5 col-md-6 col-xs-6" >
+                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};float:right;margin-left:10px;margin-bottom:10px;" value="Cancel Application" action="{!cancelApp}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner()" rendered="{!allowCancel}"/>
+                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};float:right;margin-left:10px;margin-bottom:10px;" value="Withdraw Application" action="{!withdrawApp}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner()" rendered="{!allowWithdraw}"/>
+                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};float:right;margin-left:10px;margin-bottom:10px;" value="Submit Application" action="{!submit}" onclick="appShowLoadingSpinner();" disabled="{!!allowSubmit}"/>
+                    
                 </div>
             </div>
         </apex:form>

@@ -55,12 +55,14 @@
                 <apex:variable var="reqIndex" value="{!TEXT(value(reqIndex) + 1)}"/>
             </apex:repeat>
             <div class="row" >
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 col-xs-6" >
+                    <apex:outputLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="/{!applicationId}">Back to Application</apex:outputLink>
+                </div>
+                <div class="col-lg-4 col-md-5 col-xs-6" >
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                     </apex:actionFunction>
-                    <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
-                    <apex:outputLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="/{!applicationId}">Back to Application</apex:outputLink>
+                    <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};float:right;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
                 </div>
             </div>
         </apex:form>

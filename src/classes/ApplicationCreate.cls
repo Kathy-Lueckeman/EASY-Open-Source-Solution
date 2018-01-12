@@ -33,7 +33,7 @@ public class ApplicationCreate {
     /*******************************************************************************
     * @description Initialize the page - Sets up requirements
     ********************************************************************************/
-    public void init() {
+    public PageReference init() {
 
         app = new Application__c(Application_Status__c=appControl.Application_Start_Status__c);
 
@@ -43,7 +43,7 @@ public class ApplicationCreate {
         }
         
         if(appControl == null){
-            return ;
+            return null;
         }
 
         List<ApplicationQuestion> questions1 = new List<ApplicationQuestion>();
@@ -68,7 +68,7 @@ public class ApplicationCreate {
         if(appControl.Hide_Term_Program__c == false){
             groups.add(group1);
         }
-        section = new ApplicationQuestionSection(groups);
+        //section = new ApplicationQuestionSection(groups);
 
         //Custom Requirements
         String appControlId = appControl.Id;
@@ -125,7 +125,10 @@ public class ApplicationCreate {
             }
         }
         section = new ApplicationQuestionSection(groups);
-
+		if (groups.isEmpty())
+            return save();
+        
+        return null;
     }
 
     /*******************************************************************************

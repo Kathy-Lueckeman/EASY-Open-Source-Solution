@@ -62,7 +62,7 @@
                         </div>
                         <apex:outputPanel styleClass="col-lg-2 col-xs-1" rendered="{!!hidePaging}">
                             <center>
-                                <a class="carousel-control right" href="#myCarousel" role="button" data-slide="next" style="color:#{!appControl.Arrow_Color__c};width:initial;left:auto;" >
+                                <a class="carousel-control right" href="#myCarousel" role="button" data-slide="next" style="color:#{!appControl.Arrow_Color__c};width:initial;right:auto;" >
                                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ></span>
                                     <span class="sr-only" >Next</span>
                                 </a>
