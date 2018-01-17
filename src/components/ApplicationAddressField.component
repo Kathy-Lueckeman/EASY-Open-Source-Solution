@@ -33,17 +33,29 @@
             <label for="city" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} City{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
             <apex:inputField id="city" value="{!question.response.City__c}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
         </div>
+        
+        <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}" >
+	        <div class="form-group" >
+	            <label for="state" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State/Province{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+	            <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
+	                <apex:inputField id="state" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
+	            </div>
+	        </div>
+        </apex:outputPanel>
+        
         <div class="form-group" >
             <label for="country" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Country{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
             <apex:inputField id="country" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingCountryCode','MailingCountry')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
         </div>
 
-        <div class="form-group" >
-            <label for="state" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-            <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
-                <apex:inputField id="state" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
-            </div>
-        </div>
+		<apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}" >
+	        <div class="form-group" >
+	            <label for="statePicklist" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State/Province{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+	            <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
+	                <apex:inputField id="statePicklist" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
+	            </div>
+	        </div>
+        </apex:outputPanel>
 
         <div class="form-group" >
             <label for="postal" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Postal Code{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
@@ -60,17 +72,29 @@
             <label for="city1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} City{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
             <apex:inputField id="city1" value="{!object[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','City')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
         </div>
+        
+        <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}" >
+	        <div class="form-group" >
+	            <label for="state1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+	            <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
+	                <apex:inputField id="state1" value="{!object[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
+	            </div>
+	        </div>
+        </apex:outputPanel>
+        
         <div class="form-group" >
             <label for="country1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Country{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
             <apex:inputField id="country1" value="{!object[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'CountryCode','Country'))]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
         </div>
 
-        <div class="form-group" >
-            <label for="state1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-            <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
-                <apex:inputField id="state1" value="{!object[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
-            </div>
-        </div>
+		<apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}" >
+	        <div class="form-group" >
+	            <label for="state1Picklist" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+	            <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
+	                <apex:inputField id="state1Picklist" value="{!object[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
+	            </div>
+	        </div>
+        </apex:outputPanel>
 
         <div class="form-group" >
             <label for="postal1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Postal Code{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>

@@ -10,6 +10,8 @@ public class ApplicationQuestionSection {
 
     public ApplicationQuestionSection(List<ApplicationQuestionGroup> groups) {
         this.groups = groups;
+        
+        setProgress();
     }
 
     public ApplicationQuestionSection(Application__c app, List<Requirement_Item__c> items, Map<Id, List<Question_Dependency__c>> dQuestions, Map<Id, Requirement_Response__c> responses, Map<Id, List<Question_Response__c>> dResponses, Map<String,Map<String,Schema.SObjectField>> fieldDescribeMap) {
@@ -20,7 +22,15 @@ public class ApplicationQuestionSection {
                 groups.add(ApplicationQuestionSection.createQuestionGroup(app, i, dQuestions, responses.get(i.Id), dResponses.get(i.Id),fieldDescribeMap));
             }
         }
+        
+        setProgress();
     }
+    
+    private void setProgress() {
+        for (Integer n = 0; n < groups.size(); n++)
+            groups[n].progress = (((Decimal)n + 1) / ((Decimal)groups.size())) * 100;
+    }
+    
     /*******************************************************************************
     * @description Creates a question group from a single requirement item
     ********************************************************************************/

@@ -20,6 +20,7 @@ public class ApplicationChecklist {
     public Boolean allowCancel{get;set;}
     public Boolean allowWithdraw{get;set;}
     public List<Requirement_Item__c> riList {get;set;}
+    public Decimal progress {get;set;}
 
     public Application_Control__c appControl{
         get{
@@ -123,6 +124,15 @@ public class ApplicationChecklist {
         }else{
             allowSubmit = false;
         }
+        
+        Decimal total = (Decimal)reqs.size();
+        Decimal complete = 0;
+        
+        for (RequirementWrapper req:reqs) {
+            if (req.reqStatus) complete++;
+        }
+        
+        progress = (complete / total) * 100;
     }
     /*******************************************************************************
     * @description Checks to see if requirements have been completed. Checks related list items too (Even if they are not marked completed on the Requirement Response)

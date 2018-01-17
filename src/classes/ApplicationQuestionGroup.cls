@@ -22,6 +22,7 @@ public class ApplicationQuestionGroup {
     public Boolean questionGroup {get;set;}
     public Boolean documentUpload {get;set;}
     public Boolean relatedObject {get;set;}
+    public Decimal progress {get;set;}
     public Boolean externalResponse {get;set;}
     private Integer newIndex;
     public Requirement_Response__c response{get;set;}

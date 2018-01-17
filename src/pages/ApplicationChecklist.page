@@ -5,6 +5,11 @@
             <apex:pageMessages />
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                             aria-valuemin="0" aria-valuemax="100" style="width:{!progress}%;background-color:#{!appControl.Arrow_Color__c};">
+                        </div>
+                    </div>
                     <apex:repeat value="{!reqs}" var="r" >
                         <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
                             <div class="col-lg-7 col-lg-offset-2 col-xs-9 col-xs-offset-1" >
