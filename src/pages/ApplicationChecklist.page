@@ -11,34 +11,38 @@
                         </div>
                     </div>
                     <apex:repeat value="{!reqs}" var="r" >
-                        <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
-                            <div class="col-lg-7 col-lg-offset-2 col-xs-9 col-xs-offset-1" >
-                                <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!app.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}" style="color:#{!appControl.Link_Color__c};" >{!r.req.Name}</a>
-                            </div>
-                            <div class="col-xs-1" >
-                                <apex:outputPanel rendered="{!!r.reqStatus}" >
-                                    <span class="glyphicon glyphicon-remove" style="color:red;float:right;" ></span>
-                                </apex:outputPanel>
-                                <apex:outputPanel rendered="{!r.reqStatus}" >
-                                    <span class="glyphicon glyphicon-ok" style="color:green;float:right;" ></span>
-                                </apex:outputPanel>
-                            </div>
-                        </div>
-                        <apex:repeat value="{!r.reqItems}" var="ri" >
+                        <apex:outputPanel rendered="{!r.display}" >
                             <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
-                                <div class="col-lg-6 col-lg-offset-3 col-xs-8 col-xs-offset-2" >
-                                    <apex:outputText style="color:#{!appControl.Text_Color__c};" >{!ri.reqItem.Name}</apex:outputText>
+                                <div class="col-lg-7 col-lg-offset-2 col-xs-9 col-xs-offset-1" >
+                                    <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!app.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}" style="color:#{!appControl.Link_Color__c};" >{!r.req.Name}</a>
                                 </div>
                                 <div class="col-xs-1" >
-                                    <apex:outputPanel rendered="{!!ri.reqItemStatus}" >
+                                    <apex:outputPanel rendered="{!!r.reqStatus}" >
                                         <span class="glyphicon glyphicon-remove" style="color:red;float:right;" ></span>
                                     </apex:outputPanel>
-                                    <apex:outputPanel rendered="{!ri.reqItemStatus}" >
+                                    <apex:outputPanel rendered="{!r.reqStatus}" >
                                         <span class="glyphicon glyphicon-ok" style="color:green;float:right;" ></span>
                                     </apex:outputPanel>
                                 </div>
                             </div>
-                        </apex:repeat>
+                            <apex:repeat value="{!r.reqItems}" var="ri" >
+                                <apex:outputPanel rendered="{!ri.display}" >
+                                    <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
+                                        <div class="col-lg-6 col-lg-offset-3 col-xs-8 col-xs-offset-2" >
+                                            <apex:outputText style="color:#{!appControl.Text_Color__c};" >{!ri.reqItem.Name}</apex:outputText>
+                                        </div>
+                                        <div class="col-xs-1" >
+                                            <apex:outputPanel rendered="{!!ri.reqItemStatus}" >
+                                                <span class="glyphicon glyphicon-remove" style="color:red;float:right;" ></span>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!ri.reqItemStatus}" >
+                                                <span class="glyphicon glyphicon-ok" style="color:green;float:right;" ></span>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:repeat>
+                        </apex:outputPanel>
                     </apex:repeat>
                 </div>
             </div>

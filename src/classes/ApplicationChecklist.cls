@@ -58,9 +58,6 @@ public class ApplicationChecklist {
         reqMap = new Map<Id,RequirementWrapper>();
         Set<Id> reqIds = new Set<Id>();
         for (Requirement__c r:[SELECT Id, Internal_Only__c, Name, Active__c,Intended_Program__c,Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c FROM Requirement__c WHERE Application_Control__c = :appControl.Id AND Active__c = :true and Show_On_Application_Creation__c = false ORDER BY Display_Order__c ASC NULLS LAST]){
-            if(r.Internal_Only__c == true && UserInfo.getUserType() != 'Standard'){
-                continue;
-            }
             if (ApplicationFilter.filter(app, r)){
                 reqIds.add(r.Id);
                 reqMap.put(r.Id,new RequirementWrapper(r));
@@ -72,9 +69,6 @@ public class ApplicationChecklist {
         Set<Id> riIds = new Set<Id>();
         riList = [SELECT Id, Required__c,Requirement__c, Internal_Only__c, Active__c,Required_Number_of_Children__c,Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, (SELECT Id, Active__c,Hardcoded_value__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c, Editable_Application_Status__c, New_Reference_Field__c ,Static_Text__c FROM Questions__r ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c in :reqIds ORDER BY Display_Order__c ASC NULLS LAST];
         for(Requirement_Item__c ri : riList){
-            if(ri.Internal_Only__c == true && UserInfo.getUserType() != 'Standard'){
-                continue;
-            }
             Boolean isValid = ApplicationFilter.filter(app,ri);
             if(isValid){
                 reqMap.get(ri.Requirement__c).reqItemMap.put(ri.Id,new RequirementItemWrapper(ri));
@@ -145,9 +139,6 @@ public class ApplicationChecklist {
 		Map<Id,List<Requirement_Item__c>> riMap = new Map<Id,List<Requirement_Item__c>>();
         
 		for(Requirement_Item__c ri : riList){
-            if(ri.Internal_Only__c == true && UserInfo.getUserType() != 'Standard'){
-                continue;
-            }
             if(ApplicationFilter.filter(app,ri)){
                 requirementIds.add(ri.Requirement__c);
                 if(!riMap.containsKey(ri.Requirement__c)){
@@ -325,6 +316,11 @@ public class ApplicationChecklist {
     public class RequirementWrapper{
         public Requirement__c req{get;set;}
         public Boolean reqStatus{get;set;}
+        public Boolean display {
+            get {
+                return !req.Internal_Only__c || UserInfo.getUserType().equals('Standard');
+            }
+        }
         public Map<Id,RequirementItemWrapper> reqItemMap{get;set;}
         public List<RequirementItemWrapper> reqItems{
             get{
@@ -340,6 +336,11 @@ public class ApplicationChecklist {
     public class RequirementItemWrapper{
         public Requirement_Item__c reqItem{get;set;}
         public Boolean reqItemStatus{get;set;}
+        public Boolean display {
+            get {
+                return !reqItem.Internal_Only__c || UserInfo.getUserType().equals('Standard');
+            }
+        }
         public RequirementItemWrapper(Requirement_Item__c reqItem){
             this.reqItem = reqItem;
             this.reqItemStatus = false;
