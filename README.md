@@ -52,7 +52,7 @@ EASY comes with a wealth of documentation and other resources to help admins, de
 * <a href="https://github.com/SalesforceFoundation/EASY-Open-Source-Solution/blob/master/Docs/Installation%20Guide%20-%20EASY.pdf" target="_blank">Installation Guide</a> – The Installation Guide is an important resource for administrators looking to implement EASY with step-by-step instructions for installation and post-installation requirements and recommendations.
 * <a href="https://github.com/SalesforceFoundation/EASY-Open-Source-Solution/blob/master/Docs/Technical%20Guide%20-%20EASY.pdf" target="_blank">Technical Guide</a> – This guide is geared toward developers and admins experienced with Apex to learn more about how the EASY classes function and some customization tips.
 
-## INTERACTIONS FOR STUDENT RECRUITMENT
+## Interactions for Student Recruitment
 
 EASY includes a modified version of University of Miami’s <a href="https://github.com/SalesforceFoundation/Interactions-for-Student-Recruitment" target="_blank">Interactions for Student Recruitment package</a>. Specifically, any references to HEDA objects in the codebase have been abstracted to first test for the existence of those objects before executing the code. Also, the Plan__c object has been renamed to Program__c in EASY. If you’re installing EASY after first installing/implementing ULTRA, this may mean you need to migrate all Plan__c records over to the Program__c object.
 
