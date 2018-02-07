@@ -54,7 +54,7 @@ EASY comes with a wealth of documentation and other resources to help admins, de
 
 ## Interactions for Student Recruitment
 
-EASY includes a modified version of University of Miami’s <a href="https://github.com/SalesforceFoundation/Interactions-for-Student-Recruitment" target="_blank">Interactions for Student Recruitment package</a>. Specifically, any references to HEDA objects in the codebase have been abstracted to first test for the existence of those objects before executing the code. Also, the Plan__c object has been renamed to Program__c in EASY. If you’re installing EASY after first installing/implementing ULTRA, this may mean you need to migrate all Plan__c records over to the Program__c object.
+EASY includes a modified version of University of Miami’s <a href="https://github.com/SalesforceFoundation/Interactions-for-Student-Recruitment" target="_blank">Interactions for Student Recruitment package</a>. Specifically, any references to HEDA objects in the codebase have been abstracted to first test for the existence of those objects before executing the code. Also, the Plan__c object has been renamed to Program__c in EASY. If you’re installing EASY after first installing/implementing Interactions for Student Recruitment, this may mean you need to migrate all Plan__c records over to the Program__c object.
 
 Much more information, including the Documentation Guides that explain the use and benefit of Interactions for Student Recruitment, can be found on the Salesforce Foundation GIT Respository <a href="https://github.com/SalesforceFoundation/Interactions-for-Student-Recruitment" target="_blank">here</a>.
 
