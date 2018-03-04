@@ -33,8 +33,9 @@ public class ApplicationAdminView {
 		applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
 		contactId = [Select Contact__c from Application__c where Id =:applicationId limit 1].Contact__c;
 		ApexPages.currentPage().getParameters().put('contactId',contactId);
-		app = [SELECT Id, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c FROM Application__c WHERE Id = :applicationId];
-
+		app = [SELECT Id, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Application_Control__c FROM Application__c WHERE Id = :applicationId];
+		appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
+        
 		requirementIds = new Set<Id>();
 		for(Requirement_Response__c rr : [Select Id,Requirement_Item__r.Requirement__c,Send_Reminder__c ,External_Email__c from Requirement_Response__c where Application__c = :applicationId]){
 			requirementIds.add(rr.Requirement_Item__r.Requirement__c);

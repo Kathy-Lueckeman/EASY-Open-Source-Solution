@@ -29,8 +29,8 @@ public class ApplicationReview {
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
         contactId = [Select Contact__c from Application__c where Id =:applicationId limit 1].Contact__c;
         ApexPages.currentPage().getParameters().put('contactId',contactId);
-        app = [SELECT Id, Application_Control__r.URL_Parameter__c, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c FROM Application__c WHERE Id = :applicationId];
-        ApexPages.currentPage().getParameters().put('at',app.Application_Control__r.URL_Parameter__c);
+        app = [SELECT Id, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Application_Control__c FROM Application__c WHERE Id = :applicationId];
+        appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
     }
     /*******************************************************************************
     * @description Initialize the page - Creates ApplicationRequirement for each requirement that is applicible to this application

@@ -315,7 +315,7 @@
         <externalId>false</externalId>
         <inlineHelpText>List of picklist values, separated by new line</inlineHelpText>
         <label>Picklist Values</label>
-        <length>2000</length>
+        <length>131072</length>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>10</visibleLines>
@@ -4249,7 +4249,7 @@
     </validationRules>
     <validationRules>
         <fullName>Hardcoded_Values_Related_Requirements</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>Requirement_Item__r.RecordType.DeveloperName != &apos;Related_Object&apos; &amp;&amp; NOT(ISBLANK(Hardcoded_Value__c))</errorConditionFormula>
         <errorMessage>Hardcoded values can only be used with &quot;Related Object&quot; requirement items.</errorMessage>
     </validationRules>

@@ -65,14 +65,10 @@ public class ApplicationCreate {
         ApplicationQuestionGroup group1 = new ApplicationQuestionGroup(questions1);
 
         List<ApplicationQuestionGroup> groups = new List<ApplicationQuestionGroup>{};
-        if(appControl.Hide_Term_Program__c == false){
-            groups.add(group1);
-        }
-        //section = new ApplicationQuestionSection(groups);
 
         //Custom Requirements
         String appControlId = appControl.Id;
-        String itemQuery = 'SELECT Id, Active__c,Required_Number_of_Children__c,Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c,Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, (SELECT Id, Active__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c ,Static_Text__c, Editable_Application_Status__c FROM Questions__r ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__r.Application_Control__c = :appControlId AND Requirement__r.Show_on_Application_Creation__c = true ORDER BY Display_Order__c ASC NULLS LAST';
+        String itemQuery = 'SELECT Id, Active__c,Required_Number_of_Children__c,Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c,Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, (SELECT Id, Active__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c ,Static_Text__c, Editable_Application_Status__c FROM Questions__r WHERE Active__c = true ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__r.Application_Control__c = :appControlId AND Requirement__r.Show_on_Application_Creation__c = true AND Requirement__r.Active__c = true AND Active__c = true ORDER BY Display_Order__c ASC NULLS LAST';
         items = database.query(itemQuery);
 
         Map<Id, List< Question_Dependency__c >> dQuestions = new Map<Id, List<Question_Dependency__c>>();
@@ -121,9 +117,14 @@ public class ApplicationCreate {
         for(Requirement_Item__c ri : items){
             if(ApplicationFilter.filter(app,ri)){
                 riLst.add(ri);
-                groups.add(ApplicationQuestionSection.createQuestionGroup(app, ri, dQuestions, responses.get(ri.Id), dResponses.get(ri.Id),relatedFieldDescribes));
+                groups.add(ApplicationQuestionSection.createQuestionGroup(app, ri, dQuestions, responses.get(ri.Id), dResponses.get(ri.Id),relatedFieldDescribes, true));
             }
         }
+        
+        if(appControl.Hide_Term_Program__c == false){
+            groups.add(group1);
+        }
+        
         section = new ApplicationQuestionSection(groups);
 		if (groups.isEmpty())
             return save();

@@ -61,50 +61,13 @@ public class  ApplicationRegistration {
             questions1.get(questions1.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
         }
         
-        List<ApplicationQuestion> questions2 = new List<ApplicationQuestion>();
-
-        ApplicationQuestion term = new ApplicationQuestion(app, 'What term are you applying for?', app, 'Intended_Term_of_Entry__c');
-        Map<Id, String> termMap = new Map<Id, String>();
-        for(Academic_Term__c at : [Select Id,Name from Academic_Term__c WHERE Application_Status__c = 'Active' ORDER BY Activate_Application_Date__c ASC]){
-            termMap.put(at.Id,at.Name);
-        }
-        term.setReferenceOptions(termMap);
-        questions2.add(term);
-        questions2.get(questions2.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
-
-        ApplicationQuestion program = new ApplicationQuestion(app, 'What program are you applying to?', app, 'Intended_Program__c');
-        intendedPrograms = new Map<Id,Program__c>([SELECT Id, Name, Academic_Level__c,Program_Name_on_Application__c,Active__c,Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c FROM Program__c WHERE Active__c = true ORDER BY Name ASC]);
-        program.addIntendedProgramFilteringList(intendedPrograms.values());
-        questions2.add(program);
-        questions2.get(questions2.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
-        
-        List<ApplicationQuestion> questions3 = new List<ApplicationQuestion>();
-        ApplicationQuestion portalPassword = new ApplicationQuestion(app, 'What password would you like to use for saving your application?',extraFields, 'LastName',Schema.DisplayType.ENCRYPTEDSTRING,true);
-        questions3.add(portalPassword);
-        questions3.get(questions3.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
-        ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(app, 'Please enter your password again.',extraFields, 'FirstName',Schema.DisplayType.ENCRYPTEDSTRING,true);
-        questions3.add(portalPasswordConfirmation);
-        questions3.get(questions3.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
-
-        Map<String,RecordType> questionRTMap = new Map<String,RecordType>();
-        for(RecordType rt : [Select Id,DeveloperName from RecordType where sObjectType = 'Question__c']){
-            questionRTMap.put(rt.DeveloperName,rt);
-        }
-
         ApplicationQuestionGroup group1 = new ApplicationQuestionGroup(questions1);
-        ApplicationQuestionGroup group2 = new ApplicationQuestionGroup(questions2);
-        ApplicationQuestionGroup group3 = new ApplicationQuestionGroup(questions3);
 		
         List<ApplicationQuestionGroup> groups = new List<ApplicationQuestionGroup>{group1};
-        if(appControl.Hide_Term_Program__c == false){
-            groups.add(group2);
-        }
-        groups.add(group3);
-
 
         //Custom Requirements
         String appControlId = appControl.Id;
-        String itemQuery = 'SELECT Id, Active__c,Required_Number_of_Children__c,Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c,Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, (SELECT Id, Active__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c ,Static_Text__c, Editable_Application_Status__c FROM Questions__r ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__r.Application_Control__c = :appControlId AND Requirement__r.Show_on_Application_Creation__c = true ORDER BY Display_Order__c ASC NULLS LAST';
+        String itemQuery = 'SELECT Id, Active__c,Required_Number_of_Children__c,Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c,Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, (SELECT Id, Active__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c ,Static_Text__c, Editable_Application_Status__c FROM Questions__r WHERE Active__c = true ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__r.Application_Control__c = :appControlId AND Requirement__r.Show_on_Application_Creation__c = true AND Requirement__r.Active__c = true AND Active__c = true ORDER BY Display_Order__c ASC NULLS LAST';
         items = database.query(itemQuery);
 
         Map<Id, List< Question_Dependency__c >> dQuestions = new Map<Id, List<Question_Dependency__c>>();
@@ -153,9 +116,48 @@ public class  ApplicationRegistration {
         for(Requirement_Item__c ri : items){
             if(ApplicationFilter.filter(app,ri)){
                 riLst.add(ri);
-                groups.add(ApplicationQuestionSection.createQuestionGroup(app, ri, dQuestions, responses.get(ri.Id), dResponses.get(ri.Id),relatedFieldDescribes));
+                groups.add(ApplicationQuestionSection.createQuestionGroup(app, ri, dQuestions, responses.get(ri.Id), dResponses.get(ri.Id),relatedFieldDescribes, true));
             }
         }
+        
+        List<ApplicationQuestion> questions2 = new List<ApplicationQuestion>();
+
+        ApplicationQuestion term = new ApplicationQuestion(app, 'What term are you applying for?', app, 'Intended_Term_of_Entry__c');
+        Map<Id, String> termMap = new Map<Id, String>();
+        for(Academic_Term__c at : [Select Id,Name from Academic_Term__c WHERE Application_Status__c = 'Active' ORDER BY Activate_Application_Date__c ASC]){
+            termMap.put(at.Id,at.Name);
+        }
+        term.setReferenceOptions(termMap);
+        questions2.add(term);
+        questions2.get(questions2.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
+
+        ApplicationQuestion program = new ApplicationQuestion(app, 'What program are you applying to?', app, 'Intended_Program__c');
+        intendedPrograms = new Map<Id,Program__c>([SELECT Id, Name, Academic_Level__c,Program_Name_on_Application__c,Active__c,Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c FROM Program__c WHERE Active__c = true ORDER BY Name ASC]);
+        program.addIntendedProgramFilteringList(intendedPrograms.values());
+        questions2.add(program);
+        questions2.get(questions2.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
+        
+        List<ApplicationQuestion> questions3 = new List<ApplicationQuestion>();
+        ApplicationQuestion portalPassword = new ApplicationQuestion(app, 'What password would you like to use for saving your application?',extraFields, 'LastName',Schema.DisplayType.ENCRYPTEDSTRING,true);
+        questions3.add(portalPassword);
+        questions3.get(questions3.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
+        ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(app, 'Please enter your password again.',extraFields, 'FirstName',Schema.DisplayType.ENCRYPTEDSTRING,true);
+        questions3.add(portalPasswordConfirmation);
+        questions3.get(questions3.size()-1).question = new Question__c(Required__c=app.Application_Status__c,Active__c=true);
+
+        Map<String,RecordType> questionRTMap = new Map<String,RecordType>();
+        for(RecordType rt : [Select Id,DeveloperName from RecordType where sObjectType = 'Question__c']){
+            questionRTMap.put(rt.DeveloperName,rt);
+        }
+        
+        ApplicationQuestionGroup group2 = new ApplicationQuestionGroup(questions2);
+        ApplicationQuestionGroup group3 = new ApplicationQuestionGroup(questions3);
+        
+        if(appControl.Hide_Term_Program__c == false){
+            groups.add(group2);
+        }
+        groups.add(group3);
+        
         section = new ApplicationQuestionSection(groups);
 
     }

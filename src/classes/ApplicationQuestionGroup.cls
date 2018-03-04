@@ -254,8 +254,16 @@ public class ApplicationQuestionGroup {
         this.questions = questions;
         questionGroup = true;
     }
-
+    
     public ApplicationQuestionGroup(Application__c app, Requirement_Item__c item, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response, List<Question_Response__c> dResponses, Map<String,Schema.SObjectField> sObjectFields) {
+        init(app, item, dQuestions, response, dResponses, sObjectFields, false);
+    }
+    
+    public ApplicationQuestionGroup(Application__c app, Requirement_Item__c item, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response, List<Question_Response__c> dResponses, Map<String,Schema.SObjectField> sObjectFields, Boolean isAppCreate) {
+        init(app, item, dQuestions, response, dResponses, sObjectFields, isAppCreate);
+    }
+
+    private void init(Application__c app, Requirement_Item__c item, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response, List<Question_Response__c> dResponses, Map<String,Schema.SObjectField> sObjectFields, Boolean isAppCreate) {
         creatingNewRelatedRecord = false;
         this.item = item;
         this.response = response;
@@ -275,15 +283,21 @@ public class ApplicationQuestionGroup {
                 questions = new List<ApplicationQuestion>();
                 Map<Id, ApplicationQuestion> qMap = new Map<Id, ApplicationQuestion>();
                 for (Question__c q:item.Questions__r) {
-                    if (!qResponses.containsKey(q.Id) && response!= null && q.RecordType.DeveloperName != 'Static'){
-                        qResponses.put(q.Id, new Question_Response__c(Requirement_Response__c = response.Id, Question__c = q.Id));
-                    }else if(response == null && q.RecordType.DeveloperName != 'Static'){
-                        qResponses.put(q.Id, new Question_Response__c(Question__c = q.Id));
+                    if (isAppCreate && String.isNotBlank(q.Application_Field__c)) {
+                        ApplicationQuestion aq = new ApplicationQuestion(app, q.Label__c, app, q.Application_Field__c);
+                        questions.add(aq);
+                        qMap.put(q.Id, aq);
+                    } else {
+                        if (!qResponses.containsKey(q.Id) && response!= null && q.RecordType.DeveloperName != 'Static'){
+                            qResponses.put(q.Id, new Question_Response__c(Requirement_Response__c = response.Id, Question__c = q.Id));
+                        }else if(response == null && q.RecordType.DeveloperName != 'Static'){
+                            qResponses.put(q.Id, new Question_Response__c(Question__c = q.Id));
+                        }
+                        ApplicationQuestion aq = new ApplicationQuestion(app, q, qResponses.get(q.Id));
+                        aq.setRequirementResponse(response);
+                        questions.add(aq);
+                        qMap.put(q.Id, aq);
                     }
-                    ApplicationQuestion aq = new ApplicationQuestion(app, q, qResponses.get(q.Id));
-                    aq.setRequirementResponse(response);
-                    questions.add(aq);
-                    qMap.put(q.Id, aq);
                 }
                 if(dResponses != null){
                     for(Question_Response__c qr : dResponses){
@@ -291,7 +305,7 @@ public class ApplicationQuestionGroup {
                     }
                 }
                 for (ApplicationQuestion aq:questions) {
-                    if (dQuestions.containsKey(aq.question.Id)) {
+                    if (aq.question != null && dQuestions.containsKey(aq.question.Id)) {
                         aq.addQuestionDependencies(dQuestions.get(aq.question.Id), qMap);
                 }
             }

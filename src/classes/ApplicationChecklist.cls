@@ -46,7 +46,8 @@ public class ApplicationChecklist {
         }
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
 
-        app = [SELECT Id, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c,School_College__c FROM Application__c WHERE Id = :applicationId];
+        app = [SELECT Id, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Application_Control__c FROM Application__c WHERE Id = :applicationId];
+        appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
         
         if(String.isNotBlank(appControl.Allow_Cancel_From__c) && new Set<String>(appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c)){
             allowCancel = true;

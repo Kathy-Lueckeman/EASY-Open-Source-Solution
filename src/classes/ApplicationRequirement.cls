@@ -22,6 +22,7 @@ public class ApplicationRequirement {
     public List<Requirement_Response__c> newResponses{get;set;}
     public Boolean showSuccess{get;set;}
     public Boolean isInvalid{get;set;}
+    public Boolean isExternalUser{get;set;}
 
     public transient String additionalDataString{get;set;}
 
@@ -56,7 +57,7 @@ public class ApplicationRequirement {
     * @description Initializes the page - Pulls relevant requirement items, requirement responses, etc.
     ********************************************************************************/
     public void init() {
-        Boolean isExternalUser = false;
+        isExternalUser = false;
         if(String.isBlank(contactId)){
             contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
             if (UserInfo.getUserType().equals('Standard')){
@@ -73,7 +74,8 @@ public class ApplicationRequirement {
             if(ApexPages.currentPage().getParameters().containsKey('applicationId')){
                 applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
 
-                app = [SELECT Id, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c,Contact__c, School_College__c, Application_Status__c FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId];
+                app = [SELECT Id, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c,Contact__c, School_College__c, Application_Status__c, Application_Control__c FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId];
+                appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
             }
         }
 
@@ -81,14 +83,14 @@ public class ApplicationRequirement {
             requirementId = Id.valueOf(ApexPages.currentPage().getParameters().get('requirementId'));
         }
         if(queryItems == true){
-            String itemQuery = 'SELECT Id, Active__c,Required_Number_of_Children__c,Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c,Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, (SELECT Id, Active__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c, Editable_Application_Status__c, New_Reference_Field__c ,Static_Text__c FROM Questions__r ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c = :requirementId AND Requirement__r.Show_on_Application_Creation__c = false ';
+            String itemQuery = 'SELECT Id, Active__c,Required_Number_of_Children__c,Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c,Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, (SELECT Id, Active__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c, Editable_Application_Status__c, New_Reference_Field__c ,Static_Text__c FROM Questions__r WHERE Active__c = true ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c = :requirementId AND Requirement__r.Show_on_Application_Creation__c = false AND Requirement__r.Active__c = true AND Active__c = true';
             if(isExternalUser){
                 itemQuery += ' AND Internal_Requirement_Item__c=\''+ApexPages.currentPage().getParameters().get('r')+'\'';
             }
             if(UserInfo.getUserType() != 'Standard'){
                 itemQuery += ' AND Internal_Only__c = FALSE ';
             }
-            itemQuery += 'ORDER BY Display_Order__c ASC NULLS LAST';
+            itemQuery += ' ORDER BY Display_Order__c ASC NULLS LAST';
             items = database.query(itemQuery);
         }
 
@@ -190,7 +192,7 @@ public class ApplicationRequirement {
             if(Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()){
                 String query = 'Select Id, Name FROM '+sObj+' WHERE Name like \'%'+String.escapeSingleQuotes(term)+'%\'';
                 if(String.isNotBlank(sObjFilter)){
-                    query += ' AND ' + sObjFilter;
+                    query += ' AND (' + sObjFilter + ')';
                 }
                 query += ' ORDER BY NAME ASC';
                 try{
@@ -240,7 +242,8 @@ public class ApplicationRequirement {
             PageReference pr = new PageReference('/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + contactId+(ApexPages.currentPage().getParameters().containsKey('at')?'&at='+ApexPages.currentPage().getParameters().get('at'):''));
             if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h'))&& String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))){
                 pr = null;
-                showSuccess = true;
+                //showSuccess = true;
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Info, 'Success! Your submission has been received.'));
             }
             return pr;
         }catch(DmlException e){

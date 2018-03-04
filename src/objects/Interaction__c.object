@@ -4724,7 +4724,7 @@ IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Graduate&quot;), AND(ISBLAN
         <type>Email</type>
         <unique>false</unique>
     </fields>
-    <label>ULTRA</label>
+    <label>Interaction</label>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -4741,7 +4741,7 @@ IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Graduate&quot;), AND(ISBLAN
     </listViews>
     <nameField>
         <displayFormat>{YYYY}{MM}{DD}-{0000000}</displayFormat>
-        <label>ULTRA Name</label>
+        <label>Interaction Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>

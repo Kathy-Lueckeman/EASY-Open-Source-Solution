@@ -73,6 +73,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ApplicationRequirementPreviewTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ApplicationRequirementTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>

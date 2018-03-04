@@ -31,15 +31,19 @@ public class ApplicationQuestionSection {
             groups[n].progress = (((Decimal)n + 1) / ((Decimal)groups.size())) * 100;
     }
     
+    public static ApplicationQuestionGroup createQuestionGroup(Application__c app, Requirement_Item__c i, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response,  List<Question_Response__c> dResponses, Map<String,Map<String,Schema.SObjectField>> fieldDescribeMap){
+        return createQuestionGroup(app, i, dQuestions, response, dResponses, fieldDescribeMap, false);
+    }
+    
     /*******************************************************************************
     * @description Creates a question group from a single requirement item
     ********************************************************************************/
-    public static ApplicationQuestionGroup createQuestionGroup(Application__c app, Requirement_Item__c i, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response,  List<Question_Response__c> dResponses, Map<String,Map<String,Schema.SObjectField>> fieldDescribeMap){
+    public static ApplicationQuestionGroup createQuestionGroup(Application__c app, Requirement_Item__c i, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response,  List<Question_Response__c> dResponses, Map<String,Map<String,Schema.SObjectField>> fieldDescribeMap, Boolean isAppCreate){
         Map<String,Schema.SObjectField> sObjectFields;
         if(String.isNotBlank(i.Related_List_Object__c) && fieldDescribeMap != null && fieldDescribeMap.containskey(i.Related_List_Object__c)){
             sObjectFields = fieldDescribeMap.get(i.Related_List_Object__c);
         }
-        return new ApplicationQuestionGroup(app, i, dQuestions, response, dResponses,sObjectFields);
+        return new ApplicationQuestionGroup(app, i, dQuestions, response, dResponses,sObjectFields, isAppCreate);
     }
     /*******************************************************************************
     * @description Asks the QuestionGroup to prepare to be saved

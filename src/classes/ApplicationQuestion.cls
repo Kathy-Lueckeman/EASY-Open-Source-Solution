@@ -106,7 +106,7 @@ public class ApplicationQuestion {
                     if(question != null && (String.isBlank(question.Editable_Application_Status__c) || (String.isNotBlank(question.Editable_Application_Status__c) && new Set<String>(question.Editable_Application_Status__c.split(';')).contains(application.Application_Status__c)))){
                         return true;
                     }
-                    return false;
+                    return question == null;
                 }
             }
             return true;
@@ -117,13 +117,13 @@ public class ApplicationQuestion {
     * @description calculates if this specific program should be shown
     ********************************************************************************/
     public Boolean showIntendedProgram(Program__c ip){
-        if (String.isNotBlank(ip.Hide_Applicant_Type__c) && (String.isNotBlank(application.Applicant_Type__c) && (new Set<String>(ip.Hide_Applicant_Type__c.split(';'))).contains(application.Applicant_Type__c)))
+        if ((String.isNotBlank(ip.Hide_Applicant_Type__c) && (String.isNotBlank(application.Applicant_Type__c) && (new Set<String>(ip.Hide_Applicant_Type__c.split(';'))).contains(application.Applicant_Type__c))) || (String.isNotBlank(ip.Applicant_Type__c) && (String.isBlank(application.Applicant_Type__c) || !(new Set<String>(ip.Applicant_Type__c.split(';'))).contains(application.Applicant_Type__c))))
             return false;
 
-        if (String.isNotBlank(ip.Hide_Citizenship__c) && (String.isNotBlank(application.Citizenship__c) && (new Set<String>(ip.Hide_Citizenship__c.split(';'))).contains(application.Citizenship__c)))
+        if ((String.isNotBlank(ip.Hide_Citizenship__c) && (String.isNotBlank(application.Citizenship__c) && (new Set<String>(ip.Hide_Citizenship__c.split(';'))).contains(application.Citizenship__c))) || (String.isNotBlank(ip.Citizenship__c) && (String.isBlank(application.Citizenship__c) || !(new Set<String>(ip.Citizenship__c.split(';'))).contains(application.Citizenship__c))))
             return false;
 
-        if (String.isNotBlank(ip.Hide_Student_Type__c) && (String.isNotBlank(application.Student_Type__c) && (new Set<String>(ip.Hide_Student_Type__c.split(';'))).contains(application.Student_Type__c)))
+        if ((String.isNotBlank(ip.Hide_Student_Type__c) && (String.isNotBlank(application.Student_Type__c) && (new Set<String>(ip.Hide_Student_Type__c.split(';'))).contains(application.Student_Type__c))) || (String.isNotBlank(ip.Student_Type__c) && (String.isBlank(application.Student_Type__c) || !(new Set<String>(ip.Student_Type__c.split(';'))).contains(application.Student_Type__c))))
             return false;
 
         return true;
@@ -150,6 +150,9 @@ public class ApplicationQuestion {
         get {
             if(obj!=null && String.isNotBlank(fieldName) && response != null && fieldType != fieldTypes.get(Schema.DisplayType.ADDRESS)){
                 obj.put(fieldName,response.ValueText__c);
+            }
+            if(question != null && String.isNotBlank(question.Hardcoded_Value__c)){
+                return false;
             }
             if(forceShowQuestion == true){
                 return true;
@@ -244,8 +247,16 @@ public class ApplicationQuestion {
         }
     }
     public ApplicationQuestion(SObject obj, Question__c question, Question_Response__c response) {
+        
+        this.response = response;
         if(obj.getSObjectType() == Application__c.sObjectType){
             this.application = (Application__c)obj;
+            if (String.isNotBlank(question.Application_Field__c))
+                fieldName = question.Application_Field__c;
+            if (String.isNotBlank(question.Application_Field__c) && String.isNotBlank(question.Hardcoded_Value__c)) {
+                this.response.ValueText__c = question.Hardcoded_Value__c;
+                this.application.put(question.Application_Field__c, question.Hardcoded_Value__c);
+            }
         }else{
             this.obj = obj;
         }
@@ -254,7 +265,7 @@ public class ApplicationQuestion {
         if(obj == null){
             this.obj = response;
         }
-        this.response = response;
+        
 
         //this.fieldName = fieldNames.get(question.RecordType.DeveloperName);
         if (question.Length__c == null || (question.Length__c > 255 && !fieldType.equals('LongTextArea')))
