@@ -7,5 +7,31 @@
         <apex:stylesheet value="{!URLFOR($Resource.jqueryui, '/jquery-ui-1.12.1.custom/jquery-ui.min.css')}" />
         <apex:includescript value="{!URLFOR($Resource.ckeditor, 'ckeditor/ckeditor.js')}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <style>
+            .btn-lightning {
+                display: inline-block;
+                padding: 6px 12px;
+                margin-bottom: 0;
+                font-size: 14px;
+                font-weight: normal;
+                line-height: 1.42857143;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                -ms-touch-action: manipulation;
+                touch-action: manipulation;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                background-image: none;
+                border: 1px solid transparent;
+                border-radius: 4px;
+            }
+            .dateFormat {
+            	padding: 0 0px;
+            }
+        </style>
     </head>
 </apex:component>

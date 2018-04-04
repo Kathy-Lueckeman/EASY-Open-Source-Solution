@@ -107,11 +107,12 @@
         <label>Citizenship</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
         <valueSet>
             <restricted>true</restricted>
             <valueSetName>Citizenship_Types</valueSetName>
         </valueSet>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Degree_Type__c</fullName>
@@ -3257,10 +3258,6 @@
         </picklistValues>
         <picklistValues>
             <picklist>Application_Status</picklist>
-            <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Complete-Decision Made</fullName>
                 <default>false</default>

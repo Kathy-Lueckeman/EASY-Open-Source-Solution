@@ -34,18 +34,21 @@ public class ApplicationFilter {
     }
 
     private static Boolean filter(Application__c app, Boolean active, Id programId, String applicantTypes, String citizenship, String degreeTypes, String deliveryTypes, String residency, String schoolCollege, String studentTypes, String appStatuses) {
+        
         if (app == null)
             return true;
-        if (active == false){
+        
+        if (active == false) {
             return false;
         }
+        
         if (programId != null && (app.Intended_Program__c == null || app.Intended_Program__c != programId))
             return false;
 
         if (String.isNotBlank(applicantTypes) && (String.isBlank(app.Applicant_Type__c) || !(new Set<String>(applicantTypes.split(';'))).contains(app.Applicant_Type__c)))
             return false;
-
-        if (String.isNotBlank(citizenship) && (String.isBlank(app.Citizenship__c) || !citizenship.equals(app.Citizenship__c)))
+		
+        if (String.isNotBlank(citizenship) && (String.isBlank(app.Citizenship__c) || !(new Set<String>(citizenship.split(';'))).contains(app.Citizenship__c)))
             return false;
 
         if (String.isNotBlank(schoolCollege) && (String.isBlank(app.School_College__c) || !schoolCollege.equals(app.School_College__c)))
@@ -54,13 +57,15 @@ public class ApplicationFilter {
         if (String.isNotBlank(deliveryTypes) && (String.isBlank(app.Delivery_Type__c) || !(new Set<String>(deliveryTypes.split(';'))).contains(app.Delivery_Type__c)))
             return false;
 
-        if (String.isNotBlank(residency) && (String.isBlank(app.Residency__c) || !citizenship.equals(app.Residency__c)))
+        if (String.isNotBlank(residency) && (String.isBlank(app.Residency__c) || !residency.equals(app.Residency__c)))
             return false;
 
         if (String.isNotBlank(studentTypes) && (String.isBlank(app.Student_Type__c) || !(new Set<String>(studentTypes.split(';'))).contains(app.Student_Type__c)))
             return false;
-        if(UserInfo.getUserType() != 'Standard' && String.isNotBlank(appStatuses) && (String.isBlank(app.Application_Status__c) || !(new Set<String>(appStatuses.split(';'))).contains(app.Application_Status__c)))
+        
+        if (UserInfo.getUserType() != 'Standard' && String.isNotBlank(appStatuses) && (String.isBlank(app.Application_Status__c) || !(new Set<String>(appStatuses.split(';'))).contains(app.Application_Status__c)))
             return false;
+        
         return true;
     }
 }

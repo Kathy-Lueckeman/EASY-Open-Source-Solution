@@ -324,45 +324,6 @@ private class INT_InteractionProcessor_TEST {
         List<Account> accountMap = new List<Account>([SELECT Name FROM Account]);
         System.assert(accountMap.size() == 1, '1 Account Expected');
     }
-
-    static testMethod void testPreserveTargetValueSources() {
-        // Arrange
-        List<Interaction__c> interactionsToInsert = new List<Interaction__c>();
-
-        Interaction__c testInt = new Interaction__c(
-            First_Name__c = 'Test',
-            Last_Name__c = 'Man',
-            Email__c = 'test@nomail.com',
-            Gender__c = 'Male',
-            Interaction_Source__c = 'Student Information System'
-        );
-        interactionsToInsert.add(testInt);
-        insert interactionsToInsert;
-
-        // Act
-        Test.startTest();
-        Interaction__c testInt2 = new Interaction__c(
-            First_Name__c = 'Test',
-            Last_Name__c = 'Man',
-            Email__c = 'test@nomail.com',
-            Gender__c = 'Female',
-            Interaction_Source__c = 'Student Information System'
-        );
-        insert testInt2;
-        Test.stopTest();
-
-        // Assert
-        List<Interaction__c> interactions = [SELECT First_Name__c, Last_Name__c, Email__c, Gender__c FROM Interaction__c];
-
-        List<Lead> leads = [SELECT FirstName, LastName FROM Lead];
-        System.assert(leads.size() == 0, 'Lead count expected to be at 0. Once converted, the Leads should be deleted');
-
-        List<Contact> contactList = new List<Contact>([SELECT FirstName, LastName, Account.Name FROM Contact]);
-        System.assert(contactList.size() == 1, '1 Contact Expected');
-
-        List<Account> accountMap = new List<Account>([SELECT Name FROM Account]);
-        System.assert(accountMap.size() == 1, '1 Account Expected');
-    }
     
     static testMethod void testCampaignMemberCreation() {
         // Arrange

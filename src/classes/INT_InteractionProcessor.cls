@@ -402,7 +402,19 @@ public class INT_InteractionProcessor {
         leadConvert.setLeadId(leadId);
         leadConvert.setConvertedStatus(convertStatus.MasterLabel);
         leadConvert.setContactId(interaction.Contact__c);
-        leadConvert.setAccountId(interaction.Contact_Account_ID__c);
+        
+        if (ApexPages.currentPage() != null && ApexPages.currentPage().getUrl() != null && ApexPages.currentPage().getUrl().contains('ApplicationRegistration') && !Test.isRunningTest()) {
+            Id siteId = Network.getNetworkId();
+            if(siteId != null){
+                SObject nsr = database.query('Select Id, AccountId FROM NetworkSelfRegistration WHERE NetworkId = :siteId LIMIT 1');
+                String accountId = (String)nsr.get('AccountId');
+                if (String.isNotBlank(accountId)) {
+                    leadConvert.setAccountId(accountId);
+                }
+            }
+        } else {
+        	leadConvert.setAccountId(interaction.Contact_Account_ID__c);
+        }
         leadConvert.setDoNotCreateOpportunity(createOppty);
 
         return leadConvert;

@@ -30,7 +30,7 @@
                                 <div role="listbox">
                                     <div class="item active" >
                                         <apex:repeat value="{!$ObjectType.Application_Review__c.FieldSets.Application_Review_Header}" var="f">
-	                                        <c:ApplicationField question="{!questionHolderMap[f.fieldPath]}" obj="{!review}" appControl="{!appControl}"/>
+                                            <c:ApplicationField question="{!questionHolderMap[f.fieldPath]}" obj="{!review}" appControl="{!appControl}"/>
                                         </apex:repeat>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
             </div>
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" rerender="themessages" action="{!submit}" onclick="appShowLoadingSpinner();"/>
+                    <apex:commandLink styleClass="btn-lightning btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" rerender="themessages" action="{!submit}" onclick="appShowLoadingSpinner();"/>
                 </div>
             </div> 
         </div>

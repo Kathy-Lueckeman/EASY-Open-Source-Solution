@@ -1,6 +1,6 @@
 <apex:page controller="ApplicationChecklist" showHeader="false" standardStylesheets="false" docType="html-5.0" action="{!init}">
     <c:ApplicationHead />
-    <c:ApplicationBody title="Application Checklist" subtitle="{!IF(appControl.Hide_Term_Program__c, '', app.Intended_Program__r.Name + ' - ' + app.Intended_Term_of_Entry__r.Name)}" appControl="{!appControl}">
+    <c:ApplicationBody title="Application Checklist" subtitle="{!IF(appControl.Hide_Term_Program__c, '', app.Intended_Program__r.Program_Name_on_Application__c + ' - ' + app.Intended_Term_of_Entry__r.Name)}" appControl="{!appControl}">
         <apex:form id="theForm" >
             <apex:pageMessages />
             <div class="row" >

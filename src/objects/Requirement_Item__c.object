@@ -105,11 +105,12 @@
         <label>Citizenship</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
         <valueSet>
             <restricted>true</restricted>
             <valueSetName>Citizenship_Types</valueSetName>
         </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Degree_Type__c</fullName>
@@ -311,7 +312,7 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Enrollment_History__c</fullName>
+                    <fullName>Education_History__c</fullName>
                     <default>false</default>
                 </value>
                 <value>
@@ -457,10 +458,6 @@
         <picklistValues>
             <picklist>Application_Status</picklist>
             <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Complete-Decision Made</fullName>
                 <default>false</default>
             </values>
@@ -599,7 +596,7 @@
         <picklistValues>
             <picklist>Related_List_Object__c</picklist>
             <values>
-                <fullName>Enrollment_History%5F%5Fc</fullName>
+                <fullName>Education_History%5F%5Fc</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -688,10 +685,6 @@
         <picklistValues>
             <picklist>Application_Status</picklist>
             <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Complete-Decision Made</fullName>
                 <default>false</default>
             </values>
@@ -830,7 +823,7 @@
         <picklistValues>
             <picklist>Related_List_Object__c</picklist>
             <values>
-                <fullName>Enrollment_History%5F%5Fc</fullName>
+                <fullName>Education_History%5F%5Fc</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -918,10 +911,6 @@
         <picklistValues>
             <picklist>Application_Status</picklist>
             <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Complete-Decision Made</fullName>
                 <default>false</default>
             </values>
@@ -1060,11 +1049,11 @@
         <picklistValues>
             <picklist>Related_List_Object__c</picklist>
             <values>
-                <fullName>Employment_History%5F%5Fc</fullName>
+                <fullName>Education_History%5F%5Fc</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Enrollment_History%5F%5Fc</fullName>
+                <fullName>Employment_History%5F%5Fc</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

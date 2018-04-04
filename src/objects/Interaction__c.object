@@ -4727,15 +4727,6 @@ IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Graduate&quot;), AND(ISBLAN
     <label>Interaction</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>First_Name__c</columns>
-        <columns>Last_Name__c</columns>
-        <columns>Lead__c</columns>
-        <columns>Contact__c</columns>
-        <columns>Opportunity__c</columns>
-        <columns>Interaction_Status__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>

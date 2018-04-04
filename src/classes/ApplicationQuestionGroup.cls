@@ -391,7 +391,11 @@ public class ApplicationQuestionGroup {
     ********************************************************************************/
     public void createNewReferenceObject(){
         creatingNewRelatedRecord = true;
-        newReferenceObject = Schema.getGlobalDescribe().get(newReferenceObjectType).newSObject();
+        if (newReferenceObjectType.toLowerCase().equals('account')) {
+            newReferenceObject = [SELECT Id, Name FROM Account LIMIT 1];
+        } else {
+        	newReferenceObject = Schema.getGlobalDescribe().get(newReferenceObjectType).newSObject();
+        }
         if(String.isNotBlank(newReferenceObjectSelectedWrapperName)){
             newReferenceObject.put('Name',newReferenceObjectSelectedWrapperName);
         }
@@ -428,6 +432,7 @@ public class ApplicationQuestionGroup {
                     newReferenceObject.put(aq.question.Related_Object_Field__c,questionValue);
                 }
             }
+            newReferenceObject.Id = null;
             objW.obj.put('Related_Object_JSON__c',JSON.serialize(newReferenceObject));
             newReferenceObject = null;
             newReferenceObjectSelectedWrapper = null;

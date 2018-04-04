@@ -10,7 +10,7 @@
             <div class="input-group" >
                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
             	<apex:inputField id="field" value="{!question.response.ValueEmail__c}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', 'name@example.com', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
-                <apex:commandLink styleClass="btn" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" action="{!questionSendReminder}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
+                <apex:commandLink styleClass="btn-lightning" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" action="{!questionSendReminder}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
             </div>
         </apex:outputPanel>
         <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(object))}">
@@ -20,7 +20,7 @@
             <div class="input-group" >
                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
             	<apex:inputField id="field1" value="{!object[question.question.Related_Object_Field__c]}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', 'name@example.com', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
-                <apex:commandLink styleClass="btn" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" action="{!questionSendReminder}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
+                <apex:commandLink styleClass="btn-lightning" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" action="{!questionSendReminder}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
             </div>
         </apex:outputPanel>
         <c:ApplicationQuestionHelpText question="{!question}" />
