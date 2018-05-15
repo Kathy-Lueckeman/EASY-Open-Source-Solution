@@ -337,7 +337,7 @@ public class  ApplicationRegistration {
             u.LastName = con.LastName;
             u.Email = con.Email;
             u.UserName = con.Email;
-            u.CommunityNickname = con.Email;
+            u.CommunityNickname =  (u.Email.length() > 40) ? u.Email.substring(0, 40) : u.email;
             insert i;
             i = [Select Id,Contact__c from Interaction__c where Id = :i.Id];
 
