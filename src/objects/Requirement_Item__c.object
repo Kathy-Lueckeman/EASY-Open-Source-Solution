@@ -241,6 +241,27 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Internal_Only_Applicant_Instructions__c</fullName>
+        <description>Instructions that display to the applicant when the user accesses an Internal Only Requirement Item. Displayed at the top of the screen. This field accepts HTML.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Instructions that display to the applicant when the user accesses an Internal Only Requirement Item. Displayed at the top of the screen. This field accepts HTML.</inlineHelpText>
+        <label>Internal Only Applicant Instructions</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Internal_Only_Show_on_Checklist__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, this requirement item will show on the checklist even if it&apos;s internal-only. The applicant will not be able to view answers for this requirement item, but will be able to see if it&apos;s been satisfied or not.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, this requirement item will show on the checklist even if it&apos;s internal-only. The applicant will not be able to view answers for this requirement item, but will be able to see if it&apos;s been satisfied or not.</inlineHelpText>
+        <label>Internal Only Show on Checklist</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Internal_Only__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -261,6 +282,31 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Label__c</fullName>
+        <description>The label of this requirement item. If left blank, the name is used.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The label of this requirement item. If left blank, the name is used.</inlineHelpText>
+        <label>Label</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maximum_Number_of_Children__c</fullName>
+        <description>The maximum number of related records that an applicant can add. Unlimited if blank.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The maximum number of related records that an applicant can add. Unlimited if blank.</inlineHelpText>
+        <label>Maximum Number of Children</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Related_List_Object_Master_Field__c</fullName>

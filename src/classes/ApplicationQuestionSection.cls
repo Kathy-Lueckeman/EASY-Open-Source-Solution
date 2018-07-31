@@ -10,7 +10,6 @@ public class ApplicationQuestionSection {
 
     public ApplicationQuestionSection(List<ApplicationQuestionGroup> groups) {
         this.groups = groups;
-        
         setProgress();
     }
 
@@ -23,7 +22,22 @@ public class ApplicationQuestionSection {
             }
         }
         
+        addDependencies(dQuestions, dResponses);
         setProgress();
+    }
+    
+    public void addDependencies(Map<Id, List<Question_Dependency__c>> dQuestions, Map<Id, List<Question_Response__c>> dResponses) {
+        
+        Map<Id, ApplicationQuestion> qMap = new Map<Id, ApplicationQuestion>();
+        for (ApplicationQuestionGroup g:groups)
+            if ((g.questionGroup || g.relatedObject) && g.questions != null && g.item != null)
+                for (ApplicationQuestion aq:g.questions)
+                    if (aq.question != null)
+                        qMap.put(aq.question.Id, aq);
+        
+        for (ApplicationQuestionGroup g:groups)
+            if ((g.questionGroup || g.relatedObject) && g.questions != null && g.item != null)
+                g.addQuestionDependencies(qMap, dQuestions, dResponses == null ? null : dResponses.get(g.item.Id));
     }
     
     private void setProgress() {

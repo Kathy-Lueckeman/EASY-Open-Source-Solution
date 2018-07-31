@@ -88,6 +88,30 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Application_Creation_Display_Order__c</fullName>
+        <description>Controls whether this requirement shows before or after the Term/Program questions on application creation. If blank, shows before.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Controls whether this requirement shows before or after the Term/Program questions on application creation. If blank, shows before.</inlineHelpText>
+        <label>Application Creation Display Order</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Before Term/Program Questions</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>After Term/Program Questions</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Application_Status__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Application status(es) that this requirement applies to (applies to all if blank)</inlineHelpText>
@@ -169,6 +193,16 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Internal_Only_Show_on_Checklist__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, this requirement will show on the checklist even if it&apos;s internal-only. The applicant will not be able to view answers for this requirement, but will be able to see if it&apos;s been satisfied or not.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, this requirement will show on the checklist even if it&apos;s internal-only. The applicant will not be able to view answers for this requirement, but will be able to see if it&apos;s been satisfied or not.</inlineHelpText>
+        <label>Internal Only Show on Checklist</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Internal_Only__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -176,6 +210,18 @@
         <label>Internal Only</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Label__c</fullName>
+        <description>The label of this requirement. If left blank, the name is used.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The label of this requirement. If left blank, the name is used.</inlineHelpText>
+        <label>Label</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Residency__c</fullName>

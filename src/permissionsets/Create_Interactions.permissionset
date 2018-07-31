@@ -73,6 +73,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ApplicationRequirementPreviewTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ApplicationRequirementTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -82,6 +86,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ApplicationReviewTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ApplicationTestUtilities</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -930,6 +938,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Program__c.Number_of_Applications_Limit__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Program__c.Program_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1011,6 +1024,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Question_Response__c.IsShown__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question_Response__c.PopulatedOn__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1195,6 +1213,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Question__c.Name_Field_API_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Question__c.New_Reference_Field__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -1236,6 +1259,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Question__c.Student_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.URL_Parameter__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1305,12 +1333,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Requirement_Item__c.Internal_Only_Applicant_Instructions__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Internal_Only_Show_on_Checklist__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Requirement_Item__c.Internal_Only__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Internal_Requirement_Item__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Label__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Maximum_Number_of_Children__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1365,7 +1413,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Requirement_Response__c.Child_Requirement_Fulfilled_On__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Response__c.Document_Requirement_Fulfilled_On__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Requirement_Response__c.External_Email__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Response__c.Fulfilled_On__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1386,6 +1449,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Response__c.Incomplete_Questions__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Response__c.Question_Group_Requirement_Fulfilled_On__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1411,6 +1479,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement__c.Applicant_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement__c.Application_Creation_Display_Order__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1445,7 +1518,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Requirement__c.Internal_Only_Show_on_Checklist__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Requirement__c.Internal_Only__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement__c.Label__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

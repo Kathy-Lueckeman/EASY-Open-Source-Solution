@@ -38,14 +38,18 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Application_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableFeeds>false</enableFeeds>
+    <enableFeeds>true</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
@@ -71,6 +75,7 @@
         <externalId>false</externalId>
         <label>Admission Decision</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -84,6 +89,7 @@
         <externalId>false</externalId>
         <label>Applicant Type</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -100,6 +106,7 @@
         <relationshipLabel>Applications</relationshipLabel>
         <relationshipName>Applications</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -108,6 +115,7 @@
         <externalId>false</externalId>
         <label>Application Status</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -121,6 +129,7 @@
         <externalId>false</externalId>
         <label>Citizenship</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -147,6 +156,7 @@
         <relationshipLabel>Applications</relationshipLabel>
         <relationshipName>Applications</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -155,6 +165,7 @@
         <externalId>false</externalId>
         <label>Delivery Location</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -186,6 +197,7 @@
         <externalId>false</externalId>
         <label>Delivery Type</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -198,6 +210,7 @@
         <externalId>false</externalId>
         <label>Educational Background</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -230,6 +243,7 @@
         <label>Holding Name</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -243,6 +257,7 @@
         <relationshipLabel>Applications</relationshipLabel>
         <relationshipName>Applications</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -255,6 +270,7 @@
         <relationshipLabel>Applications</relationshipLabel>
         <relationshipName>Applications</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -264,6 +280,7 @@
         <externalId>false</externalId>
         <label>Related Object JSON</label>
         <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -273,6 +290,7 @@
         <externalId>false</externalId>
         <label>Residency</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -285,6 +303,7 @@
         <externalId>false</externalId>
         <label>School / College</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -298,21 +317,12 @@
         <externalId>false</externalId>
         <label>Student Type</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
             <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Traditional</fullName>
-                    <default>false</default>
-                </value>
-                <value>
-                    <fullName>Adult</fullName>
-                    <default>false</default>
-                </value>
-            </valueSetDefinition>
+            <valueSetName>Student_Types</valueSetName>
         </valueSet>
     </fields>
     <fields>
@@ -321,6 +331,7 @@
         <description>Only used for test classes</description>
         <externalId>false</externalId>
         <label>User Created</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -342,6 +353,7 @@
     <nameField>
         <displayFormat>A-{0000000}</displayFormat>
         <label>Application Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Applications</pluralLabel>
@@ -365,10 +377,9 @@
         <availability>online</availability>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Review</masterLabel>
-        <openType>sidebar</openType>
+        <openType>replace</openType>
         <protected>false</protected>
         <url>/apex/ApplicationReview?applicationId={!Application__c.Id}</url>
     </webLinks>

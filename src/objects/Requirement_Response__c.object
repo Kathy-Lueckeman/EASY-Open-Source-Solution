@@ -61,7 +61,7 @@
         <relationshipLabel>Requirement Responses</relationshipLabel>
         <relationshipName>Requirement_Responses</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -76,6 +76,24 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Child_Requirement_Fulfilled_On__c</fullName>
+        <description>The date/time that a related object requirement item was fulfilled.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date/time that a related object requirement item was fulfilled.</inlineHelpText>
+        <label>Child Requirement Fulfilled On</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Document_Requirement_Fulfilled_On__c</fullName>
+        <externalId>false</externalId>
+        <label>Document Requirement Fulfilled On</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>External_Email__c</fullName>
         <externalId>false</externalId>
         <label>External Email</label>
@@ -83,6 +101,22 @@
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fulfilled_On__c</fullName>
+        <description>The date/time this requirement item was completed.</description>
+        <externalId>false</externalId>
+        <formula>CASE(Requirement_Item__r.RecordType.DeveloperName,
+&quot;Question_Group&quot;, Question_Group_Requirement_Fulfilled_On__c,
+&quot;Document_Upload&quot;, Document_Requirement_Fulfilled_On__c,
+&quot;Related_Object&quot;, Child_Requirement_Fulfilled_On__c,
+null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The date/time this requirement item was completed.</inlineHelpText>
+        <label>Fulfilled On</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>HasDocument__c</fullName>
@@ -121,6 +155,23 @@
         </summaryFilterItems>
         <summaryForeignKey>Question_Response__c.Requirement_Response__c</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Question_Group_Requirement_Fulfilled_On__c</fullName>
+        <description>The max date/time that a Question with IsRequired__c == true was fulfilled.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The max date/time that a Question with IsRequired__c == true was fulfilled.</inlineHelpText>
+        <label>Question Group Requirement Fulfilled On</label>
+        <summarizedField>Question_Response__c.PopulatedOn__c</summarizedField>
+        <summaryFilterItems>
+            <field>Question_Response__c.PopulatedOn__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </summaryFilterItems>
+        <summaryForeignKey>Question_Response__c.Requirement_Response__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
         <trackTrending>false</trackTrending>
         <type>Summary</type>
     </fields>

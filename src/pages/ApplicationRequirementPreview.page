@@ -44,7 +44,7 @@
             </c:ApplicationForm>
         </c:ApplicationBody>
         <style>
-        	.bootstrap_btn {
+            .bootstrap_btn {
                 display: inline-block;
                 margin-bottom: 0;
                 font-weight: normal;

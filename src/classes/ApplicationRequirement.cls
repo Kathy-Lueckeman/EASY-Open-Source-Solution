@@ -2,12 +2,12 @@
 @description This class allows a student to fill out answers to questions and requirement items
 @author Huron Consulting Group
 
-Revision (s): 
+Revision (s):
 *******************************************************************************/
 public class ApplicationRequirement {
 
     public List<Requirement_Item__c> items {get;set;}
-    public String title { get { return items.isEmpty() ? '' : items[0].Requirement__r.Name; } }
+    public String title { get { return items.isEmpty() ? '' : (String.isBlank(items[0].Requirement__r.Label__c) ? items[0].Requirement__r.Name : items[0].Requirement__r.Label__c); } }
     public ApplicationQuestionSection section {get;set;}
     public Application__c app {get;set;}
     public List<Question_Response__c> qResponses {get;set;}
@@ -24,7 +24,13 @@ public class ApplicationRequirement {
     public Boolean isInvalid{get;set;}
     public Boolean isExternalUser{get;set;}
 
+    //Added by Chris 5-15
+    public Id previousSectionID{get;set;}
+    public Id nextSectionID{get;set;}
+    public Boolean allowSubmit{get;set;}
+
     public transient String additionalDataString{get;set;}
+    public String redirectPage{get;set;}
 
     public Application_Control__c appControl{
         get{
@@ -57,6 +63,7 @@ public class ApplicationRequirement {
     * @description Initializes the page - Pulls relevant requirement items, requirement responses, etc.
     ********************************************************************************/
     public void init() {
+        allowSubmit = true;
         isExternalUser = false;
         if(String.isBlank(contactId)){
             contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
@@ -74,7 +81,7 @@ public class ApplicationRequirement {
             if(ApexPages.currentPage().getParameters().containsKey('applicationId')){
                 applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
 
-                app = [SELECT Id, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c,Contact__c, School_College__c, Application_Status__c, Application_Control__c FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId];
+                app = [SELECT Id, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c,Contact__c, School_College__c, Residency__c, Application_Status__c, Application_Control__c FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId];
                 appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
             }
         }
@@ -83,12 +90,12 @@ public class ApplicationRequirement {
             requirementId = Id.valueOf(ApexPages.currentPage().getParameters().get('requirementId'));
         }
         if(queryItems == true){
-            String itemQuery = 'SELECT Id, Active__c,Required_Number_of_Children__c,Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c,Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, (SELECT Id, Active__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c, Editable_Application_Status__c, New_Reference_Field__c ,Static_Text__c FROM Questions__r WHERE Active__c = true ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c = :requirementId AND Requirement__r.Show_on_Application_Creation__c = false AND Requirement__r.Active__c = true AND Active__c = true';
+            String itemQuery = 'SELECT Id, Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Active__c, Required__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Requirement__r.Label__c, Name, Label__c, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c,Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, (SELECT Id, Active__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c, Editable_Application_Status__c, URL_Parameter__c, New_Reference_Field__c ,Static_Text__c FROM Questions__r WHERE Active__c = true ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c = :requirementId AND Requirement__r.Show_on_Application_Creation__c = false AND Requirement__r.Active__c = true AND Active__c = true';
             if(isExternalUser){
                 itemQuery += ' AND Internal_Requirement_Item__c=\''+ApexPages.currentPage().getParameters().get('r')+'\'';
             }
             if(UserInfo.getUserType() != 'Standard'){
-                itemQuery += ' AND Internal_Only__c = FALSE ';
+                itemQuery += ' AND ((Internal_Only__c = FALSE AND Requirement__r.Internal_Only__c = FALSE) OR (Internal_Only_Show_on_Checklist__c = TRUE AND Requirement__r.Internal_Only_Show_on_Checklist__c = TRUE))';
             }
             itemQuery += ' ORDER BY Display_Order__c ASC NULLS LAST';
             items = database.query(itemQuery);
@@ -116,7 +123,7 @@ public class ApplicationRequirement {
         Map<Id, Requirement_Response__c> responses = new Map<Id, Requirement_Response__c>();
         Map<Id, List<Question_Response__c>> dResponses = new Map<Id, List<Question_Response__c>>();
         if(requirementResponses == null && String.isNotBlank(applicationId)){
-            requirementResponses = [SELECT Id, Requirement_Item__c,ValueTextEntry__c,HasDocument__c,Application__c,Application__r.Contact__c, External_Email__c,Hashcode__c,Send_Reminder__c , (SELECT Id, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c FROM Question_Responses__r), (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks) FROM Requirement_Response__c WHERE Requirement_Item__r.Requirement__c = :requirementId AND Application__c = :applicationId];
+            requirementResponses = [SELECT Id, Requirement_Item__c,ValueTextEntry__c,Fulfilled_On__c,Incomplete_Questions__c,Question_Group_Requirement_Fulfilled_On__c,HasDocument__c,Document_Requirement_Fulfilled_On__c,Has_Child_Requirement__c,Child_Requirement_Fulfilled_On__c,Application__c,Application__r.Contact__c, External_Email__c,Hashcode__c,Send_Reminder__c , (SELECT Id, IsPopulated__c, PopulatedOn__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c FROM Question_Responses__r), (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks) FROM Requirement_Response__c WHERE Requirement_Item__r.Requirement__c = :requirementId AND Application__c = :applicationId];
         }else if(requirementResponses == null){
             requirementResponses = new List<Requirement_Response__c>();
         }
@@ -132,7 +139,7 @@ public class ApplicationRequirement {
             questionItemSet.addAll(setId);
         }
         if(questionResponses == null && String.isNotBlank(applicationId)){
-            questionResponses = [SELECT Id, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c FROM Question_Response__c WHERE Question__c IN :questionItemSet AND Requirement_Response__r.Application__c = :applicationId];
+            questionResponses = [SELECT Id, IsPopulated__c, PopulatedOn__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c FROM Question_Response__c WHERE Question__c IN :questionItemSet AND Requirement_Response__r.Application__c = :applicationId];
         }else if(questionResponses == null){
             questionResponses = new List<Question_Response__c>();
         }
@@ -144,7 +151,7 @@ public class ApplicationRequirement {
                 dResponses.get(rId).add(qr);
             }
         }
-        //Creates new responses for "new" requirements 
+        //Creates new responses for "new" requirements
         newResponses = new List<Requirement_Response__c>();
         Map<String,Map<String,Schema.SObjectField>> relatedFieldDescribes = new Map<String,Map<String,SObjectField>>();
         Set<String> relatedObjects = new Set<String>();
@@ -173,28 +180,40 @@ public class ApplicationRequirement {
         if(preventUpdates != true){
             insert newResponses;
         }
-        
-        
+
+
         section = new ApplicationQuestionSection(app,riLst, dQuestions, responses,dResponses,relatedFieldDescribes);
 
-        
+        //Added by Chris 5-15 to move between requirements without the need to go to the checklist
+        List <Requirement__c> reqList = new List<Requirement__c>([SELECT Id, Display_Order__c FROM Requirement__c WHERE Application_Control__c = :appControl.Id AND Active__c = :true and Show_On_Application_Creation__c = false ORDER BY Display_Order__c ASC NULLS LAST]);
+        for (Integer i = 0; i < reqList.size(); i++) {
+            if (reqList[i].Id == requirementId && !isExternalUser){
+                if (i < reqList.size()-1) nextSectionID = reqList[i+1].Id;
+                if (i != 0) previousSectionID = reqList[i-1].Id;
+                break;
+            }
+        }
+
     }
     /*******************************************************************************
     * @description Allows the student to lookup existing records for related objects
     ********************************************************************************/
     @RemoteAction
-    public static List<SObject> lookupSearch(String sObj, String sObjFilter, String term){
+    public static List<SObject> lookupSearch(String sObj, String sObjFilter, String sObjNameField, String term){
 
-        return new ActionWithSharing().lookupSearchWithSharing(sObj,sObjFilter, term);
+        return new ActionWithSharing().lookupSearchWithSharing(sObj,sObjFilter,sObjNameField,term);
     }
     public with sharing class ActionWithSharing{
-        public List<SObject> lookupSearchWithSharing(String sObj, String sObjFilter, String term){
+        public List<SObject> lookupSearchWithSharing(String sObj, String sObjFilter, String sObjNameField, String term){
             if(Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()){
-                String query = 'Select Id, Name FROM '+sObj+' WHERE Name like \'%'+String.escapeSingleQuotes(term)+'%\'';
+                if(String.isBlank(sObjNameField)){
+                    sObjNameField = 'Name';
+                }
+                String query = 'Select Id, '+sObjNameField+' FROM '+sObj+' WHERE '+sObjNameField+' like \'%'+String.escapeSingleQuotes(term)+'%\'';
                 if(String.isNotBlank(sObjFilter)){
                     query += ' AND (' + sObjFilter + ')';
                 }
-                query += ' ORDER BY NAME ASC';
+                query += ' ORDER BY '+sObjNameField+' ASC';
                 try{
                     return database.query(query);
                 }catch(Exception e){
@@ -211,12 +230,12 @@ public class ApplicationRequirement {
     /*******************************************************************************
     * @description Saves question responses, requirement responses and the application. Takes the student back to the application checklist
     ********************************************************************************/
-    public PageReference submit() {
+   public PageReference submit() {
         try{
             transient Map<String,Object> additionalData;
             if(String.isNotBlank(additionalDataString)){
                 additionalData = (Map<String,Object>)JSON.deserializeUntyped(additionalDataString);
-            } 
+            }
             section.processValues(additionalData);
             List<Requirement_Response__c> rrLst = new List<Requirement_Response__c>();
             for(ApplicationQuestionGroup aqg : section.groups){
@@ -239,13 +258,41 @@ public class ApplicationRequirement {
             }
             upsert qResponses;
             update app;
-            PageReference pr = new PageReference('/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + contactId+(ApexPages.currentPage().getParameters().containsKey('at')?'&at='+ApexPages.currentPage().getParameters().get('at'):''));
-            if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h'))&& String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))){
-                pr = null;
-                //showSuccess = true;
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Info, 'Success! Your submission has been received.'));
+            system.debug(redirectPage);
+            system.debug(nextSectionId);
+            system.debug(previousSectionId);
+
+            if(String.isNotBlank(redirectPage)){
+                if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h'))&& String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))){
+                    showSuccess = true;
+                } else if (redirectPage == 'checklist') {
+                    PageReference pr = new PageReference('/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + contactId+(ApexPages.currentPage().getParameters().containsKey('at')?'&at='+ApexPages.currentPage().getParameters().get('at'):''));
+                    pr.setRedirect(true);
+                    return pr;
+                } else if (redirectPage == 'forwards') {
+                    PageReference pr = new PageReference('/apex/ApplicationRequirement?requirementId=' + nextSectionId + '&applicationId=' + applicationId + '&contactId=' + contactId + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c)));
+                    pr.setRedirect(true);
+                    return pr;
+                } else if (redirectPage == 'back') {
+                    PageReference pr = new PageReference('/apex/ApplicationRequirement?requirementId=' + previousSectionID + '&applicationId=' + applicationId + '&contactId=' + contactId + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c)));
+                    pr.setRedirect(true);
+                    return pr;
+                } else if (redirectPage == 'submit') {
+                    PageReference pr;
+                    if(allowSubmit && app != null){
+                        if(appControl != null && String.isNotBlank(appControl.Submit_Status__c)){
+                            update new Application__c(Id=app.Id,Application_Status__c=appControl.Submit_Status__c);
+                            pr = Page.ApplicationChecklist;
+                            pr.setRedirect(true);
+                            for(String s : new Set<String>{'contactId','applicationId','at'}){
+                                pr.getParameters().put(s,ApexPages.currentPage().getParameters().get(s));
+                            }
+                        }
+                    }
+        return pr;
+                }
             }
-            return pr;
+            return null;
         }catch(DmlException e){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error,e.getDMLMessage(0)));
         }catch(Exception e){

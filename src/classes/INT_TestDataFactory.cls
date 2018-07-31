@@ -57,7 +57,7 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'First_Name__c',
             Target_Field_API_Name__c = 'FirstName',
-			Skip_Mapping__c = 'Webform',
+			Skip_Mapping__c = 'Webform',            
             Active__c = true
         );
         testMappingsToInsert.add(contactFirstNameMapping);
@@ -85,7 +85,7 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'Last_Name__c',
             Target_Field_API_Name__c = 'LastName',
-			Skip_Mapping__c = 'Webform',
+			Skip_Mapping__c = 'Webform',            
             Active__c = true
         );
         testMappingsToInsert.add(contactLastNameMapping);
@@ -165,7 +165,8 @@ public class INT_TestDataFactory {
         testMappingsToInsert.add(contactSalutationMapping);
 
         /* hed__Affiliation__c Mappings */
-        if (Schema.getGlobalDescribe().containsKey('hed__Affiliation__c')) {
+        Map<String, Schema.SObjectType> gd = Schema.getGlobalDescribe();
+        if (gd.containsKey('hed__Affiliation__c') && gd.get('hed__Affiliation__c').getDescribe().fields.getMap().containsKey('Upsert_Key__c')) {
             Interaction_Mapping__c affiliationAccountMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'hed__Affiliation__c',
                 Interaction_Source_Field_API_Name__c = 'Affiliated_Account__c',
@@ -360,9 +361,7 @@ public class INT_TestDataFactory {
             Active__c = true
         );
         testMappingsToInsert.add(opportunityStageMapping);
-		
-        Map<String, Schema.SObjectType> gd = Schema.getGlobalDescribe();
-        
+		       
         if (gd.containsKey('hed__Term__c') && gd.get('Opportunity').getDescribe().fields.getMap().containsKey('Term__c')) {
             Interaction_Mapping__c opportunityTermMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'Opportunity',

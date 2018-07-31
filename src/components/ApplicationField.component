@@ -8,61 +8,627 @@
         <div class="col-xs-12">
             <apex:outputPanel rendered="{!question.showQuestion}" >
                 <apex:outputPanel rendered="{!question.fieldType == 'Address'}" >
-                    <c:ApplicationAddressField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationAddressField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                     <style>
+                        .statePicklist select {
+                            font-family: 'Open Sans', sans-serif;
+                            color: {!appControl.Text_Color__c};
+                            font-weight: 400;
+                            font-size: 14px;
+                            display: block;
+                            width: 100%;
+                            height: 34px;
+                            padding: 6px 12px;
+                            line-height: 1.42857143;
+                            background-color: #fff;
+                            background-image: none;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+                            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                        }
+                    </style>
+                    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <div class="form-group" >
+                            <label for="street" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Street{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="street" value="{!question.response.Street__c}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;"/>
+                        </div>
+
+                        <div class="form-group" >
+                            <label for="city" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} City{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="city" value="{!question.response.City__c}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
+                        </div>
+                        
+                        <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}" >
+                            <div class="form-group" >
+                                <label for="state" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State/Province{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
+                                    <apex:inputField id="state" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                        
+                        <div class="form-group" >
+                            <label for="country" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Country{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="country" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingCountryCode','MailingCountry')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
+                        </div>
+
+                        <apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}" >
+                            <div class="form-group" >
+                                <label for="statePicklist" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State/Province{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
+                                    <apex:inputField id="statePicklist" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+
+                        <div class="form-group" >
+                            <label for="postal" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Postal Code{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="postal" value="{!question.response.PostalCode__c}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                        <div class="form-group" >
+                            <label for="street1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Street{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="street1" value="{!obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','Street')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;"/>
+                        </div>
+
+                        <div class="form-group" >
+                            <label for="city1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} City{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="city1" value="{!obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','City')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
+                        </div>
+                        
+                        <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}" >
+                            <div class="form-group" >
+                                <label for="state1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
+                                    <apex:inputField id="state1" value="{!obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                        
+                        <div class="form-group" >
+                            <label for="country1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Country{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="country1" value="{!obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'CountryCode','Country'))]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
+                        </div>
+
+                        <apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}" >
+                            <div class="form-group" >
+                                <label for="state1Picklist" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                <div class="statePicklist {!if(question.isEditable,'','fieldNotEditable')}" >
+                                    <apex:inputField id="state1Picklist" value="{!obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+
+                        <div class="form-group" >
+                            <label for="postal1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label} Postal Code{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="postal1" value="{!obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','PostalCode')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel >
+                        <script>
+                            jQuery('.statePicklist').unbind('DOMNodeInserted').on('DOMNodeInserted',function(){
+                                jQuery('.statePicklist select:not(.form-control)').addClass('form-control');
+                            });
+                        </script>
+                    </apex:outputPanel>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Checkbox'}" >
-                    <c:ApplicationCheckboxField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationCheckboxField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <div class="checkbox" >
+                        <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                            <label for="field" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >
+                                <apex:inputCheckbox id="checkBoxField" value="{!question.response.ValueCheckbox__c}" styleClass="{!if(question.isEditable,'','fieldNotEditable')}">
+                                    <apex:actionSupport event="onchange" reRender="questionGroup" />
+                                </apex:inputCheckbox>
+                                {!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}
+                            </label>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                            <label for="field1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >
+                                <apex:inputCheckbox id="checkBoxField1" value="{!obj[question.question.Related_Object_Field__c]}" styleClass="{!if(question.isEditable,'','fieldNotEditable')}">
+                                    <apex:actionSupport event="onchange" reRender="questionGroup" />
+                                </apex:inputCheckbox>
+                            </label>
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                {!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                    </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Currency'}" >
-                    <c:ApplicationCurrencyField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationCurrencyField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <div class="form-group" >
+                        <apex:outputPanel layout="none" rendered="{!question.response != null || question.showRelatedLabel}">
+                            <label for="CurrencyField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                        </apex:outputPanel>
+                        <div class="input-group" >
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                            <apex:inputField id="CurrencyField" value="{!question.response.ValueCurrency__c}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', '100.00', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" rendered="{!question.response != null}"/>
+                            <apex:inputField id="CurrencyField1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', '100.00', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}" />
+                        </div>
+                        <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                    </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Date'}" >
-                    <c:ApplicationDateField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationDateField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <style type="text/css" >
+                    .dateFormat {
+                        visibility:hidden;
+                        font-size: 0px;
+                    }
+                    </style>
+                    <div class="form-group" >
+                        <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                            <label for="DateField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <div class="input-group" >
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <apex:input id="DateField" type="auto" value="{!question.dateValue}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="DateField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <div class="input-group" >
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <apex:inputField id="DateField1" type="auto" value="{!obj[question.question.Related_Object_Field__c]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            </div>
+                        </apex:outputPanel>
+                        <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                    </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'DateTime'}" >
-                    <c:ApplicationDateTimeField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationDateTimeField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <div class="form-group" >
+                        <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                            <label for="dateTimeField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <div class="input-group" >
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                <apex:input id="dateTimeField" type="auto" value="{!question.datetimeValue}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="dateTimeField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <div class="input-group" >
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                <apex:inputField id="dateTimeField1" type="auto" value="{!obj[question.question.Related_Object_Field__c]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            </div>
+                        </apex:outputPanel>
+                        <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                    </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'}" >
-                    <c:ApplicationNumberField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationNumberField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <div class="form-group" >
+
+                        <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                            <label for="numberField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="numberField" value="{!question.response.ValueNumber__c}" html-placeholder="{!question.placeholder}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="numberField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <apex:inputField type="auto" id="numberField1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!question.placeholder}" html-maxlength="{!question.length}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                        </apex:outputPanel>
+
+                        <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                    </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Email'}" >
-                    <c:ApplicationEmailField question="{!question}" object="{!obj}" appControl="{!appControl}" preventUpdates="{!preventUpdates}" questionSendReminder="{!question.sendReminder}"/>
+                    <!--<c:ApplicationEmailField question="{!question}" object="{!obj}" appControl="{!appControl}" preventUpdates="{!preventUpdates}" questionSendReminder="{!question.sendReminder}"/>-->
+                    <div class="form-group" >
+                        <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                            <label for="field" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <div class="input-group" >
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <apex:inputField id="field" value="{!question.response.ValueEmail__c}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', 'name@example.com', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                                <apex:commandLink styleClass="btn-lightning" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" action="{!questionSendReminder}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="field1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <div class="input-group" >
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <apex:inputField id="field1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', 'name@example.com', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                                <apex:commandLink styleClass="btn-lightning" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" action="{!questionSendReminder}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
+                            </div>
+                        </apex:outputPanel>
+                        <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                    </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'TextEncrypted'}" >
-                    <c:ApplicationTextEncryptedField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationTextEncryptedField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <div class="form-group" >
+                            <label for="textEncryptedField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!question.response.ValueTextEncrypted__c}" html-placeholder="{!question.placeholder}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#676767;font-weight:400;font-size:14px;height:36px;"/>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                        <div class="form-group" >
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="textEncryptedField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <apex:inputSecret redisplay="true" id="textEncryptedField1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!question.placeholder}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#676767;font-weight:400;font-size:14px;height:36px;"/>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" >
-                    <c:ApplicationMultiPicklistField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationMultiPicklistField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <style>
+                        .selectCheckboxes label {
+                            margin-left:10px;
+                            font-weight:400;
+                        }
+                    </style>
+
+                    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <div class="form-group" >
+                            <label for="multiPicklistField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:selectCheckboxes id="multiPicklistField" value="{!question.multiPicklistValues}" layout="pageDirection" styleClass="selectCheckboxes {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" >
+                                <apex:selectOptions value="{!question.options}" />
+                                <apex:actionSupport event="onchange" reRender="questionGroup" />
+                            </apex:selectCheckboxes>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                        <div class="form-group" >
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="multiPicklistField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <apex:selectCheckboxes id="multiPicklistField1" value="{!obj[question.question.Related_Object_Field__c]}" layout="pageDirection" styleClass="selectCheckboxes {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" >
+                                <apex:selectOptions value="{!question.options}" />
+                                <apex:actionSupport event="onchange" reRender="questionGroup" />
+                            </apex:selectCheckboxes>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Percent'}" >
-                    <c:ApplicationPercentField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationPercentField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <div class="form-group" >
+                            <label for="percentField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <div class="input-group" >
+                                <span class="input-group-addon">%</span>
+                                <apex:inputField id="percentField" value="{!question.response.ValuePercent__c}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', '99.00', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            </div>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                        <div class="form-group" >
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="percentField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <div class="input-group" >
+                                <span class="input-group-addon">%</span>
+                                <apex:inputField id="percentField1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', '99.00', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            </div>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" >
-                    <c:ApplicationPhoneField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationPhoneField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <div class="form-group" >
+                            <label for="phoneField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <div class="input-group" >
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                                <apex:inputField id="phoneField" value="{!question.response.ValuePhone__c}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', '(123) 456-7890', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            </div>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                        <div class="form-group" >
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="phoneField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <div class="input-group" >
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                                <apex:inputField id="phoneField1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', '(123) 456-7890', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            </div>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" >
-                    <c:ApplicationPicklistField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationPicklistField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <div class="form-group" >
+                            <label for="picklistField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:selectList id="picklistField" value="{!question.response.ValueText__c}" size="1" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" >
+                                <apex:selectOptions value="{!question.options}" />
+                                <apex:actionSupport event="onchange" reRender="questionGroup" />
+                            </apex:selectList>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                        <div class="form-group" >
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="picklistField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <apex:selectList id="picklistField1" value="{!obj[question.question.Related_Object_Field__c]}" size="1" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" >
+                                <apex:selectOptions value="{!question.options}" />
+                                <apex:actionSupport event="onchange" reRender="questionGroup" />
+                            </apex:selectList>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!(question.fieldType == 'Picklist' && question.radio) || question.fieldType == 'Radio'}" >
-                    <c:ApplicationRadioField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationRadioField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <style>
+                        .selectRadio label {
+                            margin-left:10px;
+                            font-weight:400;
+                            display:inline;
+                        }
+                        .selectRadio td {
+                            padding-left:10px;
+                            padding-bottom:10px;
+                        }
+                    </style>
+
+                    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <div class="form-group" >
+                            <label for="radioField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:selectRadio id="radioField" value="{!question.response.ValueText__c}" layout="pageDirection" styleClass="selectRadio {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" >
+                                <apex:selectOptions value="{!question.options}" />
+                                <apex:actionSupport event="onchange" reRender="questionGroup" />
+                            </apex:selectRadio>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                        <div class="form-group" >
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="radioField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <apex:selectRadio id="radioField1" value="{!obj[question.question.Related_Object_Field__c]}" layout="pageDirection" styleClass="selectRadio {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" >
+                                <apex:selectOptions value="{!question.options}" />
+                                <apex:actionSupport event="onchange" reRender="questionGroup" />
+                            </apex:selectRadio>
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Reference'}" >
-                    <c:ApplicationReferenceField question="{!question}" object="{!obj}" objectType="{!objType}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationReferenceField question="{!question}" object="{!obj}" objectType="{!objType}" appControl="{!appControl}"/>-->
+                    <div class="form-group" >
+                        <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <label for="referenceField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                        <apex:selectList id="referenceField" value="{!question.response.ValueText__c}" size="1" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" >
+                            <apex:selectOptions value="{!question.options}" />
+                            <apex:actionSupport event="onchange" reRender="questionGroup" />
+                        </apex:selectList>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="referenceField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!question.question.New_Reference_Field__c == false}">
+                                <input data-objtype="{!question.question.Lookup_Object__c}" data-objtypefilter="{!question.question.Lookup_Where_Clause__c}" data-objtypenamefield="{!question.question.Name_Field_API_Name__c}" placeholder="{!question.placeholder}" class="form-control bind-autocomplete" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                                <apex:inputHidden html-class="inputHidden" value="{!obj[question.question.Related_Object_Field__c]}"/>
+                                <apex:outputPanel styleClass="lookupPanel" style="display:none">
+                                    <apex:outputField value="{!obj[IF(AND(question.question.New_Reference_Field__c == false,NOT(ISBLANK(obj['Holding_Name__c']))),'Holding_Name__c',question.question.Related_Object_Field__c)]}" />
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!obj[question.question.Related_Object_Field__c]}" styleClass="form-control" rendered="{!question.question.New_Reference_Field__c == true}"/>
+                        </apex:outputPanel>
+                        <c:ApplicationQuestionHelpText question="{!question}"/>
+                    </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Static'}" >
-                    <c:ApplicationStaticField question="{!question}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationStaticField question="{!question}" appControl="{!appControl}"/>-->
+                    <div class="form-group" >
+                        <label for="field" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" rendered="{!NOT(ISBLANK(question.label))}">{!question.label}</label>
+                        <p><apex:outputText value="{!question.question.Static_Text__c}" escape="false" /></p>
+                    </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'Text'}" >
-                    <c:ApplicationTextField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationTextField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <div class="form-group" >
+                        <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                            <label for="textField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="textField" value="{!question.response.ValueText__c}" html-placeholder="{!question.placeholder}" html-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="textField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            
+                            <apex:inputField type="auto" id="textField1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!question.placeholder}" html-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                        </apex:outputPanel>
+                        <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                    </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'TextArea'}" >
-                    <c:ApplicationTextAreaField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationTextAreaField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <div class="form-group" >
+                            <label for="textAreaField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="textAreaField" value="{!question.response.ValueTextArea__c}" html-placeholder="{!question.placeholder}" html-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;" />
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                        <div class="form-group" >
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="textAreaField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <apex:inputField id="textAreaField1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!question.placeholder}" html-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;" />
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p> 
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'LongTextArea'}" >
-                    <c:ApplicationLongTextAreaField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationLongTextAreaField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                    <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                        <div class="form-group" >
+                            <label for="longTextAreaField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            <apex:inputField id="longTextAreaField" value="{!question.response.ValueLongTextArea__c}" html-placeholder="{!if(question.length == null || question.length > 32768, 32768, question.length)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;" />
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                        <div class="form-group" >
+                            <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                <label for="longTextAreaField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                            </apex:outputPanel>
+                            <apex:inputField id="longTextAreaField1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!question.placeholder}" html-maxlength="{!if(question.length == null || question.length > 32768, 32768, question.length)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;" />
+                            <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'URL'}" >
-                    <c:ApplicationUrlField question="{!question}" object="{!obj}" appControl="{!appControl}"/>
+                    <!--<c:ApplicationUrlField question="{!question}" object="{!obj}" appControl="{!appControl}"/>-->
+                        <apex:outputPanel layout="none" rendered="{!question.response != null}">
+                            <div class="form-group" >
+                                <label for="urlField" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                <apex:inputField id="urlField" value="{!question.response.ValueURL__c}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', 'www.example.com', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                                <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(obj))}">
+                                <div class="form-group" >
+                                    <apex:outputPanel layout="none" rendered="{!question.showRelatedLabel}">
+                                        <label for="urlField1" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:18px;" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                    </apex:outputPanel>
+                                    <apex:inputField id="urlField1" value="{!obj[question.question.Related_Object_Field__c]}" html-placeholder="{!IF(question.placeholder == null || question.placeholder == '', 'www.example.com', question.placeholder)}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                                    <!--<c:ApplicationQuestionHelpText question="{!question}" />-->
+                                    <apex:outputPanel rendered="{!question.helpText != null && question.helpText != ''}" >
+                                        <p class="help-block">
+                                            <apex:outputText value="{!question.helpText}" escape="false" />
+                                        </p>
+                                    </apex:outputPanel>
+                                </div>
+                        </apex:outputPanel>
                 </apex:outputPanel>
             </apex:outputPanel>
         </div>

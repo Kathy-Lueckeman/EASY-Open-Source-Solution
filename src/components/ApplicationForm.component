@@ -1,34 +1,51 @@
-<apex:component >
+<apex:component id="applicationFormComponent" >
 
     <apex:attribute name="section" description="ApplicationQuestionSection for this page" type="ApplicationQuestionSection" required="false" />
     <apex:attribute name="hidePaging" description="Hide carousel paging" type="Boolean" default="false" required="false" />
     <apex:attribute name="preventUpdates" description="Set the page to output only" type="Boolean" default="false" required="false" />
     <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
-    
+    <apex:attribute name="nextId" description="ApplicationSettings" type="Id" required="false" />    
+    <apex:attribute name="prevId" description="ApplicationSettings" type="Id" required="false" />
+   
     <script>
+    var jq = jQuery.noConflict();
         if({!hidePaging} == false){
-    var checkitem = function() {
+        
+        var checkitem = function() {
+            //Added by Chris 5-15
+            
+                if (jq("#myCarousel .carousel-inner .item:first").hasClass("active") && "{!prevID}" == ""){
+                    jq(".leftNav").hide();
+                } else {
+                    jq(".leftNav").show();
+                } if (jq("#myCarousel .carousel-inner .item:last").hasClass("active") && "{!nextID}" == "") {
+                    jq(".rightNav").hide();
+                } else {
+                    jq(".rightNav").show(); 
+                }
+				
+            	if (jq("#myCarousel .carousel-inner .item:first").hasClass("active") && jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
+                    jq(".appCreateSave").show();
+                } else if (jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
+                    jq(".appCreateSave").show();
+                } else {
+                    jq(".appCreateSave").hide();
+                }
+            	
+                if (jq("#myCarousel .carousel-inner .item:first").hasClass("active")){
+                    jq(".left.createSlide").hide();
+                } else {
+                    jq(".left.createSlide").show();
+                } if (jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
+                    jq(".right.createSlide").hide();
+                } else {
+                    jq(".right.createSlide").show(); 
+                }
 
-            if($("#myCarousel .carousel-inner .item:first").hasClass("active") && $("#myCarousel .carousel-inner .item:last").hasClass("active")){
-                $("#myCarousel").find(".left").hide();
-                $("#myCarousel").find(".right").hide();
-                $(".appCreateSave").show();
-            } else if ($("#myCarousel .carousel-inner .item:first").hasClass("active")) {
-            	$("#myCarousel").find(".left").hide();
-            	$("#myCarousel").find(".right").show();
-                $(".appCreateSave").hide();
-            } else if ($("#myCarousel .carousel-inner .item:last").hasClass("active")) {
-            	$("#myCarousel").find(".right").hide();
-            	$("#myCarousel").find(".left").show();
-                $(".appCreateSave").show();
-            } else {
-            	$("#myCarousel").find(".carousel-control").show();
-                $(".appCreateSave").hide();
-            }
             };
             jQuery(function(){
                 checkitem();
-                $("#myCarousel").on("slid.bs.carousel", "", checkitem);
+                jq("#myCarousel").on("slid.bs.carousel", "", checkitem);
             })
         }
 
@@ -40,34 +57,24 @@
         <div class="row" >
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
                 <div id="myCarousel" class="{!if(hidePaging,'','carousel')} slide" data-interval="false" data-wrap="false" >
-                    <div class="row" style="display:flex;" >
-                        <apex:outputPanel styleClass="col-lg-2 col-xs-1" rendered="{!!hidePaging}">
-                            <center>
-                                <a class="carousel-control left" href="#myCarousel" role="button" data-slide="prev" style="color:#{!appControl.Arrow_Color__c};width:initial;left:auto;" >
-                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" ></span>
-                                    <span class="sr-only" >Previous</span>
-                                </a>
-                            </center>
-                        </apex:outputPanel>
-                        <div class="col-lg-8 col-xs-10" >
+                    <div class="row" >
+                        <div class="col-lg-10 col-lg-offset-1" >
                             <div class="{!if(hidePaging,'','carousel-inner')}" role="listbox">
                                 <apex:variable var="itemCount" value="0"/>
-                                <apex:repeat value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}" >
+                                <apex:commandLink id="reRenderGroups" value="" style="display:none;" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}" />
+                                <script>
+                                	function reRenderAllGroups() {
+                                        document.getElementById('{!$Component.reRenderGroups}').click();
+                                    }
+                                </script>
+                                <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}" >
                                     <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
-                                        <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appControl="{!appControl}"/>
+                                        <c:ApplicationFormSection id="theFormSectionComponent" groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appControl="{!appControl}"/>
                                     </div>
                                     <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
                                 </apex:repeat>
                             </div>
                         </div>
-                        <apex:outputPanel styleClass="col-lg-2 col-xs-1" rendered="{!!hidePaging}">
-                            <center>
-                                <a class="carousel-control right" href="#myCarousel" role="button" data-slide="next" style="color:#{!appControl.Arrow_Color__c};width:initial;right:auto;" >
-                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ></span>
-                                    <span class="sr-only" >Next</span>
-                                </a>
-                            </center>
-                        </apex:outputPanel>
                     </div>
                 </div>
             </div>

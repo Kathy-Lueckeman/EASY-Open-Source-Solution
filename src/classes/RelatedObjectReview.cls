@@ -2,7 +2,7 @@
 @description This class allows an administrator to review any related object such as Schools or employers that were not found in the system and approve new records/lookup existing records
 @author Huron Consulting Group
 
-Revision (s): 
+Revision (s):
 *******************************************************************************/
 public class RelatedObjectReview {
 	public Map<String, List<SObjectWrapper>> objWrappers{get;set;}
@@ -136,7 +136,7 @@ public class RelatedObjectReview {
                 if(String.isNotBlank(sObjFilter)){
                     query += ' AND ' + sObjFilter;
                 }
-                query += ' ORDER BY NAME ASC';
+                query += ' ORDER BY Name ASC';
                 try{
                     return database.query(query);
                 }catch(Exception e){

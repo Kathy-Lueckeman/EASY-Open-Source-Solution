@@ -14,7 +14,7 @@ public class ApplicationQuestionGroup {
     public String newReferenceObjectSelectedWrapper{get;set;}
     public String newReferenceObjectSelectedWrapperName{get;set;}
     public Requirement_Item__c item {get;set;}
-    public String instructions { get { return item != null ? item.Instructions__c : null; } }
+    public Boolean isInternal { get { return item != null && (item.Internal_Only__c || item.Requirement__r.Internal_Only__c) && !UserInfo.getUserType().equals('Standard'); } }
     public ContentVersion att {get;set;}
     private Id oldAttId;
     public ContentDocumentLink oldAttLink{get;set;}
@@ -26,6 +26,14 @@ public class ApplicationQuestionGroup {
     public Boolean externalResponse {get;set;}
     private Integer newIndex;
     public Requirement_Response__c response{get;set;}
+    
+    public String instructions {
+        get {
+            if (item == null) return null;
+            return isInternal ? item.Internal_Only_Applicant_Instructions__c : item.Instructions__c;
+        }
+    }
+    
     public List<SObjectWrapper> relatedObjects{
         get{
             if(relatedObjectsMap!=null){
@@ -41,7 +49,7 @@ public class ApplicationQuestionGroup {
     ********************************************************************************/
     public Boolean isEditable{
         get{
-            if(UserInfo.getUserType() != 'Standard'){
+            if(UserInfo.getUserType() != 'Standard' || Test.isRunningTest()){
                 if(app != null && String.isNotBlank(app.Application_Status__c)){
                     if(item != null && (String.isBlank(item.Editable_Application_Status__c) || (String.isNotBlank(item.Editable_Application_Status__c) && new Set<String>(item.Editable_Application_Status__c.split(';')).contains(app.Application_Status__c)))){
                         return true;
@@ -70,6 +78,29 @@ public class ApplicationQuestionGroup {
         public String idx{get;set;}
         public ContentDocumentLink att{get;set;}
         public Boolean isValid;
+        
+        public Map<ApplicationQuestion, Boolean> showQuestions {
+            get {
+                showQuestions = new Map<ApplicationQuestion, Boolean>();
+                for (ApplicationQuestion aq:aqg.questions)
+                    showQuestions.put(aq, aq.getShowQuestion(obj));
+                return showQuestions;
+            } set;
+        }
+        
+        public Map<String, List<String>> multiPicklistValues {
+            get {
+                if (multiPicklistValues == null) {
+                    multiPicklistValues = new Map<String, List<String>>();
+                    for (ApplicationQuestion question:aqg.questions)
+                        if (question.question.RecordType.DeveloperName.equals('MultiPicklist'))
+                            multiPicklistValues.put(question.question.Related_Object_Field__c, obj.get(question.question.Related_Object_Field__c) != null ? String.valueOf(obj.get(question.question.Related_Object_Field__c)).split(';') : new List<String>());
+                }
+                
+                return multiPicklistValues;
+            } set;
+        }
+        
         public SObjectWrapper(ApplicationQuestionGroup aqg, String idx,SObject obj){
             this.aqg = aqg;
             this.idx = idx;
@@ -78,6 +109,7 @@ public class ApplicationQuestionGroup {
             isEditMode = false;
             isDeleted = false;
             isValid = true;
+			
             if(((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks')) != null && ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks')).size()>0){
                 att = ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks'))[0];
             }
@@ -100,6 +132,10 @@ public class ApplicationQuestionGroup {
             }
         }
         public void enableConfirmMode(){
+            
+            for (String fn:multiPicklistValues.keySet())
+                obj.put(fn, String.join(multiPicklistValues.get(fn), ';'));
+            
             if(checkValid()){
                 isEditMode = false;
                 sobjClone = obj.clone(true,true,true,true);
@@ -108,18 +144,23 @@ public class ApplicationQuestionGroup {
             }
         }
         public Boolean checkValid(){
+            
             Boolean valid = true;
-            for(ApplicationQuestion question : aqg.questions){
-                try{
-                    if(String.isNotBlank(question.question.Related_Object_Field__c) && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && obj.get(question.question.Related_Object_Field__c) == ''){
+            for (ApplicationQuestion question:aqg.questions) {
+                
+                if (!question.getShowQuestion(obj))
+                    continue;
+                
+                try {
+                    if (String.isNotBlank(question.question.Related_Object_Field__c) && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && obj.get(question.question.Related_Object_Field__c) == '')
                         valid = false;
-                    }
-                }catch(Exception e){}
-                if(String.isNotBlank(question.question.Related_Object_Field__c) && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && obj.get(question.question.Related_Object_Field__c) == null){
+                    
+                } catch (Exception e) {}
+                
+                if (String.isNotBlank(question.question.Related_Object_Field__c) && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && obj.get(question.question.Related_Object_Field__c) == null)
                     valid = false;
-                }
             }
-            system.debug(valid);
+            
             isValid = valid;
             return valid;
         }
@@ -280,35 +321,24 @@ public class ApplicationQuestionGroup {
             relatedObject = false;
             externalResponse = false;
 
-                questions = new List<ApplicationQuestion>();
-                Map<Id, ApplicationQuestion> qMap = new Map<Id, ApplicationQuestion>();
-                for (Question__c q:item.Questions__r) {
-                    if (isAppCreate && String.isNotBlank(q.Application_Field__c)) {
-                        ApplicationQuestion aq = new ApplicationQuestion(app, q.Label__c, app, q.Application_Field__c);
-                        questions.add(aq);
-                        qMap.put(q.Id, aq);
-                    } else {
-                        if (!qResponses.containsKey(q.Id) && response!= null && q.RecordType.DeveloperName != 'Static'){
-                            qResponses.put(q.Id, new Question_Response__c(Requirement_Response__c = response.Id, Question__c = q.Id));
-                        }else if(response == null && q.RecordType.DeveloperName != 'Static'){
-                            qResponses.put(q.Id, new Question_Response__c(Question__c = q.Id));
-                        }
-                        ApplicationQuestion aq = new ApplicationQuestion(app, q, qResponses.get(q.Id));
-                        aq.setRequirementResponse(response);
-                        questions.add(aq);
-                        qMap.put(q.Id, aq);
+            questions = new List<ApplicationQuestion>();
+            for (Question__c q:item.Questions__r) {
+                if (isAppCreate && String.isNotBlank(q.Application_Field__c)) {
+                    ApplicationQuestion aq = new ApplicationQuestion(app, q.Label__c, app, q.Application_Field__c);
+                    aq.addQuestionObject(q);
+                    questions.add(aq);
+                } else {
+                    if (!qResponses.containsKey(q.Id) && response!= null && q.RecordType.DeveloperName != 'Static'){
+                        qResponses.put(q.Id, new Question_Response__c(Requirement_Response__c = response.Id, Question__c = q.Id));
+                    }else if(response == null && q.RecordType.DeveloperName != 'Static'){
+                        qResponses.put(q.Id, new Question_Response__c(Question__c = q.Id));
                     }
-                }
-                if(dResponses != null){
-                    for(Question_Response__c qr : dResponses){
-                        qMap.put(qr.Question__c,new ApplicationQuestion(app,new Question__c(Active__c=true,Id=qr.Question__c),qr));
-                    }
-                }
-                for (ApplicationQuestion aq:questions) {
-                    if (aq.question != null && dQuestions.containsKey(aq.question.Id)) {
-                        aq.addQuestionDependencies(dQuestions.get(aq.question.Id), qMap);
+                    ApplicationQuestion aq = new ApplicationQuestion(app, q, qResponses.get(q.Id));
+                    aq.setRequirementResponse(response);
+                    questions.add(aq);
                 }
             }
+            
         } else if (item.RecordType.DeveloperName.equals('Document_Upload')) {
             documentUpload = true;
             questionGroup = false;
@@ -327,71 +357,83 @@ public class ApplicationQuestionGroup {
             }else{
                 att = new ContentVersion();
             }
-        }else if (item.RecordType.DeveloperName.equals('Related_Object')) {
+        } else if (item.RecordType.DeveloperName.equals('Related_Object')) {
+            
             newIndex = 0;
             relatedObject = true;
             questionGroup = false;
             documentUpload = false;
             externalResponse = false;
-            if(app != null && app.Contact__c != null){
-                questions = new List<ApplicationQuestion>();
-                relatedReferenceQuestions = new List<ApplicationQuestion>();
-                Map<Id, ApplicationQuestion> qMap = new Map<Id, ApplicationQuestion>();
-                for (Question__c q:item.Questions__r) {
-                    if(q.New_Reference_Field__c == false){
-                        questions.add(new ApplicationQuestion(app, q, null));
-                    }else{
-                        relatedReferenceQuestions.add(new ApplicationQuestion(app,q,null));
-                        relatedReferenceQuestions.get(relatedReferenceQuestions.size()-1).showRelatedLabel(true);
+            
+            questions = new List<ApplicationQuestion>();
+            relatedReferenceQuestions = new List<ApplicationQuestion>();
+            Map<Id, ApplicationQuestion> qMap = new Map<Id, ApplicationQuestion>();
+            for (Question__c q:item.Questions__r) {
+                if (!q.New_Reference_Field__c) {
+                    questions.add(new ApplicationQuestion(app, q, null));
+                } else {
+                    relatedReferenceQuestions.add(new ApplicationQuestion(app,q,null));
+                    relatedReferenceQuestions.get(relatedReferenceQuestions.size()-1).showRelatedLabel(true);
+                }
+            }
+            if (item.Questions__r != null && !item.Questions__r.isEmpty()) {
+                fieldResultMap = new Map<String,Map<String,Object>>();
+                if (sObjectFields != null) {
+                    for (String s : sObjectFields.keySet()) {
+                        Map<String, Object> fieldResults = new Map<String, Object>();
+                        Schema.DescribeFieldResult fResult = SObjectFields.get(s).getDescribe();
+                        fieldResults.put('isReference', fResult.getType() == Schema.DisplayType.Reference);
+                        fieldResultMap.put(s,fieldResults);
                     }
                 }
-                if(item.Questions__r != null && item.Questions__r.size()>0){
-                    fieldResultMap = new Map<String,Map<String,Object>>();
-                    if(sObjectFields != null){
-                        for(String s : sObjectFields.keySet()){
-                            Map<String,Object> fieldResults = new Map<String,Object>();
-                            Schema.DescribeFieldResult fResult = SObjectFields.get(s).getDescribe();
-                            fieldResults.put('isReference',fResult.getType()==Schema.DisplayType.Reference);
-                            fieldResultMap.put(s,fieldResults);
-                        }
-                    }
-                    Set<String> fieldsSet = new Set<String>{'Id','User_Created__c','Holding_Name__c'};
-                    for(Question__c q : item.Questions__r){
-                        if(q != null && String.isNotBlank(q.Related_Object_Field__c) && q.New_Reference_Field__c == false){
-                            fieldsSet.add(q.Related_Object_Field__c);
-                            if(String.isNotBlank(q.Lookup_Object__c)){
+                Set<String> fieldsSet = new Set<String>{'id','user_created__c','holding_name__c'};
+                    for (Question__c q:item.Questions__r) {
+                        if (q != null && String.isNotBlank(q.Related_Object_Field__c) && !q.New_Reference_Field__c) {
+                            fieldsSet.add(q.Related_Object_Field__c.toLowerCase());
+                            if (String.isNotBlank(q.Lookup_Object__c))
                                 newReferenceObjectType = q.Lookup_Object__c;
-                            }
-                            if(fieldResultMap.containsKey(q.Related_Object_Field__c.toLowerCase()) && fieldResultMap.get(q.Related_Object_Field__c.toLowerCase()).get('isReference') == true && q.Related_Object_Field__c.endsWith('__c')){
+                            if (fieldResultMap.containsKey(q.Related_Object_Field__c.toLowerCase()) && (Boolean)fieldResultMap.get(q.Related_Object_Field__c.toLowerCase()).get('isReference') && q.Related_Object_Field__c.endsWith('__c'))
                                 fieldsSet.add(q.Related_Object_Field__c.substring(0,q.Related_Object_Field__c.length()-1)+'r.Name');
-                            }
                         }
                     }
-                    relatedObjectsMap = new Map<String,SObjectWrapper>();
-                    relatedObjectsMapDelete = new Map<Id,SObjectWrapper>();
-                    String connectingId;
-                    if(item.Related_List_Object_Master__c == 'Application'){
-                        connectingId = app.Id;
-                    }else if(item.Related_List_Object_Master__c == 'Contact'){
-                        connectingId = app.Contact__c;
-                    }
-                    String query = 'Select (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks Where ContentDocument.Description = \'Supporting Document\'), ' + String.join(new List<String>(fieldsSet),', ') + ' FROM ' + item.Related_List_Object__c + ' WHERE '+item.Related_List_Object_Master_Field__c+' =\''+connectingId+'\'';
-                    if(String.isNotBlank(item.Related_List_Where_Clause__c)){
+                relatedObjectsMap = new Map<String,SObjectWrapper>();
+                relatedObjectsMapDelete = new Map<Id,SObjectWrapper>();
+                if (app.Id != null && app.Contact__c != null) {
+                    String connectingId = item.Related_List_Object_Master__c == 'Contact' ? app.Contact__c : app.Id;
+                        String query = 'Select (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks Where ContentDocument.Description = \'Supporting Document\'), ' + String.join(new List<String>(fieldsSet),', ') + ' FROM ' + item.Related_List_Object__c + ' WHERE '+item.Related_List_Object_Master_Field__c+' =\''+connectingId+'\'';
+                    if (String.isNotBlank(item.Related_List_Where_Clause__c))
                         query += ' AND ' + item.Related_List_Where_Clause__c;
-                    }
-                    for(SObject obj : database.query(query)){
+                    for (SObject obj:database.query(query))
                         relatedObjectsMap.put(obj.Id,new SObjectWrapper(this,obj.Id,obj));
-                    }
                 }
             }
         }
     }
+    
+    // Add question dependencies for group
+    public void addQuestionDependencies(Map<Id, ApplicationQuestion> qMap, Map<Id, List<Question_Dependency__c>> dQuestions, List<Question_Response__c> dResponses) {
+        
+        if (questionGroup || relatedObject) {
+            
+            if (dResponses != null)
+                for (Question_Response__c qr:dResponses)
+                    qMap.put(qr.Question__c, new ApplicationQuestion(app, new Question__c(Active__c = true, Id = qr.Question__c), qr));
+            else if (relatedObject)
+                for (ApplicationQuestion aq:questions)
+                	qMap.put(aq.question.Id, aq);
+            
+            for (ApplicationQuestion aq:questions)
+                if (aq.question != null && dQuestions.containsKey(aq.question.Id))
+                    aq.addQuestionDependencies(dQuestions.get(aq.question.Id), qMap);
+        }
+    }
+    
     /*******************************************************************************
     * @description Indicates that the user would like to create a new related object reference that doesn't exist such as a new Employer or School
     ********************************************************************************/
     public void createNewReferenceObject(){
         creatingNewRelatedRecord = true;
-        if (newReferenceObjectType.toLowerCase().equals('account')) {
+        if (newReferenceObjectType.toLowerCase().equals('account') && !UserInfo.getUserType().equals('Guest')) {
             newReferenceObject = [SELECT Id, Name FROM Account LIMIT 1];
         } else {
         	newReferenceObject = Schema.getGlobalDescribe().get(newReferenceObjectType).newSObject();
@@ -404,39 +446,54 @@ public class ApplicationQuestionGroup {
     /*******************************************************************************
     * @description Saves the JSON data corresponding to a new related object reference that doesn't exist such as a new Employer or School
     ********************************************************************************/
-    public void addNewReferenceObject(){
-        creatingNewRelatedRecord = false;
-        if(String.isNotBlank(newReferenceObjectSelectedWrapper) && relatedObjectsMap.containsKey(newReferenceObjectSelectedWrapper)){
+    public void addNewReferenceObject() {
+        
+        if (String.isNotBlank(newReferenceObjectSelectedWrapper) && relatedObjectsMap.containsKey(newReferenceObjectSelectedWrapper)){
+            
+            for (ApplicationQuestion aq:relatedReferenceQuestions) {
+                if (String.isNotBlank(aq.question.Related_Object_Field__c)) {
+                    
+                    if (String.isBlank(aq.question.Hardcoded_Value__c) && String.isNotBlank(aq.question.Related_Object_Field__c) && ApplicationUtilities.containsValue(aq.question.Required__c, app.Application_Status__c) && String.isBlank(String.valueOf(newReferenceObject.get(aq.question.Related_Object_Field__c)))) {
+                        
+                        ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Required Fields Missing'));
+                        return;
+                        
+                    } else if (String.isNotBlank(aq.question.Hardcoded_Value__c)) {
+                        
+                        Object questionValue = aq.question.Hardcoded_Value__c;
+                        
+                        if (aq.question.RecordType.DeveloperName == 'Checkbox')
+                        	questionValue = Boolean.valueOf(aq.question.Hardcoded_Value__c);
+                        else if (aq.question.RecordType.DeveloperName == 'Currency' || aq.question.RecordType.DeveloperName == 'Number' || aq.question.RecordType.DeveloperName == 'Percent')
+                        	questionValue = Decimal.valueOf(aq.question.Hardcoded_Value__c);
+                        else if (aq.question.RecordType.DeveloperName == 'Date')
+                        	questionValue = Date.valueOf(aq.question.Hardcoded_Value__c);
+                        else if (aq.question.RecordType.DeveloperName == 'Datetime')
+                        	questionValue = DateTime.valueOf(aq.question.Hardcoded_Value__c);
+                        
+                        newReferenceObject.put(aq.question.Related_Object_Field__c, questionValue);
+                    }
+                }
+            }
+            
             SObjectWrapper objW = relatedObjectsMap.get(newReferenceObjectSelectedWrapper);
-            if(String.isNotBlank((String)newReferenceObject.get('Name'))){
+            if (String.isNotBlank((String)newReferenceObject.get('Name'))) {
                 objW.obj.put('Holding_Name__c',(String)newReferenceObject.get('Name'));
-                for(ApplicationQuestion aq : questions){
-                    if(aq.fieldType == 'Reference'){
+                for (ApplicationQuestion aq:questions) {
+                    if (aq.fieldType == 'Reference') {
                         objW.obj.put(aq.question.Related_Object_Field__c,item.Holding_Record_Id__c);
                         break;
                     }
                 }
             }
-            for(ApplicationQuestion aq : relatedReferenceQuestions){
-                if(String.isNotBlank(aq.question.Hardcoded_Value__c) && String.isNotBlank(aq.question.Related_Object_Field__c)){
-                    Object questionValue = aq.question.Hardcoded_Value__c;
-                    if(aq.question.RecordType.DeveloperName == 'Checkbox'){
-                    questionValue = Boolean.valueOf(aq.question.Hardcoded_Value__c);
-                    }else if(aq.question.RecordType.DeveloperName == 'Currency' || aq.question.RecordType.DeveloperName == 'Number' || aq.question.RecordType.DeveloperName == 'Percent'){
-                    questionValue = Decimal.valueOf(aq.question.Hardcoded_Value__c);
-                    }else if(aq.question.RecordType.DeveloperName == 'Date'){
-                    questionValue = Date.valueOf(aq.question.Hardcoded_Value__c);
-                    }else if(aq.question.RecordType.DeveloperName == 'Datetime'){
-                    questionValue = DateTime.valueOf(aq.question.Hardcoded_Value__c);
-                    }
-                    newReferenceObject.put(aq.question.Related_Object_Field__c,questionValue);
-                }
-            }
+            
             newReferenceObject.Id = null;
-            objW.obj.put('Related_Object_JSON__c',JSON.serialize(newReferenceObject));
+            objW.obj.put('Related_Object_JSON__c', JSON.serialize(newReferenceObject));
             newReferenceObject = null;
             newReferenceObjectSelectedWrapper = null;
         }
+        
+        creatingNewRelatedRecord = false;
     }
     /*******************************************************************************
     * @description Tells the ApplicationQuestion to prepare to save, Saves updated Salesforce File data, save related object data
@@ -460,6 +517,7 @@ public class ApplicationQuestionGroup {
                                 if(objW.obj.Id != null){
                                     lstUpdate.add(objW.obj);
                                 }else{
+                                    objW.obj.put(item.Related_List_Object_Master_Field__c, item.Related_List_Object_Master__c == 'Contact' ? app.Contact__c : app.Id);
                                     lstInsert.add(objW.obj);
                                 }
                             }
@@ -468,12 +526,16 @@ public class ApplicationQuestionGroup {
                             }
                         }
                     }
-                    response.Has_Child_Requirement__c= false;
-                    if(item.Required_Number_of_Children__c == null){
-                        response.Has_Child_Requirement__c= true;
-                    }else if(item.Required_Number_of_Children__c != null && item.Required_Number_of_Children__c<=childCount){
-                        response.Has_Child_Requirement__c= true;
+                    
+                    if (item.Required_Number_of_Children__c != null && item.Required_Number_of_Children__c > childCount) {
+                        response.Has_Child_Requirement__c = false;
+                        response.Child_Requirement_Fulfilled_On__c = null;
+                    } else if (item.Required_Number_of_Children__c == null || item.Required_Number_of_Children__c <= childCount) {
+                        if (!response.Has_Child_Requirement__c || response.Child_Requirement_Fulfilled_On__c == null)
+                        	response.Child_Requirement_Fulfilled_On__c = System.NOW();
+                        response.Has_Child_Requirement__c = true;
                     }
+                    
                     if(relatedObjectsMapDelete != null){
                         for(SObjectWrapper objW : relatedObjectsMapDelete.values()){
                             if(((Boolean)objW.obj.get('User_Created__c')) == true && objW.obj.Id != null){
@@ -517,7 +579,7 @@ public class ApplicationQuestionGroup {
                         att.VersionData = Blob.valueOf((String)attData.get('data'));
                     }
                 }
-                if(documentUpload == true && att != null && att.Title != null && att.VersionData != null && response != null){
+                if (documentUpload == true && att != null && att.Title != null && att.VersionData != null && response != null) {
                     
                     att.PathOnClient = att.Title;
                     att.firstPublishLocationId = response.Id;
@@ -530,13 +592,18 @@ public class ApplicationQuestionGroup {
                         delete new ContentDocument(Id=oldAttLink.ContentDocumentId);
                     }
                     response.HasDocument__c = true;
+                    if (response.Document_Requirement_Fulfilled_On__c == null)
+                        response.Document_Requirement_Fulfilled_On__c = System.NOW();
                 }
-                if(documentUpload == true && response != null && String.isNotBlank(response.ValueTextEntry__c)){
+                if (documentUpload == true && response != null && String.isNotBlank(response.ValueTextEntry__c)) {
                     response.HasDocument__c = true;
-                    }
-                if(documentUpload == true && response != null && response.HasDocument__c == true && att.Title == null && String.isBlank(response.ValueTextEntry__c)){
+                    if (response.Document_Requirement_Fulfilled_On__c == null)
+                        response.Document_Requirement_Fulfilled_On__c = System.NOW();
+                }
+                if (documentUpload == true && response != null && response.HasDocument__c == true && att.Title == null && String.isBlank(response.ValueTextEntry__c)){
                     response.HasDocument__c = false;
                     response.ValueTextEntry__c = null;
+                    response.Document_Requirement_Fulfilled_On__c = null;
                 }
             }
         }catch(DmlException e){

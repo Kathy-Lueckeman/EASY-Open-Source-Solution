@@ -303,6 +303,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Name_Field_API_Name__c</fullName>
+        <defaultValue>&quot;Name&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Name Field API Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>New_Reference_Field__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -420,6 +431,17 @@
             <valueSetName>Student_Types</valueSetName>
         </valueSet>
         <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>URL_Parameter__c</fullName>
+        <description>The URL Parameter to be used as a key when pre-populating this question</description>
+        <externalId>false</externalId>
+        <label>URL Parameter</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>Question</label>
     <listViews>

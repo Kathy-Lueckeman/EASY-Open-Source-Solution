@@ -1,11 +1,12 @@
 <apex:page controller="ApplicationRegistration" showHeader="false" standardStylesheets="false" docType="html-5.0" >
     <script>
-        function lookupSearchJS(sObj,sObjFilter,searchTerm,callback){
+        function lookupSearchJS(sObj,sObjFilter,sObjNameField,searchTerm,callback){
+            console.log("in application requirement vfp");
             console.log(sObj);
             console.log(searchTerm);
             Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ApplicationRegistration.lookupSearch}',
-                sObj, sObjFilter,searchTerm,
+                sObj, sObjFilter,sObjNameField,searchTerm,
                 function(result, event){
                     if (event.status) {
                         console.log(result);
@@ -19,17 +20,21 @@
         }
     </script>
     <c:ApplicationHead />
-    <c:ApplicationBody title="New Application" rendered="{!NOT(ISBLANK(appControl))}" appControl="{!appControl}">
-        <apex:outputPanel id="regMessages">
-            <apex:pageMessages />
-        </apex:outputPanel>
-        <c:ApplicationForm section="{!section}" appControl="{!appControl}">
+    <c:ApplicationBody title="New Application" rendered="{!NOT(ISBLANK(appCreate.appControl))}" appControl="{!appCreate.appControl}">
+        <c:ApplicationForm section="{!appCreate.section}" appControl="{!appCreate.appControl}">
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
-                        <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
+                	<apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="login();">
+                        <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
                     </apex:actionFunction>
-                    <apex:commandLink styleClass="btn btn-lg appCreateSave" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                    <apex:actionFunction name="login" action="{!login}" oncomplete="appHideLoadingSpinner();" />
+                    <button Class="btn btn-lg navButton left  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c}; float:left; margin: 10px;" 
+                        role="button" data-slide="prev"
+                    >Back</button>
+                    <apex:commandLink styleClass="btn btn-lg appCreateSave" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c};float:right;margin: 10px;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                    <button Class="btn btn-lg navButton right  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c}; float:right; margin: 10px;" 
+                        role="button" data-slide="next"
+                    >Next</button>
                 </div>
             </div>
         </c:ApplicationForm>

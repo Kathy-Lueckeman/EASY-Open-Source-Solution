@@ -101,6 +101,10 @@
                 <behavior>Readonly</behavior>
                 <field>IsComplete__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PopulatedOn__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

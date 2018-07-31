@@ -403,18 +403,14 @@ public class INT_InteractionProcessor {
         leadConvert.setConvertedStatus(convertStatus.MasterLabel);
         leadConvert.setContactId(interaction.Contact__c);
         
-        if (ApexPages.currentPage() != null && ApexPages.currentPage().getUrl() != null && ApexPages.currentPage().getUrl().contains('ApplicationRegistration') && !Test.isRunningTest()) {
-            Id siteId = Network.getNetworkId();
-            if(siteId != null){
-                SObject nsr = database.query('Select Id, AccountId FROM NetworkSelfRegistration WHERE NetworkId = :siteId LIMIT 1');
-                String accountId = (String)nsr.get('AccountId');
-                if (String.isNotBlank(accountId)) {
-                    leadConvert.setAccountId(accountId);
-                }
-            }
-        } else {
-        	leadConvert.setAccountId(interaction.Contact_Account_ID__c);
+        Id accountId;
+        if (interaction.Contact_Account_ID__c != null) {
+            accountId = interaction.Contact_Account_ID__c;
+        } else if (ApexPages.currentPage() != null && ApexPages.currentPage().getUrl() != null && ApexPages.currentPage().getUrl().contains('ApplicationRegistration') && Network.getNetworkId() != null && !Test.isRunningTest()) {
+            accountId = [SELECT Id, AccountId FROM NetworkSelfRegistration WHERE NetworkId = :Network.getNetworkId() LIMIT 1].AccountId;
         }
+        
+        leadConvert.setAccountId(accountId);
         leadConvert.setDoNotCreateOpportunity(createOppty);
 
         return leadConvert;

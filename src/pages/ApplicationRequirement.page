@@ -1,11 +1,12 @@
 <apex:page controller="ApplicationRequirement" action="{!init}" showHeader="false" standardStylesheets="false" docType="html-5.0" >
     <script>
-        function lookupSearchJS(sObj,sObjFilter,searchTerm,callback){
+        function lookupSearchJS(sObj,sObjFilter,sObjNameField,searchTerm,callback){
+            console.log("in application requirement vfp");
             console.log(sObj);
             console.log(searchTerm);
             Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
-                sObj, sObjFilter,searchTerm,
+                sObj, sObjFilter,sObjNameField,searchTerm,
                 function(result, event){
                     if (event.status) {
                         console.log(result);
@@ -17,16 +18,55 @@
                 {escape: true}
             );
         }
+        //Added by Chris Boulden (function below). Enables navigation buttons to both navigation between sections and requirement pages
+        function redirect(redirectTo){
+
+            var jq = jQuery.noConflict();
+
+            if (redirectTo == 'forwards' && jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
+                performDocUploadSave(redirectTo);
+                appShowLoadingSpinner();
+            } else if(redirectTo == 'forwards') {
+                jq("#myCarousel").carousel("next");
+            } else if (redirectTo == 'back' && jq("#myCarousel .carousel-inner .item:first").hasClass("active")) {
+                performDocUploadSave(redirectTo);
+                appShowLoadingSpinner();
+            } else if (redirectTo == 'back') {
+                jq("#myCarousel").carousel("prev");
+            }
+        }
     </script>
     <c:ApplicationHead />
     <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occured and you do not have access to this page.','')}" appControl="{!appControl}">
-        <c:ApplicationForm section="{!section}" rendered="{!!showSuccess && !isInvalid}" appControl="{!appControl}">
+        <c:ApplicationForm section="{!section}" rendered="{!!showSuccess && !isInvalid}" appControl="{!appControl}" nextID="{!nextSectionId}" prevId="{!previousSectionId}">  
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
+                        <apex:param name="p2" value="" assignTo="{!redirectPage}"/>
                     </apex:actionFunction>
-                    <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="{!if(!isInvalid && isExternalUser, 'Submit', 'Save and Back')}" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                    <div class="row" >
+                        <style>
+                        	@media only screen and (max-width: 400px) {
+                            	.btn-lg {
+                            		padding: 10px;
+                            	}
+                            }
+                        </style>
+                        <div class="col-xs-3 col-md-2" ><apex:commandLink onclick="redirect('back');" styleClass="btn btn-lg leftNav" reRender="none" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; float:left; width:100%;" value="<" /></div>
+                    <!--<button Class="btn btn-lg navButton left" href="#myCarousel" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; float:left; margin: 10px;" 
+                        role="button" data-slide="prev"
+                    >Back</button>-->
+                        <div class="col-xs-6 col-md-4 col-md-offset-2">
+                            <center>
+                                <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; width:100%;" value="Back to Checklist" reRender="none" onclick="performDocUploadSave('checklist');appShowLoadingSpinner();" rendered="{!!isExternalUser}" />
+                                <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; width:100%;" value="Save" reRender="none" onclick="performDocUploadSave('');appShowLoadingSpinner();" rendered="{!isExternalUser}" />
+                            </center>
+                        </div>
+                        <div class="col-xs-3 col-md-2 col-md-offset-2"><apex:commandLink onclick="redirect('forwards');" styleClass="btn btn-lg rightNav" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; float:right; width:100%" value=">" reRender="none" /></div>
+                    <!--<button Class="btn btn-lg navButton right" href="#myCarousel"  style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; float:right; margin: 10px;" 
+                        role="button" data-slide="next">Next</button>-->     
+                    </div>
                 </div>
             </div>
         </c:ApplicationForm>
