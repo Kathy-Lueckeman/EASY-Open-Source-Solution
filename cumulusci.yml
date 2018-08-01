@@ -1,0 +1,5 @@
+project:
+    name: EASY
+    package:
+        name:  EASY Open Source Solution
+        api_version: '38.0'
