@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20180801 14:32:08.204" generator="Robot 3.0.4 (Python 2.7.14 on darwin)">
+<suite source="/Users/jlantz/dev/EASY-Open-Source-Solution/tests" id="s1" name="Tests">
+<suite source="/Users/jlantz/dev/EASY-Open-Source-Solution/tests/standard_objects" id="s1-s1" name="Standard Objects">
+<suite source="/Users/jlantz/dev/EASY-Open-Source-Solution/tests/standard_objects/create_contact.robot" id="s1-s1-s1" name="Create Contact">
+<kw type="setup" name="Open Test Browser" library="Salesforce">
+<kw name="Login Url" library="cumulusci.robotframework.CumulusCI">
+<doc>Returns the login url which will automatically log into the target</doc>
+<assign>
+<var>${login_url}</var>
+</assign>
+<msg timestamp="20180801 14:32:08.399" level="INFO">${login_url} = https://connect-enterprise-3132-dev-ed.cs2.my.salesforce.com/secur/frontdoor.jsp?sid=00DR0000001nTaA!AQoAQIslGcn0UhDlwl7Bzhrcus1fBFWBCEEMVlBAPkqYtYLf1iJQk3t3dRTytF0_Gu34mqfaYM8lh.h6_1OpLOusmGbAIMge</msg>
+<status status="PASS" endtime="20180801 14:32:08.399" starttime="20180801 14:32:08.399"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${BROWSER}' == 'chrome'</arg>
+<arg>Open Test Browser Chrome</arg>
+<arg>${login_url}</arg>
+<arg>ELSE IF</arg>
+<arg>'${BROWSER}' == 'firefox'</arg>
+<arg>Open Test Browser Firefox</arg>
+<arg>${login_url}</arg>
+<arg>ELSE IF</arg>
+<arg>'${BROWSER}' == 'headlesschrome'</arg>
+<arg>Open Test Browser Chrome</arg>
+<arg>${login_url}</arg>
+<arg>ELSE IF</arg>
+<arg>'${BROWSER}' == 'headlessfirefox'</arg>
+<arg>Open Test Browser Headless Firefox</arg>
+<arg>${login_url}</arg>
+<arg>ELSE</arg>
+<arg>Open Browser</arg>
+<arg>${login_url}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<kw name="Open Test Browser Chrome" library="Salesforce">
+<arguments>
+<arg>${login_url}</arg>
+</arguments>
+<kw name="Get Chrome Options" library="Salesforce">
+<assign>
+<var>${options}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>selenium.webdriver.ChromeOptions()</arg>
+<arg>modules=selenium</arg>
+</arguments>
+<assign>
+<var>${options}</var>
+</assign>
+<msg timestamp="20180801 14:32:08.401" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x112099910&gt;</msg>
+<status status="PASS" endtime="20180801 14:32:08.401" starttime="20180801 14:32:08.401"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${BROWSER}' == 'headlesschrome'</arg>
+<arg>Chrome Set Headless</arg>
+<arg>${options}</arg>
+</arguments>
+<status status="PASS" endtime="20180801 14:32:08.402" starttime="20180801 14:32:08.401"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${CHROME_BINARY}' != '${empty}'</arg>
+<arg>Chrome Set Binary</arg>
+<arg>${options}</arg>
+</arguments>
+<status status="PASS" endtime="20180801 14:32:08.402" starttime="20180801 14:32:08.402"></status>
+</kw>
+<msg timestamp="20180801 14:32:08.402" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x112099910&gt;</msg>
+<status status="PASS" endtime="20180801 14:32:08.402" starttime="20180801 14:32:08.401"></status>
+</kw>
+<kw name="Create Webdriver" library="SeleniumLibrary">
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<arguments>
+<arg>Chrome</arg>
+<arg>options=${options}</arg>
+</arguments>
+<msg timestamp="20180801 14:32:08.403" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" endtime="20180801 14:32:10.005" starttime="20180801 14:32:08.403"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>${IMPLICIT_WAIT}</arg>
+</arguments>
+<status status="PASS" endtime="20180801 14:32:10.007" starttime="20180801 14:32:10.006"></status>
+</kw>
+<kw name="Set Selenium Timeout" library="SeleniumLibrary">
+<doc>Sets the timeout that is used by various keywords.</doc>
+<arguments>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<status status="PASS" endtime="20180801 14:32:10.009" starttime="20180801 14:32:10.007"></status>
+</kw>
+<kw name="Go To" library="SeleniumLibrary">
+<doc>Navigates the active browser instance to the provided ``url``.</doc>
+<arguments>
+<arg>${login_url}</arg>
+</arguments>
+<msg timestamp="20180801 14:32:10.009" level="INFO">Opening url 'https://connect-enterprise-3132-dev-ed.cs2.my.salesforce.com/secur/frontdoor.jsp?sid=00DR0000001nTaA!AQoAQIslGcn0UhDlwl7Bzhrcus1fBFWBCEEMVlBAPkqYtYLf1iJQk3t3dRTytF0_Gu34mqfaYM8lh.h6_1OpLOusmGbAIMge'</msg>
+<status status="PASS" endtime="20180801 14:32:11.152" starttime="20180801 14:32:10.009"></status>
+</kw>
+<status status="PASS" endtime="20180801 14:32:11.152" starttime="20180801 14:32:08.400"></status>
+</kw>
+<status status="PASS" endtime="20180801 14:32:11.153" starttime="20180801 14:32:08.399"></status>
+</kw>
+<kw name="Wait Until Loading Is Complete" library="cumulusci.robotframework.Salesforce">
+<doc>EXPERIMENTAL!!!</doc>
+<status status="PASS" endtime="20180801 14:32:11.160" starttime="20180801 14:32:11.153"></status>
+</kw>
+<status status="PASS" endtime="20180801 14:32:11.160" starttime="20180801 14:32:08.399"></status>
+</kw>
+<test id="s1-s1-s1-t1" name="Via API">
+<kw name="Generate Random String" library="String">
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<assign>
+<var>${first_name}</var>
+</assign>
+<msg timestamp="20180801 14:32:11.162" level="INFO">${first_name} = mQ7ADqol</msg>
+<status status="PASS" endtime="20180801 14:32:11.162" starttime="20180801 14:32:11.161"></status>
+</kw>
+<kw name="Generate Random String" library="String">
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<assign>
+<var>${last_name}</var>
+</assign>
+<msg timestamp="20180801 14:32:11.162" level="INFO">${last_name} = KF4SGxWR</msg>
+<status status="PASS" endtime="20180801 14:32:11.162" starttime="20180801 14:32:11.162"></status>
+</kw>
+<kw name="Salesforce Insert" library="cumulusci.robotframework.Salesforce">
+<doc>Inserts a Salesforce object setting fields using kwargs and returns the id</doc>
+<arguments>
+<arg>Contact</arg>
+<arg>FirstName=${first_name}</arg>
+<arg>LastName=${last_name}</arg>
+</arguments>
+<assign>
+<var>${contact_id}</var>
+</assign>
+<msg timestamp="20180801 14:32:11.163" level="INFO">Inserting Contact with values {u'LastName': 'KF4SGxWR', u'FirstName': 'mQ7ADqol'}</msg>
+<msg timestamp="20180801 14:32:11.742" level="INFO">Storing Contact 003R000001JvROzIAN to session records</msg>
+<msg timestamp="20180801 14:32:11.742" level="INFO">${contact_id} = 003R000001JvROzIAN</msg>
+<status status="PASS" endtime="20180801 14:32:11.742" starttime="20180801 14:32:11.163"></status>
+</kw>
+<kw name="Salesforce Get" library="cumulusci.robotframework.Salesforce">
+<doc>Gets a Salesforce object by id and returns the dict result</doc>
+<arguments>
+<arg>Contact</arg>
+<arg>${contact_id}</arg>
+</arguments>
+<assign>
+<var>&amp;{contact}</var>
+</assign>
+<msg timestamp="20180801 14:32:11.743" level="INFO">Getting Contact with Id 003R000001JvROzIAN</msg>
+<msg timestamp="20180801 14:32:11.901" level="INFO">&amp;{contact} = { attributes={u'type': u'Contact', u'url': u'/services/data/v38.0/sobjects/Contact/003R000001JvROzIAN'} | Id=003R000001JvROzIAN | IsDeleted=False | MasterRecordId=None | AccountId=None | LastName=KF4S...</msg>
+<status status="PASS" endtime="20180801 14:32:11.901" starttime="20180801 14:32:11.743"></status>
+</kw>
+<kw name="Validate Contact">
+<arguments>
+<arg>${contact_id}</arg>
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+</arguments>
+<kw name="Go To Record Home" library="cumulusci.robotframework.Salesforce">
+<doc>Navigates to the Home view of a Salesforce Object</doc>
+<arguments>
+<arg>Contact</arg>
+<arg>${contact_id}</arg>
+</arguments>
+<msg timestamp="20180801 14:32:11.903" level="INFO">Opening url 'https://connect-enterprise-3132-dev-ed.lightning.force.com/one/one.app#/sObject/Contact/view'</msg>
+<status status="PASS" endtime="20180801 14:32:19.353" starttime="20180801 14:32:11.902"></status>
+</kw>
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<doc>Verifies that current page contains ``text``.</doc>
+<arguments>
+<arg>${first_name} ${last_name}</arg>
+</arguments>
+<msg timestamp="20180801 14:32:23.087" level="INFO">Current page contains text 'mQ7ADqol KF4SGxWR'.</msg>
+<status status="PASS" endtime="20180801 14:32:23.087" starttime="20180801 14:32:19.353"></status>
+</kw>
+<kw name="Salesforce Get" library="cumulusci.robotframework.Salesforce">
+<doc>Gets a Salesforce object by id and returns the dict result</doc>
+<arguments>
+<arg>Contact</arg>
+<arg>${contact_id}</arg>
+</arguments>
+<assign>
+<var>&amp;{contact}</var>
+</assign>
+<msg timestamp="20180801 14:32:23.088" level="INFO">Getting Contact with Id 003R000001JvROzIAN</msg>
+<msg timestamp="20180801 14:32:23.219" level="INFO">&amp;{contact} = { attributes={u'type': u'Contact', u'url': u'/services/data/v38.0/sobjects/Contact/003R000001JvROzIAN'} | Id=003R000001JvROzIAN | IsDeleted=False | MasterRecordId=None | AccountId=None | LastName=KF4S...</msg>
+<status status="PASS" endtime="20180801 14:32:23.219" starttime="20180801 14:32:23.087"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${first_name}</arg>
+<arg>&amp;{contact}[FirstName]</arg>
+</arguments>
+<msg timestamp="20180801 14:32:23.220" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20180801 14:32:23.221" starttime="20180801 14:32:23.219"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${last_name}</arg>
+<arg>&amp;{contact}[LastName]</arg>
+</arguments>
+<msg timestamp="20180801 14:32:23.222" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20180801 14:32:23.222" starttime="20180801 14:32:23.221"></status>
+</kw>
+<status status="PASS" endtime="20180801 14:32:23.222" starttime="20180801 14:32:11.902"></status>
+</kw>
+<status status="PASS" endtime="20180801 14:32:23.222" critical="yes" starttime="20180801 14:32:11.160"></status>
+</test>
+<test id="s1-s1-s1-t2" name="Via UI">
+<kw name="Generate Random String" library="String">
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<assign>
+<var>${first_name}</var>
+</assign>
+<msg timestamp="20180801 14:32:23.224" level="INFO">${first_name} = omu8ck06</msg>
+<status status="PASS" endtime="20180801 14:32:23.224" starttime="20180801 14:32:23.224"></status>
+</kw>
+<kw name="Generate Random String" library="String">
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<assign>
+<var>${last_name}</var>
+</assign>
+<msg timestamp="20180801 14:32:23.224" level="INFO">${last_name} = Em2NVsGu</msg>
+<status status="PASS" endtime="20180801 14:32:23.224" starttime="20180801 14:32:23.224"></status>
+</kw>
+<kw name="Go To Object Home" library="cumulusci.robotframework.Salesforce">
+<doc>Navigates to the Home view of a Salesforce Object</doc>
+<arguments>
+<arg>Contact</arg>
+</arguments>
+<msg timestamp="20180801 14:32:23.225" level="INFO">Opening url 'https://connect-enterprise-3132-dev-ed.lightning.force.com/one/one.app#/sObject/Contact/home'</msg>
+<status status="PASS" endtime="20180801 14:32:24.073" starttime="20180801 14:32:23.225"></status>
+</kw>
+<kw name="Click Object Button" library="cumulusci.robotframework.Salesforce">
+<arguments>
+<arg>New</arg>
+</arguments>
+<status status="PASS" endtime="20180801 14:32:26.499" starttime="20180801 14:32:24.074"></status>
+</kw>
+<kw name="Populate Form" library="cumulusci.robotframework.Salesforce">
+<arguments>
+<arg>First Name=${first_name}</arg>
+<arg>Last Name=${last_name}</arg>
+</arguments>
+<status status="PASS" endtime="20180801 14:32:26.804" starttime="20180801 14:32:26.500"></status>
+</kw>
+<kw name="Click Modal Button" library="cumulusci.robotframework.Salesforce">
+<arguments>
+<arg>Save</arg>
+</arguments>
+<status status="PASS" endtime="20180801 14:32:29.770" starttime="20180801 14:32:26.804"></status>
+</kw>
+<kw name="Wait Until Modal Is Closed" library="cumulusci.robotframework.Salesforce">
+<doc>EXPERIMENTAL!!!</doc>
+<status status="PASS" endtime="20180801 14:32:36.816" starttime="20180801 14:32:29.770"></status>
+</kw>
+<kw name="Get Current Record Id" library="cumulusci.robotframework.Salesforce">
+<doc>Parses the current url to get the object id of the current record.</doc>
+<assign>
+<var>${contact_id}</var>
+</assign>
+<msg timestamp="20180801 14:32:36.821" level="INFO">${contact_id} = 003R000001JvRP4IAN</msg>
+<status status="PASS" endtime="20180801 14:32:36.821" starttime="20180801 14:32:36.816"></status>
+</kw>
+<kw name="Store Session Record" library="cumulusci.robotframework.Salesforce">
+<doc>Stores a Salesforce record's id for use in the Delete Session Records keyword</doc>
+<arguments>
+<arg>Contact</arg>
+<arg>${contact_id}</arg>
+</arguments>
+<msg timestamp="20180801 14:32:36.822" level="INFO">Storing Contact 003R000001JvRP4IAN to session records</msg>
+<status status="PASS" endtime="20180801 14:32:36.822" starttime="20180801 14:32:36.821"></status>
+</kw>
+<kw name="Validate Contact">
+<arguments>
+<arg>${contact_id}</arg>
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+</arguments>
+<kw name="Go To Record Home" library="cumulusci.robotframework.Salesforce">
+<doc>Navigates to the Home view of a Salesforce Object</doc>
+<arguments>
+<arg>Contact</arg>
+<arg>${contact_id}</arg>
+</arguments>
+<msg timestamp="20180801 14:32:36.823" level="INFO">Opening url 'https://connect-enterprise-3132-dev-ed.lightning.force.com/one/one.app#/sObject/Contact/view'</msg>
+<status status="PASS" endtime="20180801 14:32:37.743" starttime="20180801 14:32:36.822"></status>
+</kw>
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<doc>Verifies that current page contains ``text``.</doc>
+<arguments>
+<arg>${first_name} ${last_name}</arg>
+</arguments>
+<msg timestamp="20180801 14:32:38.276" level="INFO">Current page contains text 'omu8ck06 Em2NVsGu'.</msg>
+<status status="PASS" endtime="20180801 14:32:38.277" starttime="20180801 14:32:37.743"></status>
+</kw>
+<kw name="Salesforce Get" library="cumulusci.robotframework.Salesforce">
+<doc>Gets a Salesforce object by id and returns the dict result</doc>
+<arguments>
+<arg>Contact</arg>
+<arg>${contact_id}</arg>
+</arguments>
+<assign>
+<var>&amp;{contact}</var>
+</assign>
+<msg timestamp="20180801 14:32:38.277" level="INFO">Getting Contact with Id 003R000001JvRP4IAN</msg>
+<msg timestamp="20180801 14:32:38.416" level="INFO">&amp;{contact} = { attributes={u'type': u'Contact', u'url': u'/services/data/v38.0/sobjects/Contact/003R000001JvRP4IAN'} | Id=003R000001JvRP4IAN | IsDeleted=False | MasterRecordId=None | AccountId=None | LastName=Em2N...</msg>
+<status status="PASS" endtime="20180801 14:32:38.416" starttime="20180801 14:32:38.277"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${first_name}</arg>
+<arg>&amp;{contact}[FirstName]</arg>
+</arguments>
+<msg timestamp="20180801 14:32:38.418" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20180801 14:32:38.418" starttime="20180801 14:32:38.417"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${last_name}</arg>
+<arg>&amp;{contact}[LastName]</arg>
+</arguments>
+<msg timestamp="20180801 14:32:38.419" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20180801 14:32:38.419" starttime="20180801 14:32:38.418"></status>
+</kw>
+<status status="PASS" endtime="20180801 14:32:38.420" starttime="20180801 14:32:36.822"></status>
+</kw>
+<status status="PASS" endtime="20180801 14:32:38.420" critical="yes" starttime="20180801 14:32:23.223"></status>
+</test>
+<kw type="teardown" name="Delete Records and Close Browser" library="Salesforce">
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20180801 14:32:38.498" starttime="20180801 14:32:38.421"></status>
+</kw>
+<kw name="Delete Session Records" library="cumulusci.robotframework.Salesforce">
+<msg timestamp="20180801 14:32:38.499" level="INFO">Deleting 2 records</msg>
+<msg timestamp="20180801 14:32:38.499" level="INFO">  Deleting Contact 003R000001JvRP4IAN</msg>
+<msg timestamp="20180801 14:32:38.499" level="INFO">Deleting Contact with Id 003R000001JvRP4IAN</msg>
+<status status="PASS" endtime="20180801 14:32:38.853" starttime="20180801 14:32:38.498"></status>
+</kw>
+<status status="PASS" endtime="20180801 14:32:38.853" starttime="20180801 14:32:38.421"></status>
+</kw>
+<status status="PASS" endtime="20180801 14:32:38.853" starttime="20180801 14:32:08.232"></status>
+</suite>
+<status status="PASS" endtime="20180801 14:32:38.856" starttime="20180801 14:32:08.230"></status>
+</suite>
+<status status="PASS" endtime="20180801 14:32:38.857" starttime="20180801 14:32:08.207"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="2">Critical Tests</stat>
+<stat fail="0" pass="2">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="Tests" pass="2">Tests</stat>
+<stat fail="0" id="s1-s1" name="Standard Objects" pass="2">Tests.Standard Objects</stat>
+<stat fail="0" id="s1-s1-s1" name="Create Contact" pass="2">Tests.Standard Objects.Create Contact</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

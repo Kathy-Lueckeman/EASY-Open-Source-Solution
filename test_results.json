@@ -1,0 +1,1282 @@
+[
+    {
+        "ClassName": "ApplicationAdminViewTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 806
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:16.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "appReview"
+    }, 
+    {
+        "ClassName": "ApplicationChecklistTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 618
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:17.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "cancelApp"
+    }, 
+    {
+        "ClassName": "ApplicationChecklistTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 406
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:17.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "checkFailures"
+    }, 
+    {
+        "ClassName": "ApplicationChecklistTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 313
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:18.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "checkSuccesses"
+    }, 
+    {
+        "ClassName": "ApplicationChecklistTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 13, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 17, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 8, 
+                "allowed": 10000
+            }, 
+            "duration": 579, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 100, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 6, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:18.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "submitApp"
+    }, 
+    {
+        "ClassName": "ApplicationCreateTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 370
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:15.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testError"
+    }, 
+    {
+        "ClassName": "ApplicationCreateTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 273
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:16.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testFreshman"
+    }, 
+    {
+        "ClassName": "ApplicationFilterTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 0, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 1, 
+                "allowed": 10000
+            }, 
+            "duration": 188, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 24, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 1, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:18.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "appFilter1"
+    }, 
+    {
+        "ClassName": "ApplicationFilterTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 0, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 1, 
+                "allowed": 10000
+            }, 
+            "duration": 115, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 16, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 1, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:18.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "appFilter2"
+    }, 
+    {
+        "ClassName": "ApplicationFilterTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 0, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 1, 
+                "allowed": 10000
+            }, 
+            "duration": 190, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 24, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 1, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:19.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "appFilter3"
+    }, 
+    {
+        "ClassName": "ApplicationFilterTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 84
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:19.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "appFilter4"
+    }, 
+    {
+        "ClassName": "ApplicationFilterTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 71
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:19.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "appFilter5"
+    }, 
+    {
+        "ClassName": "ApplicationPortalTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 97
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:17.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "loadApps"
+    }, 
+    {
+        "ClassName": "ApplicationRegistrationTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 1990
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:16.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testCreate"
+    }, 
+    {
+        "ClassName": "ApplicationRegistrationTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 48
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:18.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testLookupSearch"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementPreviewTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 267
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:18.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "appPreview"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 810
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:18.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "standardTest"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 7, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 23, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 12, 
+                "allowed": 10000
+            }, 
+            "duration": 1155, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 166, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 7, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:19.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testDependentQuestions"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 10, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 13, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 7, 
+                "allowed": 10000
+            }, 
+            "duration": 720, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 105, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 5, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:20.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testDocumentUpload"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 355
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:21.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testExternal"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 0, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 1, 
+                "allowed": 10000
+            }, 
+            "duration": 109, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 18, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 1, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:21.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testLookupSearch"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 229
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:22.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testMisc"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 0, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 0, 
+                "allowed": 10000
+            }, 
+            "duration": 52, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 0, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 0, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:22.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testMiscQuestion"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 350
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:22.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testQuestionGroup"
+    }, 
+    {
+        "ClassName": "ApplicationRequirementTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 591
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:22.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testRelatedObject"
+    }, 
+    {
+        "ClassName": "ApplicationReviewTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 594
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:23.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "appReview"
+    }, 
+    {
+        "ClassName": "BatchApplicationArchiverTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 1, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 0, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 0, 
+                "allowed": 10000
+            }, 
+            "duration": 5887, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 11, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 0, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:18.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "standardTest"
+    }, 
+    {
+        "ClassName": "INT_InteractionMappingService_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 1, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 37, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 0, 
+                "allowed": 10000
+            }, 
+            "duration": 57, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 1, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 0, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:17.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testCreateContact"
+    }, 
+    {
+        "ClassName": "INT_InteractionMappingService_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 1, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 37, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 0, 
+                "allowed": 10000
+            }, 
+            "duration": 27, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 1, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 0, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:17.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testCreateContactExcludedSources"
+    }, 
+    {
+        "ClassName": "INT_InteractionProcessor_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 6, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 114, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 2000, 
+                "allowed": 10000
+            }, 
+            "duration": 26350, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 82, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 10, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:15.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testBulkInsertLeadsOnly"
+    }, 
+    {
+        "ClassName": "INT_InteractionProcessor_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 6, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 114, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 3012, 
+                "allowed": 10000
+            }, 
+            "duration": 57495, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 134, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 16, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:43.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testBulkInteractionInsert"
+    }, 
+    {
+        "ClassName": "INT_InteractionProcessor_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 4, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 40, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 10, 
+                "allowed": 10000
+            }, 
+            "duration": 3285, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 33, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 8, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:28:44.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testCampaignMemberCreation"
+    }, 
+    {
+        "ClassName": "INT_InteractionProcessor_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 2, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 38, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 402, 
+                "allowed": 10000
+            }, 
+            "duration": 3456, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 39, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 4, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:28:47.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testInsertDupeLeadsOnlyInImport"
+    }, 
+    {
+        "ClassName": "INT_InteractionProcessor_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 8, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 2, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 41, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 10, 
+                "allowed": 10000
+            }, 
+            "duration": 1457, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 84, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 10, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:28:51.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testOpportunityCreation"
+    }, 
+    {
+        "ClassName": "INT_InteractionProcessor_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 2, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 38, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 8, 
+                "allowed": 10000
+            }, 
+            "duration": 697, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 17, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 6, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:28:53.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testPreProcessing"
+    }, 
+    {
+        "ClassName": "INT_InteractionProcessor_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 2, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 0, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 38, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 6, 
+                "allowed": 10000
+            }, 
+            "duration": 645, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 12, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 6, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:28:53.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testSkipMappingSources"
+    }, 
+    {
+        "ClassName": "INT_OpportunityContactRoleHandler_TEST", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 6, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 2, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 3, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 4, 
+                "allowed": 10000
+            }, 
+            "duration": 823, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 23, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 4, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:15.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testOpportunityContactRoleHandler"
+    }, 
+    {
+        "ClassName": "RelatedDocumentUploadTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 1345
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:15.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "docUpload"
+    }, 
+    {
+        "ClassName": "RelatedObjectReviewTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "duration": 372
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:15.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "relatedObjectReview"
+    }, 
+    {
+        "ClassName": "UserApplicationTriggerHandlerTest", 
+        "StackTrace": null, 
+        "Stats": {
+            "TESTING_LIMITS: Number of Email Invocations": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of SOQL queries": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of callouts": {
+                "used": 0, 
+                "allowed": 100
+            }, 
+            "TESTING_LIMITS: Number of future calls": {
+                "used": 1, 
+                "allowed": 50
+            }, 
+            "TESTING_LIMITS: Number of SOSL queries": {
+                "used": 0, 
+                "allowed": 20
+            }, 
+            "TESTING_LIMITS: Number of query rows": {
+                "used": 0, 
+                "allowed": 50000
+            }, 
+            "TESTING_LIMITS: Number of Mobile Apex push calls": {
+                "used": 0, 
+                "allowed": 10
+            }, 
+            "TESTING_LIMITS: Number of DML rows": {
+                "used": 1, 
+                "allowed": 10000
+            }, 
+            "duration": 695, 
+            "TESTING_LIMITS: Maximum CPU time": {
+                "used": 21, 
+                "allowed": 10000
+            }, 
+            "TESTING_LIMITS: Number of DML statements": {
+                "used": 1, 
+                "allowed": 150
+            }
+        }, 
+        "TestTimestamp": "2018-08-01T20:27:15.000+0000", 
+        "Message": null, 
+        "Outcome": "Pass", 
+        "Children": null, 
+        "Method": "testUserCreation"
+    }
+]

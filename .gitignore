@@ -1,8 +1,7 @@
-.project
-.settings
-salesforce.schema
-Referenced Packages
-.gitignore
-build.properties
-.*.swp
+*.pyc
+*.swp
 .DS_Store
+.manifest
+.sfdx/
+/test_results.xml
+build.properties
