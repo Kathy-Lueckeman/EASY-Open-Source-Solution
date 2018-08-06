@@ -59,10 +59,6 @@
                 <behavior>Edit</behavior>
                 <field>Educational_Background__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Student_Type__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

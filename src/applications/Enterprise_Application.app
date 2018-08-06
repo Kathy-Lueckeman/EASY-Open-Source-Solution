@@ -8,7 +8,6 @@
     <tab>Interaction__c</tab>
     <tab>Application__c</tab>
     <tab>Application_Review__c</tab>
-    <tab>Related_Object_Review</tab>
     <tab>Application_Control__c</tab>
     <tab>Requirement__c</tab>
     <tab>Program__c</tab>

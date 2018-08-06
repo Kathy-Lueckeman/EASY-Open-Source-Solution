@@ -29,6 +29,10 @@
                 <behavior>Edit</behavior>
                 <field>Display_Order__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>URL_Parameter__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

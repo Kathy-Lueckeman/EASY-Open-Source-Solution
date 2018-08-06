@@ -2,7 +2,7 @@
 @description This class allows an administrator to review any related object such as Schools or employers that were not found in the system and approve new records/lookup existing records
 @author Huron Consulting Group
 
-Revision (s): 
+Revision (s):
 *******************************************************************************/
 public class RelatedObjectReview {
 	public Map<String, List<SObjectWrapper>> objWrappers{get;set;}
@@ -15,7 +15,7 @@ public class RelatedObjectReview {
 	public Application_Control__c appControl{
         get{
             if(appControl == null){
-                appControl = ApplicationUtilities.getApplicationControls(null);
+                appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
             }
             return appControl;
         }set;
@@ -28,7 +28,7 @@ public class RelatedObjectReview {
 		Map<String,String> reqItemLookupObjMap = new Map<String,String>();
 		Map<String,String> reqItemRelatedObjMap = new Map<String,String>();
 		//Find all relevant fields based on questions asked
-		for(Question__c q : [SELECT Id, Lookup_Object__c, Related_Object_Field__c, Requirement_Item__c, Requirement_Item__r.Related_List_Object__c, RecordType.DeveloperName, New_Reference_Field__c ,Static_Text__c FROM Question__c WHERE (Lookup_Object__c != null OR New_Reference_Field__c = true) AND Active__c = true ORDER BY New_Reference_Field__c, Display_Order__c ASC NULLS LAST]){
+		for(Question__c q : [SELECT Id, Lookup_Object__c, Related_Object_Field__c, Requirement_Item__c, Requirement_Item__r.Related_List_Object__c, RecordType.DeveloperName, New_Reference_Field__c ,Static_Text__c FROM Question__c WHERE (Lookup_Object__c != null OR New_Reference_Field__c = true) AND Active__c = :true AND Requirement_Item__r.Active__c = :true AND Requirement_Item__r.Requirement__r.Active__c = :true AND Requirement_Item__r.Requirement__r.Application_Control__c = :appControl.Id ORDER BY New_Reference_Field__c, Display_Order__c ASC NULLS LAST]){
 			if(q.New_Reference_Field__c == false && q.RecordType.DeveloperName == 'Reference' && String.isNotBlank(q.Lookup_Object__c)){
 				reqItemLookupObjMap.put(q.Requirement_Item__c,q.Lookup_Object__c);
 				reqItemRelatedObjMap.put(q.Requirement_Item__r.Related_List_Object__c,q.Lookup_Object__c);
@@ -136,7 +136,7 @@ public class RelatedObjectReview {
                 if(String.isNotBlank(sObjFilter)){
                     query += ' AND ' + sObjFilter;
                 }
-                query += ' ORDER BY NAME ASC';
+                query += ' ORDER BY Name ASC';
                 try{
                     return database.query(query);
                 }catch(Exception e){

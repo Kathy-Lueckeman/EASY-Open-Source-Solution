@@ -30,14 +30,14 @@ public class ApplicationQuestion {
 
     public String label {get;private set;}
     public sObject obj {get;set;}
-    public  String fieldName {get;set;}
+    public String fieldName {get;set;}
     public String value;
     public Boolean checkboxValue;
     public Decimal decimalValue;
     public Datetime datetimeValue;
     public Date dateValue;
     public Integer integerValue;
-    public String placeholder {get;private set;}
+    public String placeholder {get; set;}
     public Integer length {get;set;}
     public Schema.DisplayType displayType {get;set;}
     public Contact con {get;set;}
@@ -68,7 +68,15 @@ public class ApplicationQuestion {
     }
 
     public List<String> multiPicklistValues;
-    public Question__c question {get;set;}
+    public Question__c question {get;
+        //Added by Chris Boulden (next 8 lines). Setter writes question response if a URL parameter is available to prepopulate
+        set{
+            this.question = value;
+            if (value.URL_Parameter__c != null && ApexPages.currentPage().getParameters().containsKey(question.URL_Parameter__c)) {
+                this.writeResponse(ApexPages.currentPage().getParameters().get(value.URL_Parameter__c));
+            }
+        }
+    }
     private Boolean tableBased {get;set;}
     public Question_Response__c response {get;set;}
     public String helpText {get;set;}
@@ -101,7 +109,7 @@ public class ApplicationQuestion {
     ********************************************************************************/
     public Boolean isEditable{
         get{
-            if(UserInfo.getUserType() != 'Standard'){
+            if(UserInfo.getUserType() != 'Standard' || Test.isRunningTest()){
                 if(application != null && String.isNotBlank(application.Application_Status__c)){
                     if(question != null && (String.isBlank(question.Editable_Application_Status__c) || (String.isNotBlank(question.Editable_Application_Status__c) && new Set<String>(question.Editable_Application_Status__c.split(';')).contains(application.Application_Status__c)))){
                         return true;
@@ -142,84 +150,164 @@ public class ApplicationQuestion {
         }
         return retValue;
     }
-
+	
+    public Boolean getShowQuestion() {
+        return this.showQuestion;
+    }
+    
     /*******************************************************************************
     * @description Calculates whether to render the question or not
     ********************************************************************************/
     public Boolean showQuestion {
         get {
-            if(obj!=null && String.isNotBlank(fieldName) && response != null && fieldType != fieldTypes.get(Schema.DisplayType.ADDRESS)){
-                obj.put(fieldName,response.ValueText__c);
-            }
-            if(question != null && String.isNotBlank(question.Hardcoded_Value__c)){
-                return false;
-            }
-            if(forceShowQuestion == true){
-                return true;
-            }
-            if(application != null && question != null && !ApplicationFilter.filter(application,question)){
-                return false;
-            }
-            //Are the answers to controlling questions the right answer to render this question
-            if (!tableBased){
-                return (controllingQuestion == null && multiControllingQuestions == null) || ( controllingQuestion != null && String.isNotBlank(controllingQuestion.response.ValueText__c) && showValues.contains(controllingQuestion.response.ValueText__c) || (multiControllingQuestions != null && checkMultiControllingQuestion()));
-            }
-            if (dQuestions == null || controllingQuestions == null || dQuestions.isEmpty() || controllingQuestions.isEmpty())
-                return true;
-            //Based on Question_Dependency records, should this question be shown.
-            if (String.isBlank(question.Dependency_Logic__c) || question.Dependency_Logic__c.equals('AND')) {
-                for (Question_Dependency__c qd:dQuestions) {
-                    if (controllingQuestions.containsKey(qd.Controlling_Question__c))
-                        if (qd.RecordType.DeveloperName.equals('Checkbox') && controllingQuestions.get(qd.Controlling_Question__c).response != null && Boolean.valueOf(qd.ValueCheckbox__c) != controllingQuestions.get(qd.Controlling_Question__c).response.ValueCheckbox__c){
-                            return String.isNotBlank(question.Dependency_Behavior__c) && question.Dependency_Behavior__c.equals('Hide');
-                        }else if (qd.RecordType.DeveloperName.equals('Picklist') && (String.isBlank(controllingQuestions.get(qd.Controlling_Question__c).response.ValueText__c) || !qd.Value__c.equals(controllingQuestions.get(qd.Controlling_Question__c).response.ValueText__c)))
-                        	return String.isNotBlank(question.Dependency_Behavior__c) && question.Dependency_Behavior__c.equals('Hide');
-                        else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')){
-                            if(String.isNotBlank(controllingQuestions.get(qd.Controlling_Question__c).response.ValueText__c) && String.isNotBlank(qd.Value__c)){
-                                Set<String> multiItems = new Set<String>(controllingQuestions.get(qd.Controlling_Question__c).response.ValueText__c.split(';'));
-                                Boolean foundValue = false;
-                                for(String controlItem : qd.Value__c.split(';')){
-                                    if(multiItems.contains(controlItem)){
-                                        foundValue = true;
-                                        break;
-                                    }
-                                }
-                                if(!foundValue){
-                                    return String.isNotBlank(question.Dependency_Behavior__c) && question.Dependency_Behavior__c.equals('Hide');
-                                }
-                            }else{
-                                return String.isNotBlank(question.Dependency_Behavior__c) && question.Dependency_Behavior__c.equals('Hide');
-                            }
-                        }
-                }
-                return String.isBlank(question.Dependency_Behavior__c) || question.Dependency_Behavior__c.equals('Show');
-            } else {
-                for (Question_Dependency__c qd:dQuestions) {
-                    if (!controllingQuestions.containsKey(qd.Controlling_Question__c))
-                        return String.isBlank(question.Dependency_Behavior__c) || question.Dependency_Behavior__c.equals('Show');
-                    else if (qd.RecordType.DeveloperName.equals('Checkbox') && Boolean.valueOf(qd.ValueCheckbox__c) == controllingQuestions.get(qd.Controlling_Question__c).response.ValueCheckbox__c)
-                        return String.isBlank(question.Dependency_Behavior__c) || question.Dependency_Behavior__c.equals('Show');
-                    else if (qd.RecordType.DeveloperName.equals('Picklist') && String.isNotBlank(controllingQuestions.get(qd.Controlling_Question__c).response.ValueText__c) && qd.Value__c.equals(controllingQuestions.get(qd.Controlling_Question__c).response.ValueText__c))
-                        return String.isBlank(question.Dependency_Behavior__c) || question.Dependency_Behavior__c.equals('Show');
-                    else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')){
-                        if(String.isNotBlank(controllingQuestions.get(qd.Controlling_Question__c).response.ValueText__c) && String.isNotBlank(qd.Value__c)){
-                            Set<String> multiItems = new Set<String>(controllingQuestions.get(qd.Controlling_Question__c).response.ValueText__c.split(';'));
+            return getShowQuestion(null);
+        }
+    }
+    
+    public Boolean getShowQuestion(SObject obj) {
+        
+        if (forceShowQuestion == true)
+            return returnShowQuestion(true, obj);
+        
+        if (application != null && question != null && !ApplicationFilter.filter(application,question))
+            return returnShowQuestion(false, obj);
+        
+        if (dQuestions == null || controllingQuestions == null || dQuestions.isEmpty() || controllingQuestions.isEmpty())
+            return returnShowQuestion(true, obj);
+        
+        Boolean satisfied;
+        
+        // Based on Question_Dependency records, should this question be shown.
+        if (String.isBlank(question.Dependency_Logic__c) || question.Dependency_Logic__c.equals('AND')) {
+            
+            satisfied = true;
+            
+            for (Question_Dependency__c qd:dQuestions) {
+                
+                if (controllingQuestions.containsKey(qd.Controlling_Question__c)) {
+                    
+                    ApplicationQuestion cq = controllingQuestions.get(qd.Controlling_Question__c);
+                    cq.getShowQuestion(obj);
+                    Object resp = cq.getResponseObject(obj);
+                    
+                    if (qd.RecordType.DeveloperName.equals('Checkbox') && Boolean.valueOf(qd.ValueCheckbox__c) != (Boolean)resp) {
+                        satisfied = false;
+                        break;
+                    } else if (qd.RecordType.DeveloperName.equals('Picklist') && (String.isBlank(String.valueOf(resp)) || !qd.Value__c.equals((String)resp))) {
+                        satisfied = false;
+                        break;
+                    } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
+                        
+                        if (String.isNotBlank(String.valueOf(resp)) && String.isNotBlank(qd.Value__c)) {
+                            
+                            Set<String> multiItems = new Set<String>(((String)resp).split(';'));
+                            
                             Boolean foundValue = false;
-                            for(String controlItem : qd.Value__c.split(';')){
-                                if(multiItems.contains(controlItem)){
+                            for (String controlItem : qd.Value__c.split(';')) {
+                                if (multiItems.contains(controlItem)) { 
                                     foundValue = true;
                                     break;
                                 }
                             }
-                            if(foundValue){
-                                return String.isBlank(question.Dependency_Behavior__c) || question.Dependency_Behavior__c.equals('Show');
+                            
+                            if (!foundValue) {
+                                satisfied = false;
+                                break;
                             }
+                            
+                        } else {
+                            satisfied = false;
+                            break;
                         }
                     }
                 }
-                return String.isNotBlank(question.Dependency_Behavior__c) && question.Dependency_Behavior__c.equals('Hide');
+            }
+            
+        } else {
+            
+            satisfied = false;
+            
+            for (Question_Dependency__c qd:dQuestions) {
+                
+                if (!controllingQuestions.containsKey(qd.Controlling_Question__c)) {
+                    satisfied = true;
+                    break;
+                }
+                
+                ApplicationQuestion cq = controllingQuestions.get(qd.Controlling_Question__c);
+                cq.getShowQuestion(obj);
+                Object resp = cq.getResponseObject(obj);
+                
+                if (qd.RecordType.DeveloperName.equals('Checkbox') && Boolean.valueOf(qd.ValueCheckbox__c) == (Boolean)resp) {
+                    satisfied = true;
+                    break;
+                } else if (qd.RecordType.DeveloperName.equals('Picklist') && String.isNotBlank(String.valueOf(resp)) && qd.Value__c.equals((String)cq.response.ValueText__c)) {
+                    satisfied = true;
+                    break;
+                } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
+                    
+                    if (String.isNotBlank(String.valueOf(resp)) && String.isNotBlank(qd.Value__c)) {
+                        
+                        Set<String> multiItems = new Set<String>(((String)resp).split(';'));
+                        
+                        Boolean foundValue = false;
+                        for (String controlItem : qd.Value__c.split(';')) {
+                            if (multiItems.contains(controlItem)) {
+                                foundValue = true;
+                                break;
+                            }
+                        }
+                        
+                        if (foundValue) {
+                            satisfied = true;
+                            break;
+                        }
+                    }
+                }
             }
         }
+        
+        Boolean showBehavior = String.isBlank(question.Dependency_Behavior__c) || question.Dependency_Behavior__c.equals('Show');
+        Boolean ret = (satisfied && showBehavior) || (!satisfied && !showBehavior);
+        
+        return returnShowQuestion(ret, obj);
+    }
+    
+    private Boolean returnShowQuestion(Boolean ret, SObject obj) {
+        
+        if (!ret) {
+            
+            if (response != null) {
+                
+                response.ValueCheckbox__c = false;
+                response.ValueCurrency__c = null;
+                response.ValueDate__c = null;
+                response.ValueDateTime__c = null;
+                response.ValueEmail__c = null;
+                response.ValueNumber__c = null;
+                response.ValuePercent__c = null;
+                response.ValuePhone__c = null;
+                response.ValueText__c = null;
+                response.ValueTextEncrypted__c = null;
+                response.ValueTextArea__c = null;
+                response.ValueLongTextArea__c = null;
+                response.ValueURL__c = null;
+                
+            } else if (String.isNotBlank(question.Related_Object_Field__c)) {
+                obj.put(question.Related_Object_Field__c, null);
+            }
+            
+        } else if (question != null && String.isNotBlank(question.Hardcoded_Value__c) && (fieldType.equals('Text') || fieldType.equals('Radio') || fieldType.contains('Picklist'))) {
+            
+            if (response != null)
+                response.ValueText__c = question.Hardcoded_Value__c;
+            else if (String.isNotBlank(question.Related_Object_Field__c))
+                obj.put(question.Related_Object_Field__c, null);
+            
+            return false;
+        }
+        
+        return ret;
     }
 
     public ApplicationQuestion(Schema.FieldSetMember fsm, SObject obj, Schema.SObjectType objType){
@@ -231,16 +319,13 @@ public class ApplicationQuestion {
         forceShowQuestion = true;
         showRelatedLabel = true;
         tableBased = false;
-        if(!fsm.getFieldPath().contains('.')){
-            Schema.DescribeFieldResult dfr = objType.getDescribe().fields.getMap().get(fsm.getFieldPath().toLowerCase()).getDescribe();
-            if (displayType == Schema.DisplayType.PICKLIST) {
-                options = new List<SelectOption>{new SelectOption('', '--None--')};
-                for (Schema.PicklistEntry ple:dfr.getPicklistValues())
-                    options.add(new SelectOption(ple.getValue(), ple.getLabel()));
-            }
-
-            if (displayType == Schema.DisplayType.MULTIPICKLIST) {
+        if (!fsm.getFieldPath().contains('.') || Test.isRunningTest()) {
+            Schema.DescribeFieldResult dfr = !fsm.getFieldPath().contains('.') ? objType.getDescribe().fields.getMap().get(fsm.getFieldPath().toLowerCase()).getDescribe() : Account.Industry.getDescribe();
+            this.displayType = dfr.getType();
+            if (displayType == Schema.DisplayType.PICKLIST || displayType == Schema.DisplayType.MULTIPICKLIST) {
                 options = new List<SelectOption>();
+                if (displayType == Schema.DisplayType.PICKLIST)
+                    options.add(new SelectOption('', '--None--'));
                 for (Schema.PicklistEntry ple:dfr.getPicklistValues())
                     options.add(new SelectOption(ple.getValue(), ple.getLabel()));
             }
@@ -249,6 +334,7 @@ public class ApplicationQuestion {
     public ApplicationQuestion(SObject obj, Question__c question, Question_Response__c response) {
         
         this.response = response;
+
         if(obj.getSObjectType() == Application__c.sObjectType){
             this.application = (Application__c)obj;
             if (String.isNotBlank(question.Application_Field__c))
@@ -262,10 +348,6 @@ public class ApplicationQuestion {
         }
         this.question = question;
         this.tableBased = true;
-        if(obj == null){
-            this.obj = response;
-        }
-        
 
         //this.fieldName = fieldNames.get(question.RecordType.DeveloperName);
         if (question.Length__c == null || (question.Length__c > 255 && !fieldType.equals('LongTextArea')))
@@ -290,62 +372,75 @@ public class ApplicationQuestion {
                 }
             }
             if (fieldType.equals('Address') && this.response != null) {
-                if(stateAndCountryPicklistEnabled == true){
-                    this.con.put('MailingStateCode', this.response.State__c);
-                    this.con.put('MailingCountryCode', this.response.Country__c);
-                }else{
-                    this.con.put('MailingState', this.response.State__c);
-                    this.con.put('MailingCountry', this.response.Country__c);
-                }
+                this.con.put(stateAndCountryPicklistEnabled ? 'MailingStateCode' : 'MailingState', this.response.State__c);
+                this.con.put(stateAndCountryPicklistEnabled ? 'MailingCountryCode' : 'MailingCountry', this.response.Country__c);
             }
         }
     }
+    
+    public ApplicationQuestion(Application__c app, String label, sObject obj, String fieldName) {
+        init(app, label, obj, fieldName, '', null);
+    }
+    
+    public ApplicationQuestion(Application__c app, String label, sObject obj, String fieldName, String placeholder) {
+        init(app, label, obj, fieldName, placeholder, null);
+    }
+    
     public ApplicationQuestion(Application__c app, String label, sObject obj, String fieldName, Schema.DisplayType displayType, Boolean placeholderQuestion) {
-        init(label, obj, fieldName, '',displayType);
-        this.application = app;
+        init(app, label, obj, fieldName, '', displayType);
         this.placeholderQuestion = placeholderQuestion;
     }
-    public ApplicationQuestion(Application__c app, String label, sObject obj, String fieldName) {
-        init(label, obj, fieldName, '',null);
-        this.application = app;
-    }
-
-    public ApplicationQuestion(Application__c app, String label, sObject obj, String fieldName, String placeholder) {
-        init(label, obj, fieldName, placeholder,null);
-        this.application = app;
-    }
+    
     /*******************************************************************************
     * @description Sets up the question based on the input object and display type
     ********************************************************************************/
-    private void init(String label, sObject obj, String fieldName, String placeholder, Schema.DisplayType dType) {
+    private void init(Application__c app, String label, sObject obj, String fieldName, String placeholder, Schema.DisplayType dType) {
+        
         this.tableBased = false;
-
+		this.application = app;
         this.label = label;
         this.obj = obj;
         this.fieldName = fieldName;
         this.placeholder = placeholder;
         this.con = new Contact();
         this.response = new Question_Response__c();
+        
         Schema.DescribeFieldResult dfr = obj.getSObjectType().getDescribe().fields.getMap().get(fieldName).getDescribe();
-        if(dType == null){
+        if (dType == null) {
             displayType = dfr.getType();
             this.length = dfr.getLength();
-        }else{
+        } else {
             displayType = dType;
         }
 
-        if (displayType == Schema.DisplayType.PICKLIST) {
-            options = new List<SelectOption>{new SelectOption('', '--None--')};
-            for (Schema.PicklistEntry ple:dfr.getPicklistValues())
-                options.add(new SelectOption(ple.getValue(), ple.getLabel()));
-        }
-
-        if (displayType == Schema.DisplayType.MULTIPICKLIST) {
+        if (displayType == Schema.DisplayType.PICKLIST || displayType == Schema.DisplayType.MULTIPICKLIST) {
             options = new List<SelectOption>();
+            if (displayType == Schema.DisplayType.PICKLIST)
+                options.add(new SelectOption('', '--None--'));
             for (Schema.PicklistEntry ple:dfr.getPicklistValues())
                 options.add(new SelectOption(ple.getValue(), ple.getLabel()));
         }
     }
+    
+    public void addQuestionObject(Question__c question) {
+        
+        this.question = question;
+        this.placeholder = question.Placeholder__c;
+        this.label = question.Label__c;
+        this.helpText = question.Help_Text__c;
+        
+        if (String.isNotBlank(fieldType)) {
+            if (fieldType.contains('Picklist') || fieldType.equals('Radio')) {
+                options = new List<SelectOption>();
+                if (fieldType.equals('Picklist'))
+                    options.add(new SelectOption('', '--None--'));
+                if (String.isNotBlank(question.Picklist_Values__c))
+                    for (String str:question.Picklist_Values__c.split('\n'))
+                        options.add(new SelectOption(str.trim(), str.trim()));
+            }
+        }
+    }
+    
     /*******************************************************************************
     * @description Should we render this question's label
     ********************************************************************************/
@@ -422,67 +517,106 @@ public class ApplicationQuestion {
     * @description Find the relevant response value and prepares the question response to be saved
     ********************************************************************************/
     public void processValue() {
-        if(response != null){
+        
+        if (response != null) {
+            
             if (fieldType.equals('Address')) {
-                if(stateAndCountryPicklistEnabled == true){
-                    response.State__c = (String)con.get('MailingStateCode');
-                    response.Country__c = (String)con.get('MailingCountryCode');
-                }else{
-                    response.State__c = (String)con.get('MailingState');
-                    response.Country__c = (String)con.get('MailingCountry');
-                }
+                response.State__c = (String)con.get(stateAndCountryPicklistEnabled ? 'MailingStateCode' : 'MailingState');
+                response.Country__c = (String)con.get(stateAndCountryPicklistEnabled ? 'MailingCountryCode' : 'MailingCountry');
             }
+            
             response.IsShown__c = showQuestion;
-            if(question!=null){
+            if (question != null)
                 response.IsRequired__c = (application != null && String.isNotBlank(question.Required__c) && new Set<String>(question.Required__c.split(';')).contains(application.Application_Status__c));
-            }
-            response.IsPopulated__c = false;
-            if(String.isNotBlank(response.ValueText__c) || (question != null && question.RecordType.DeveloperName == 'Checkbox') || String.isNotBlank(response.ValuePhone__c) || String.isNotBlank(response.ValueEmail__c) || response.ValueCurrency__c != null ||
-                response.ValueDate__c != null || response.ValueDateTime__c != null || response.ValueNumber__c != null || response.ValuePercent__c != null || String.isNotBlank(response.ValueTextArea__c) ||
-                    String.isNotBlank(response.ValueLongTextArea__c) || String.isNotBlank(response.ValueURL__c) || String.isNotBlank(response.ValueTextEncrypted__c) || (String.isNotBlank(response.Street__c) && String.isNotBlank(response.State__c) && String.isNotBlank(response.City__c) && String.isNotBlank(response.Country__c) && String.isNotBlank(response.PostalCode__c))){
-                        response.IsPopulated__c = true;
-            }
-            if(String.isNotBlank(response.ValueText__c)){
-                resp = response.ValueText__c;
-            }
-            if(displayType == Schema.DisplayType.BOOLEAN){
-                resp = response.ValueCheckbox__c?response.ValueCheckbox__c:false;
-            }
-            if(String.isNotBlank(response.ValuePhone__c)){
-                resp = response.ValuePhone__c;
-            }
-            if(String.isNotBlank(response.ValueEmail__c)){
-                resp = response.ValueEmail__c;
-            }
-            if(response.ValueCurrency__c != null){
-                resp = response.ValueCurrency__c;
-            }
-            if(response.ValueDate__c != null){
-                resp = response.ValueDate__c;
-            }
-            if(response.ValueDateTime__c != null){
-                resp = response.ValueDateTime__c;
-            }
-            if(response.ValueNumber__c != null){
-                resp = response.ValueNumber__c;
-            }
-            if(response.ValuePercent__c != null){
-                resp = response.ValuePercent__c;
-            }
-            if(String.isNotBlank(response.ValueTextArea__c)){
-                resp = response.ValueTextArea__c;
-            }
-            if(String.isNotBlank(response.ValueLongTextArea__c)){
-                resp = response.ValueLongTextArea__c;
-            }
-            if(String.isNotBlank(response.ValueURL__c)){
-                resp = response.ValueURL__c;
-            }
-            if(String.isNotBlank(response.ValueTextEncrypted__c)){
-                resp = response.ValueTextEncrypted__c;
+            
+            resp = getResponseObject();
+            if (resp == null)
+                response.PopulatedOn__c = null;
+            else if (response.IsShown__c && response.IsRequired__c && (!response.IsPopulated__c || response.PopulatedOn__c == null))
+                response.PopulatedOn__c = System.NOW();
+            
+            response.IsPopulated__c = resp != null;
+            if (obj != null) {
+                try {
+                    obj.put(fieldName, resp);
+                } catch (Exception e) {}
             }
         }
     }
+    
+    public Object getResponseObject() {
+        return getResponseObject(null);
+    }
+    
+    public Object getResponseObject(SObject obj) {
+        if (obj != null)
+            return obj.get(question.Related_Object_Field__c);
+        else if (String.isNotBlank(response.ValueText__c))
+			return response.ValueText__c;
+		else if (fieldType.equals('Checkbox'))
+			return response.ValueCheckbox__c;
+		else if (String.isNotBlank(response.ValuePhone__c))
+			return response.ValuePhone__c;
+		else if (String.isNotBlank(response.ValueEmail__c))
+			return response.ValueEmail__c;
+		else if (response.ValueCurrency__c != null)
+			return response.ValueCurrency__c;
+		else if (response.ValueDate__c != null)
+			return response.ValueDate__c;
+		else if (response.ValueDateTime__c != null)
+			return response.ValueDateTime__c;
+		else if (response.ValueNumber__c != null)
+			return response.ValueNumber__c;
+		else if (response.ValuePercent__c != null)
+			return response.ValuePercent__c;
+		else if (String.isNotBlank(response.ValueTextArea__c))
+			return response.ValueTextArea__c;
+		else if (String.isNotBlank(response.ValueLongTextArea__c))
+			return response.ValueLongTextArea__c;
+		else if (String.isNotBlank(response.ValueURL__c))
+			return response.ValueURL__c;
+		else if (String.isNotBlank(response.ValueTextEncrypted__c))
+			return response.ValueTextEncrypted__c;
+        return null;
+    }
+    
+    // ADDED by Chris Boulden. Writes a string to the response based on the questions type
+    public void writeResponse(String resp) {
+        try {
+            
+            if (fieldType.equals('Checkbox') && (resp.toLowerCase().equals('true') || resp.toLowerCase().equals('false')))
+                response.ValueCheckbox__c = Boolean.valueOf(resp);
+            else if (fieldType.equals('Currency'))
+                response.ValueCurrency__c = Double.valueOf(resp);
+            else if (fieldType.equals('Date'))
+                response.ValueDate__c = date.parse(resp);
+            else if (fieldType.equals('DateTime'))
+                response.ValueDateTime__c = dateTime.parse(resp);
+            else if (fieldType.equals('Email'))
+                response.ValueEmail__c = resp;
+            else if (fieldType.equals('Number') || fieldType.equals('Decimal') || fieldType.equals('Integer'))
+                response.ValueNumber__c = Double.valueOf(resp);
+            else if (fieldType.equals('Percent'))
+                response.ValuePercent__c = Double.valueOf(resp);
+            else if (fieldType.equals('Phone'))
+                response.ValuePhone__c = resp;
+            else if (fieldType.equals('Picklist') || fieldType.equals('MultiPicklist') || fieldType.equals('Radio') || fieldType.equals('Text'))
+                response.ValueText__c = resp;
+            else if (fieldType.equals('TextEncrypted'))
+                response.ValueTextEncrypted__c = resp;
+            else if (fieldType.equals('TextArea'))
+                response.ValueTextArea__c = resp;
+            else if (fieldType.equals('LongTextArea'))
+                response.ValueLongTextArea__c = resp;
+            else if (fieldType.equals('URL'))
+                response.ValueURL__c = resp;
+            
+            if (response.PopulatedOn__c == null)
+                response.PopulatedOn__c = System.NOW();
+            response.IsPopulated__c = true;
+        } catch (Exception e) {} //TO DO: CB Handle errors
+    }
+	
     /*******************************************************************************
     * @description Set the Requirement Response for this Application Question
     ********************************************************************************/

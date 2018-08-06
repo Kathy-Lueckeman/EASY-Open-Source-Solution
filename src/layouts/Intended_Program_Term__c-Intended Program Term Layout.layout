@@ -15,6 +15,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>Intended_Program__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Academic_Term__c</field>
             </layoutItems>
         </layoutColumns>

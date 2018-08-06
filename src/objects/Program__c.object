@@ -290,6 +290,41 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Number_of_Applications_Limit__c</fullName>
+        <description>One Application (Any other applications, don&apos;t allow creation)
+One Application Per Term (Only one application for the selected term)
+One Application Per Program (Only one application for the selected program)
+One Application Per Term Per Program (Only one application for the selected term and selected program)
+~Blank~ No Restrictions</description>
+        <externalId>false</externalId>
+        <label>Number of Applications Limit</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>One Application</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>One Application Per Term</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>One Application Per Program</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>One Application Per Term Per Program</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Program_Code__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>A checkbox to mark whether or not a Program is active.</description>
@@ -451,6 +486,19 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
+    <listViews>
+        <fullName>Recruitment_Programs</fullName>
+        <columns>NAME</columns>
+        <columns>Career__c</columns>
+        <columns>Department__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Program_Record_Type__c</field>
+            <operation>equals</operation>
+            <value>Recruitment Program</value>
+        </filters>
+        <label>Recruitment Programs</label>
+    </listViews>
     <nameField>
         <label>Program Name</label>
         <type>Text</type>
@@ -567,6 +615,25 @@
             </values>
             <values>
                 <fullName>Online</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_of_Applications_Limit__c</picklist>
+            <values>
+                <fullName>One Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Application Per Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Application Per Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Application Per Term Per Program</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -769,6 +836,25 @@
             </values>
             <values>
                 <fullName>Online</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_of_Applications_Limit__c</picklist>
+            <values>
+                <fullName>One Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Application Per Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Application Per Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Application Per Term Per Program</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -164,7 +164,7 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
-    <label>ULTRA Mapping</label>
+    <label>Interaction Mapping</label>
     <listViews>
         <fullName>Affiliation</fullName>
         <columns>NAME</columns>
@@ -264,7 +264,7 @@
     </listViews>
     <nameField>
         <displayFormat>INTMap-{000000}</displayFormat>
-        <label>ULTRA Mapping Name</label>
+        <label>Interaction Mapping Name</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Interaction Mappings</pluralLabel>

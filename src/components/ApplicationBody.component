@@ -51,7 +51,8 @@
                     jQuery(el).text(data);
             });
         }
-        function performDocUploadSave(){
+
+        function performDocUploadSave(redirectTo){
             var docUploadPromiseArr = [];
             ensureRichTextContent();
             jQuery('.docUploadInput').each(function(idx,docUpload){
@@ -68,7 +69,8 @@
                 docUploads.forEach(function(docUpload){
                     docUploadObj[docUpload.itemId] = {"attData":docUpload};
                 });
-                saveWithDocs(JSON.stringify(docUploadObj));
+                saveWithDocs(JSON.stringify(docUploadObj),redirectTo);
+                console.log(redirectTo);
             }).catch(function(){});
         }
         function getAsText(readFile, respId) {

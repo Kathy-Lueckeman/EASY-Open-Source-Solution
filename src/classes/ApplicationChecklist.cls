@@ -2,7 +2,7 @@
 @description This controller is used to show which requirements/requirement items have been completed for this application
 @author Huron Consulting Group
 
-Revision (s): 
+Revision (s):
 *******************************************************************************/
 public class ApplicationChecklist {
 
@@ -32,10 +32,12 @@ public class ApplicationChecklist {
     }
     
     public ApplicationChecklist(){}
+
     /*******************************************************************************
     * @description Initialize the page - Checks if requirements have been completed
     ********************************************************************************/
     public void init() {
+        system.debug('**CB** in the initialization function');
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
@@ -46,7 +48,7 @@ public class ApplicationChecklist {
         }
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
 
-        app = [SELECT Id, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Application_Control__c FROM Application__c WHERE Id = :applicationId];
+        app = [SELECT Id, Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c , Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Residency__c, Application_Control__c FROM Application__c WHERE Id = :applicationId];
         appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
         
         if(String.isNotBlank(appControl.Allow_Cancel_From__c) && new Set<String>(appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c)){
@@ -58,7 +60,7 @@ public class ApplicationChecklist {
         
         reqMap = new Map<Id,RequirementWrapper>();
         Set<Id> reqIds = new Set<Id>();
-        for (Requirement__c r:[SELECT Id, Internal_Only__c, Name, Active__c,Intended_Program__c,Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c FROM Requirement__c WHERE Application_Control__c = :appControl.Id AND Active__c = :true and Show_On_Application_Creation__c = false ORDER BY Display_Order__c ASC NULLS LAST]){
+        for (Requirement__c r:[SELECT Id, Internal_Only__c, Internal_Only_Show_on_Checklist__c, Name, Label__c, Active__c,Intended_Program__c,Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c FROM Requirement__c WHERE Application_Control__c = :appControl.Id AND Active__c = :true and Show_On_Application_Creation__c = false ORDER BY Display_Order__c ASC NULLS LAST]){
             if (ApplicationFilter.filter(app, r)){
                 reqIds.add(r.Id);
                 reqMap.put(r.Id,new RequirementWrapper(r));
@@ -68,7 +70,7 @@ public class ApplicationChecklist {
         Map<Id,Boolean> completedRequirement = new Map<Id,Boolean>();
         
         Set<Id> riIds = new Set<Id>();
-        riList = [SELECT Id, Required__c,Requirement__c, Internal_Only__c, Active__c,Required_Number_of_Children__c,Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, (SELECT Id, Active__c,Hardcoded_value__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c, Editable_Application_Status__c, New_Reference_Field__c ,Static_Text__c FROM Questions__r ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c in :reqIds ORDER BY Display_Order__c ASC NULLS LAST];
+        riList = [SELECT Id, Required__c, Requirement__c, Internal_Only__c, Internal_Only_Show_on_Checklist__c, Active__c,Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Requirement__r.Label__c, Name, Label__c, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, (SELECT Id, Active__c,Hardcoded_value__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c, Editable_Application_Status__c, New_Reference_Field__c, URL_Parameter__c,Static_Text__c FROM Questions__r ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c in :reqIds ORDER BY Display_Order__c ASC NULLS LAST];
         for(Requirement_Item__c ri : riList){
             Boolean isValid = ApplicationFilter.filter(app,ri);
             if(isValid){
@@ -77,7 +79,7 @@ public class ApplicationChecklist {
             }
         }
         checkRequirementCompletion();
-        for(Requirement_Response__c rr : [Select Id, Requirement_Item__r.Required__c,Has_Child_Requirement__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,Incomplete_Questions__c, HasDocument__c,Send_Reminder__c,External_Email__c from Requirement_Response__c WHERE Application__c = :applicationId and Requirement_Item__r.Requirement__c in :reqIds]){
+        for(Requirement_Response__c rr : [Select Id, Requirement_Item__r.Required__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,Fulfilled_On__c,Incomplete_Questions__c,Question_Group_Requirement_Fulfilled_On__c,HasDocument__c,Document_Requirement_Fulfilled_On__c,Has_Child_Requirement__c,Child_Requirement_Fulfilled_On__c,Send_Reminder__c,External_Email__c from Requirement_Response__c WHERE Application__c = :applicationId and Requirement_Item__r.Requirement__c in :reqIds]){
             if(riIds.contains(rr.Requirement_Item__c)){
                 Boolean itemCompleted = true;
                 if(!completedRequirement.containsKey(rr.Requirement_Item__r.Requirement__c)){
@@ -120,7 +122,7 @@ public class ApplicationChecklist {
             allowSubmit = false;
         }
         
-        Decimal total = (Decimal)reqs.size();
+        Decimal total = reqs == null || reqs.isEmpty() ? 1 : (Decimal)reqs.size();
         Decimal complete = 0;
         
         for (RequirementWrapper req:reqs) {
@@ -151,7 +153,7 @@ public class ApplicationChecklist {
 
 		//Requirement Responses
 		Map<Id,List<Requirement_Response__c>> rrMap = new Map<Id,List<Requirement_Response__c>>();
-		for(Requirement_Response__c rr : [SELECT Id, Requirement_Item__r.Requirement__c,Requirement_Item__c,ValueTextEntry__c,HasDocument__c,Application__c,Application__r.Contact__c,External_Email__c,Hashcode__c,Send_Reminder__c, (SELECT Id, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c FROM Question_Responses__r), (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks) FROM Requirement_Response__c WHERE Requirement_Item__r.Requirement__c in :requirementIds AND Application__c = :applicationId]){
+		for(Requirement_Response__c rr : [SELECT Id, Requirement_Item__r.Requirement__c,Requirement_Item__c,ValueTextEntry__c,Incomplete_Questions__c,Question_Group_Requirement_Fulfilled_On__c,HasDocument__c,Document_Requirement_Fulfilled_On__c,Has_Child_Requirement__c,Child_Requirement_Fulfilled_On__c,Application__c,Application__r.Contact__c,External_Email__c,Hashcode__c,Send_Reminder__c, (SELECT Id, IsPopulated__c, PopulatedOn__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c FROM Question_Responses__r), (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks) FROM Requirement_Response__c WHERE Requirement_Item__r.Requirement__c in :requirementIds AND Application__c = :applicationId]){
 			if(!rrMap.containsKey(rr.Requirement_Item__r.Requirement__c)){
 				rrMap.put(rr.Requirement_Item__r.Requirement__c,new List<Requirement_Response__c>());
 			}
@@ -175,7 +177,7 @@ public class ApplicationChecklist {
 
 		//Question responses
 		Map<Id,List<Question_Response__c>> qrMap = new Map<Id,List<Question_Response__c>>();
-		for(Question_Response__c qr : [SELECT Id, Question__r.Requirement_Item__r.Requirement__c,Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c FROM Question_Response__c WHERE Question__c IN :questionItemSet AND Requirement_Response__r.Application__c = :applicationId]){
+		for(Question_Response__c qr : [SELECT Id, IsPopulated__c, PopulatedOn__c, Question__r.Requirement_Item__r.Requirement__c,Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c FROM Question_Response__c WHERE Question__c IN :questionItemSet AND Requirement_Response__r.Application__c = :applicationId]){
 			if(!qrMap.containsKey(qdReqMap.get(qr.Question__c))){
 				qrMap.put(qdReqMap.get(qr.Question__c),new List<Question_Response__c>());
 			}
@@ -319,7 +321,7 @@ public class ApplicationChecklist {
         public Boolean reqStatus{get;set;}
         public Boolean display {
             get {
-                return !req.Internal_Only__c || UserInfo.getUserType().equals('Standard');
+                return !req.Internal_Only__c || req.Internal_Only_Show_on_Checklist__c || UserInfo.getUserType().equals('Standard');
             }
         }
         public Map<Id,RequirementItemWrapper> reqItemMap{get;set;}
@@ -339,7 +341,7 @@ public class ApplicationChecklist {
         public Boolean reqItemStatus{get;set;}
         public Boolean display {
             get {
-                return !reqItem.Internal_Only__c || UserInfo.getUserType().equals('Standard');
+                return !reqItem.Internal_Only__c || reqItem.Internal_Only_Show_on_Checklist__c || UserInfo.getUserType().equals('Standard');
             }
         }
         public RequirementItemWrapper(Requirement_Item__c reqItem){

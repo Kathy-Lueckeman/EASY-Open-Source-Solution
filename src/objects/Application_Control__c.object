@@ -286,4 +286,15 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <webLinks>
+        <fullName>Related_Object_Review</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Related Object Review</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/RelatedObjectReview?at={!Application_Control__c.URL_Parameter__c}</url>
+    </webLinks>
 </CustomObject>

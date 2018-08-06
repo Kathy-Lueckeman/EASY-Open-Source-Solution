@@ -1,10 +1,9 @@
 /*******************************************************************************
 @description This class is a set of helpful utility methods
 @author Huron Consulting Group
-
-Revision (s): 
 *******************************************************************************/
 public class ApplicationUtilities {
+    
     /*******************************************************************************
     * @description Returns the application control based on urlParameter or the default one if no param is found.
     ********************************************************************************/
@@ -30,7 +29,29 @@ public class ApplicationUtilities {
         
 		return appControl == null ? defaultControl : appControl;
 	}
+    
+    public static Boolean containsValue(String multiPicklistValue, String value) {
+        return String.isNotBlank(multiPicklistValue) && (new Set<String>(multiPicklistValue.split(';'))).contains(value);
+    }
+    
     public class AdditionalDataWrapper {
-        Map<String,Map<String,Object>> additionalData;
+        Map<String, Map<String,Object>> additionalData;
+    }
+    
+    // Custom exception class for validation
+    public class ApplicationException extends Exception {
+        
+        public Boolean doRollback = false;
+        public Boolean isError = true;
+        
+        public ApplicationException(String e, Boolean doRollback) {
+            this(e);
+            this.doRollback = doRollback;
+        }
+        
+        public ApplicationException(String e, Boolean doRollback, Boolean isError) {
+            this(e, doRollback);
+            this.isError = isError;
+        }
     }
 }

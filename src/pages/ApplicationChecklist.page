@@ -1,6 +1,6 @@
 <apex:page controller="ApplicationChecklist" showHeader="false" standardStylesheets="false" docType="html-5.0" action="{!init}">
     <c:ApplicationHead />
-    <c:ApplicationBody title="Application Checklist" subtitle="{!IF(appControl.Hide_Term_Program__c, '', app.Intended_Program__r.Program_Name_on_Application__c + ' - ' + app.Intended_Term_of_Entry__r.Name)}" appControl="{!appControl}">
+    <c:ApplicationBody title="Application Checklist" subtitle="{!IF(appControl.Hide_Term_Program__c, '', IF(ISBLANK(app.Intended_Program__r.Program_Name_on_Application__c), app.Intended_Program__r.Name, app.Intended_Program__r.Program_Name_on_Application__c) + ' - ' + app.Intended_Term_of_Entry__r.Name)}" appControl="{!appControl}">
         <apex:form id="theForm" >
             <apex:pageMessages />
             <div class="row" >
@@ -14,7 +14,7 @@
                         <apex:outputPanel rendered="{!r.display}" >
                             <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
                                 <div class="col-lg-7 col-lg-offset-2 col-xs-9 col-xs-offset-1" >
-                                    <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!app.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}" style="color:#{!appControl.Link_Color__c};" >{!r.req.Name}</a>
+                                    <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!app.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}" style="color:#{!appControl.Link_Color__c};" >{!IF(r.req.Label__c != null && r.req.Label__c != '', r.req.Label__c, r.req.Name)}</a>
                                 </div>
                                 <div class="col-xs-1" >
                                     <apex:outputPanel rendered="{!!r.reqStatus}" >
@@ -29,7 +29,7 @@
                                 <apex:outputPanel rendered="{!ri.display}" >
                                     <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
                                         <div class="col-lg-6 col-lg-offset-3 col-xs-8 col-xs-offset-2" >
-                                            <apex:outputText style="color:#{!appControl.Text_Color__c};" >{!ri.reqItem.Name}</apex:outputText>
+                                            <apex:outputText style="color:#{!appControl.Text_Color__c};" >{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
                                         </div>
                                         <div class="col-xs-1" >
                                             <apex:outputPanel rendered="{!!ri.reqItemStatus}" >

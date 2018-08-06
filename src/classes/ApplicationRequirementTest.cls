@@ -15,7 +15,7 @@ public class ApplicationRequirementTest {
             Withdraw_Status__c=Application_Control__c.Withdraw_Status__c.getDescribe().getPicklistValues()[0].getValue()
         );
         insert appControl;
-        
+
 		Account acc = new Account(Name='NewAcc');
 		insert acc;
 		Contact student = new Contact(LastName='TestStudent');
@@ -27,7 +27,7 @@ public class ApplicationRequirementTest {
 		for(RecordType rt : [Select Id,DeveloperName from RecordType where sObjectType = 'Requirement_Item__c']){
 			rtMap.put(rt.DeveloperName,rt.Id);
 		}
-		
+
 		Program__c ip = new Program__c(Name='Test');
 		insert ip;
 
@@ -172,7 +172,7 @@ public class ApplicationRequirementTest {
 
 		Requirement_Response__c rrRO = new Requirement_Response__c(Application__c=app.Id,Requirement_Item__c=riMap.get('Related_Object'),Has_Child_Requirement__c=true);
 		insert new List<Requirement_Response__c>{rrRO};
-	
+
 		PageReference pr = Page.ApplicationRequirement;
 		pr.getParameters().put('contactId', student.Id);
 		pr.getParameters().put('applicationId', app.Id);
@@ -183,7 +183,8 @@ public class ApplicationRequirementTest {
 		System.assertEquals(ac.title,'Test Req');
 		for(ApplicationQuestionGroup agq : ac.section.groups){
 			if(agq.relatedObject == true){
-				agq.newRow();
+                agq.newRow();
+                Map<ApplicationQuestion, Boolean> showQuestions = agq.relatedObjects[0].showQuestions;
 				agq.selectedRelatedId = 'new0';
 				agq.enableEditMode();
 				agq.selectedRelatedId = 'new0';
@@ -214,7 +215,7 @@ public class ApplicationRequirementTest {
                 agq.setCreatingNewRelatedRecord();
 			}
 		}
-		
+
 
 		ac.submit();
 		// System.assertEquals(1,[Select count() from Enrollment_History__c]);
@@ -244,6 +245,8 @@ public class ApplicationRequirementTest {
 		ac.init();
 		for(ApplicationQuestionGroup agq : ac.section.groups){
 			if(agq.questionGroup == true){
+                String inst = agq.instructions;
+        		Boolean edit = agq.isEditable;
 				agq.questions[0].getDatetimeValue();
 				agq.questions[0].setDatetimeValue(Datetime.now());
 				agq.questions[0].getDateValue();
@@ -307,7 +310,7 @@ public class ApplicationRequirementTest {
 		Test.setCurrentPage(pr);
 		ApplicationRequirement ac = new ApplicationRequirement();
 		ac.init();
-		
+
 		ac.submit();
 		Test.startTest();
 			q1.Dependency_Logic__c = 'OR';
@@ -352,16 +355,18 @@ public class ApplicationRequirementTest {
 		Test.startTest();
 			insert new Account(Name='Example Account');
 		Test.stopTest();
-		List<SObject> results = ApplicationRequirement.lookupSearch('Account',null,'Example');
+		List<SObject> results = ApplicationRequirement.lookupSearch('Account',null,'Name','Example');
 		system.debug(results);
 		System.assertEquals(1,results.size());
 	}
     public static TestMethod void testMiscQuestion(){
         Test.startTest();
-        
+
         new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Name', Schema.DisplayType.STRING, true);
         new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Name');
         new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Name', 'test');
+        new ApplicationQuestion(new Account(), new Question__c(Length__c = 100), new Question_Response__c());
+        new ApplicationQuestion(new Application__c(), new Question__c(Application_Field__c = 'Student_Type__c', Hardcoded_Value__c = 'Test'), new Question_Response__c());
         ApplicationQuestion q1 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Industry', Schema.DisplayType.PICKLIST, true);
         ApplicationQuestion q2 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Industry', Schema.DisplayType.MULTIPICKLIST, true);
         ApplicationQuestion q3 = new ApplicationQuestion(new Application__c(), 'test', new Contact(), 'MailingAddress', Schema.DisplayType.ADDRESS, true);
@@ -373,15 +378,15 @@ public class ApplicationRequirementTest {
         ApplicationQuestion q9 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'NumberOfEmployees', Schema.DisplayType.INTEGER, true);
         ApplicationQuestion q10 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Description', Schema.DisplayType.TEXTAREA, true);
         ApplicationQuestion q11 = new ApplicationQuestion(new Application__c(), 'test', new Account(), 'Website', Schema.DisplayType.URL, true);
-        
+
         Schema.FieldSetMember fsm;
         for (Schema.FieldSetMember m:Schema.SObjectType.Application_Review__c.fieldSets.Application_Review_Header.getFields()) {
             fsm = m;
             break;
         }
-        
+
         ApplicationQuestion q12 = new ApplicationQuestion(fsm, new Application_Review__c(), Application_Review__c.SObjectType);
-        
+
         q1.setPicklistOptions(new Map<String, String>{'test'=>'test'});
         q1.setReferenceOptions(new Map<Id, String>{Id.valueOf('001000000000000')=>'test'});
         q1.addControllingQuestion(q2, new Set<String>{'test'});
@@ -389,6 +394,15 @@ public class ApplicationRequirementTest {
         q1.addDependentOptions(new Map<String, Map<String, String>>{'test'=>new Map<String, String>{'test'=>'test'}});
         q1.addIntendedProgramFilteringList(new List<Program__c>());
         q1.makeRadio();
+        q1.acc = null;
+        q2.controllingQuestion = q1;
+        q2.intendedPrograms = new List<Program__c>{new Program__c(Name = 'test', Id = Id.valueOf(Schema.SObjectType.Program__c.getKeyPrefix() + '000000000000'))};
+        q2.dependentOptions = new Map<String, List<SelectOption>>();
+        List<SelectOption> options = q2.options;
+        q2.question = new Question__c(URL_Parameter__c = 'test');
+        q2.multiControllingQuestions = new Map<ApplicationQuestion, Set<String>>{q1 => new Set<String>{'Test'}};
+        q2.checkMultiControllingQuestion();
+        ApplicationQuestion.getStateAndCountryPicklistEnabled();
         q3.processValue();
         q4.processValue();
         q5.response.ValuePhone__c = 'test';
@@ -405,6 +419,7 @@ public class ApplicationRequirementTest {
         q10.processValue();
         q11.response.ValueURL__c = 'www.test.com';
         q11.processValue();
+		new ApplicationQuestionGroup(new List<ApplicationQuestion>());
         
         Test.stopTest();
     }

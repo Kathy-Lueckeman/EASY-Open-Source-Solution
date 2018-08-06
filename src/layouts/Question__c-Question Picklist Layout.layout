@@ -29,6 +29,10 @@
                 <behavior>Edit</behavior>
                 <field>Picklist_Values__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>URL_Parameter__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

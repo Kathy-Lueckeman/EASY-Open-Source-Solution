@@ -1,147 +1,141 @@
 @isTest
-public class ApplicationCreateTest {
-	@testSetup
-	public static void testSetup(){
-        Application_Control__c appControl = new Application_Control__c(
-            Application_Start_Status__c=Application_Control__c.Application_Start_Status__c.getDescribe().getPicklistValues()[0].getValue(),
-            Active__c=true,
-            Allow_Cancel_From__c=Application_Control__c.Allow_Cancel_From__c.getDescribe().getPicklistValues()[0].getValue(),
-            Allow_Withdraw_From__c=Application_Control__c.Allow_Withdraw_From__c.getDescribe().getPicklistValues()[0].getValue(),
-            Allow_Submit_From__c=Application_Control__c.Allow_Submit_From__c.getDescribe().getPicklistValues()[0].getValue(),
-            Cancel_Status__c=Application_Control__c.Cancel_Status__c.getDescribe().getPicklistValues()[0].getValue(),
-            Default__c=true,
-            URL_Parameter__c ='st',
-            Submit_Status__c=Application_Control__c.Submit_Status__c.getDescribe().getPicklistValues()[0].getValue(),
-            Withdraw_Status__c=Application_Control__c.Withdraw_Status__c.getDescribe().getPicklistValues()[0].getValue()
-        );
-        insert appControl;
+private class ApplicationCreateTest {
+	
+    @isTest
+    static void test_application_create() {
         
-		Contact student = new Contact(LastName='TestStudent');
-		insert student;
-		insert new Program__c(Name='Test');
-		insert new Academic_Term__c(Activate_Application_Date__c=Date.today().addDays(-2),End_Application_Date__c=Date.today().addDays(2));
-
-		Map<String,Id> rtMap = new Map<String,Id>();
-		for(RecordType rt : [Select Id,DeveloperName from RecordType where sObjectType = 'Requirement_Item__c']){
-			rtMap.put(rt.DeveloperName,rt.Id);
-		}
-
-		Map<String,Id> rtQMap = new Map<String,Id>();
-		for(RecordType rt : [Select Id,DeveloperName from RecordType where sObjectType = 'Question__c']){
-			rtQMap.put(rt.DeveloperName,rt.Id);
-		}
-
-		Requirement__c req = new Requirement__c(Application_Control__c=appControl.Id,Active__c = true,Name='Test Req',Show_on_Application_Creation__c=true);
-		insert req;
-		Requirement_Item__c riQG = new Requirement_Item__c(Requirement__c=req.Id,Name='Test RI',Active__c = true,RecordTypeId=rtMap.get('Question_Group'));
-		insert riQG;
-		insert new Question__c(Requirement_Item__c=riQG.Id,Name='Test',RecordTypeId=rtQMap.get('Text'));
-	}
-	public static TestMethod void testFreshman(){
-		Contact student = [Select Id from Contact limit 1];
-		Program__c ap = [Select id from Program__c limit 1];
-		Academic_Term__c at = [Select id from Academic_Term__c limit 1];
-		PageReference pr = Page.ApplicationCreate;
-		pr.getParameters().put('contactId', student.Id);
-		Test.setCurrentPage(pr);
-		ApplicationCreate ac = new ApplicationCreate();
-		ac.init();
-		ac.app.Educational_Background__c = 'Freshman';
-		for(ApplicationQuestionGroup aqg : ac.section.groups){
-            for(ApplicationQuestion question : aqg.questions){
-				List<SelectOption> options = question.options;
-				Boolean isShown = question.showQuestion;
-				
-                if(String.isNotBlank(question.fieldName) && question.response != null){
-					if(question.fieldType == 'Address'){
-						question.response.Street__c = 'test street';
-						question.response.City__c = 'test city';
-						if(ApplicationQuestion.stateAndCountryPicklistEnabled == true){
-							question.con.put('MailingCountryCode', 'US');
-							question.con.put('MailingStateCode', 'AL');
-						}else{
-							question.con.put('MailingCountry', 'US');
-							question.con.put('MailingState', 'AL');
-						}
-						question.response.PostalCode__c = '12345';
-					}else if(question.fieldType == 'Checkbox'){
-						question.response.ValueCheckbox__c = true;
-					}else if(question.fieldType == 'Currency'){
-						question.response.ValueCurrency__c = 100.23;
-					}else if(question.fieldType == 'Date'){
-						question.response.ValueDate__c = Date.today();
-					}else if(question.fieldType == 'DateTime'){
-						question.response.ValueDateTime__c = Datetime.now();
-					}else if(question.fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'){
-						question.response.ValueNumber__c = 10;
-					}else if(question.fieldType == 'Email'){
-						question.response.ValueEmail__c = 'abctest123@example.com';
-					}else if(question.fieldType == 'TextEncrypted'){
-						question.response.ValueTextEncrypted__c = '111111111';
-					}else if(question.fieldType == 'MultiPicklist'){
-						question.multiPicklistValues = new List<String>();
-						if(question.options != null && question.options.size()>0){
-							for(SelectOption so : question.options){
-								question.multiPicklistValues.add(so.getValue());
-							}
-						}
-					}else if(question.fieldType == 'Percent'){
-						question.response.ValuePercent__c = 0.50;
-					}else if(question.fieldType == 'Phone'){
-						question.response.ValuePhone__c = '2121231234';
-					}else if(question.fieldType == 'Picklist' || question.fieldType == 'Reference'){
-						question.response.ValueText__c = 'Domestic';
-						if(question.options != null && question.options.size()>0){
-							question.response.ValueText__c = question.options[0].getValue();
-						}
-						if(question.options != null && question.options.size()>1){
-							question.response.ValueText__c = question.options[1].getValue();
-						}
-					}else if(question.fieldType == 'Text'){
-						question.response.ValueText__c = 'test text';
-					}else if(question.fieldType == 'TextArea'){
-						question.response.ValueTextArea__c = 'test text area';
-					}else if(question.fieldType == 'LongTextArea'){
-						question.response.ValueLongTextArea__c = 'test text area';
-					}else if(question.fieldType == 'TextArea'){
-						question.response.ValueURL__c = 'http://example.com';
-					}
-				}
-				if(question.fieldName == 'Intended_Program__c'){
-					question.response.ValueText__c = String.valueOf(ap.Id);
-				}
-				if(question.fieldName == 'Intended_Term_of_Entry__c'){
-					question.response.ValueText__c = String.valueOf(at.Id);
-				}
-				if(String.isBlank(question.fieldName)){
-					question.response.ValueText__c = 'Test';
-				}
-				if(question.fieldName == 'Educational_Background__c'){
-					question.response.ValueText__c = 'Freshman';
-				}
-			}
-		}
+        Program__c prog1 = [SELECT Id, Applicant_Type__c FROM Program__c WHERE Name = :'test1'];
+        Program__c prog2 = [SELECT Id, Hide_Applicant_Type__c FROM Program__c WHERE Name = :'test2'];
+        Program__c prog3 = [SELECT Id, Hide_Student_Type__c FROM Program__c WHERE Name = :'test3'];
+        Program__c prog4 = [SELECT Id, Hide_Citizenship__c FROM Program__c WHERE Name = :'test4'];
+        Program__c prog5 = [SELECT Id FROM Program__c WHERE Name = :'test5'];
+        Id termId = [SELECT Id FROM Academic_Term__c WHERE Name = :'test'].Id;
+        Intended_Program_Term__c ipt = [SELECT Id, Applicant_Type__c FROM Intended_Program_Term__c WHERE Academic_Term__c = :termId];
+        
+        Id conId = [SELECT Id FROM Contact WHERE LastName = :'test'].Id;
+        PageReference pr = Page.ApplicationCreate;
+		pr.getParameters().put('contactId', conId);
+		
+        Test.startTest();
+        
+        Test.setCurrentPage(pr);
+        ApplicationCreate ac = new ApplicationCreate();
+        ac.init();
 		ac.save();
-		System.assertEquals(1,[Select count() from Application__c]);
-	}
-	public static TestMethod void testError(){
-		Contact student = [Select Id from Contact limit 1];
-		Program__c ap = [Select id from Program__c limit 1];
-		Academic_Term__c at = [Select id from Academic_Term__c limit 1];
-		PageReference pr = Page.ApplicationCreate;
-		pr.getParameters().put('contactId', student.Id);
-		Test.setCurrentPage(pr);
-		ApplicationCreate ac = new ApplicationCreate();
-		ac.init();
-		ac.app.Educational_Background__c = 'AdultFreshman';
-		for(ApplicationQuestionGroup appGroup : ac.section.groups){
-			for(ApplicationQuestion aq : appGroup.questions){
-				if(aq.fieldName == 'Intended_Program__c'){
-					aq.response.ValueText__c = String.valueOf(ap.Id);
-				}
-			}
-		}
-		ac.save();
-		System.assertEquals(0,[Select count() from Application__c]);
+        
+        Question_Response__c programResponse;
+        
+        for (ApplicationQuestionGroup g:ac.section.groups) {
+            for (ApplicationQuestion q:g.questions) {
+            	if (q.fieldName != null && q.fieldName.equals('Intended_Program__c'))
+            		programResponse = q.response;
+                else if (q.fieldName != null && q.fieldName.equals('Intended_Term_of_Entry__c'))
+            		q.response.ValueText__c = termId;
+                else if (q.label.equals('test1'))
+                    q.response.ValueText__c = 'One';
+            }
+        }
+        
+        programResponse.ValueText__c = prog1.Id;
+        ac.save();
+        ac.app.Applicant_Type__c = prog1.Applicant_Type__c;
+        ac.save();
+        delete [SELECT Id FROM Intended_Program_Term__c];
+        ac.save();
+        
+        programResponse.ValueText__c = prog2.Id;
+        ac.app.Applicant_Type__c = prog2.Hide_Applicant_Type__c;
+        ac.save();
+        ac.app.Applicant_Type__c = null;
+        ac.save();
+        
+        programResponse.ValueText__c = prog3.Id;
+        ac.app.Student_Type__c = prog3.Hide_Student_Type__c;
+        ac.save();
+        ac.app.Student_Type__c = null;
+        ac.save();
+        
+        programResponse.ValueText__c = prog4.Id;
+        ac.app.Citizenship__c = prog4.Hide_Citizenship__c;
+        ac.save();
+        
+        programResponse.ValueText__c = prog5.Id;
+        ac.save();
+        
+        Test.stopTest();
+    }
+    
+    @isTest
+    static void test_other() {
+        
+        Application_Control__c appControl = [SELECT Id FROM Application_Control__c WHERE Name = :'test'];
+        appControl.Default__c = false;
+        appControl.URL_Parameter__c = 'test';
+        update appControl;
+        
+        Id conId = [SELECT Id FROM Contact WHERE LastName = :'test'].Id;
+        PageReference pr = Page.ApplicationCreate;
+		pr.getParameters().put('contactId', conId);
+		
+        Test.startTest();
+        
+        Test.setCurrentPage(pr);
+        ApplicationCreate ac = new ApplicationCreate();
+        ac.init();
+        pr.getParameters().put('at', 'test');
+        ac.setup(new ApplicationQuestionGroup(new List<ApplicationQuestion>()), new ApplicationQuestionGroup(new List<ApplicationQuestion>()));
+        delete [SELECT Id FROM Requirement__c WHERE Application_Control__c = :appControl.Id];
+        appControl.Hide_Term_Program__c = true;
+        update appControl;
+        ac = new ApplicationCreate();
+        ac.init();
+        ac.app.Contact__c = null;
+        ac.save();
+        ac = new ApplicationCreate();
+        ac.additionalDataString = 'not json';
+        ac.init();
+        ac.save();
+        
+        Test.stopTest();
+    }
+    
+    @testSetup
+	static void setup() {
+        
+        Application_Control__c appControl = ApplicationTestUtilities.createApplicationControl();
+        
+		Contact con = new Contact(LastName = 'test');
+		insert con;
+        
+		Academic_Term__c at = new Academic_Term__c(Name = 'test', Activate_Application_Date__c = Date.TODAY().addDays(-2), End_Application_Date__c = Date.TODAY().addDays(2));
+		insert at;
+        
+        Program__c p1 = new Program__c(Name = 'test1', Number_of_Applications_Limit__c = 'One Application', Applicant_Type__c = Program__c.Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue());
+        Program__c p2 = new Program__c(Name = 'test2', Number_of_Applications_Limit__c = 'One Application Per Term', Hide_Applicant_Type__c = Program__c.Hide_Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue());
+        Program__c p3 = new Program__c(Name = 'test3', Number_of_Applications_Limit__c = 'One Application Per Program', Hide_Student_Type__c = Program__c.Hide_Student_Type__c.getDescribe().getPicklistValues()[0].getValue());
+        Program__c p4 = new Program__c(Name = 'test4', Hide_Citizenship__c = Program__c.Hide_Citizenship__c.getDescribe().getPicklistValues()[0].getValue());
+        Program__c p5 = new Program__c(Name = 'test5');
+        insert new List<Program__c>{p1, p2, p3, p4, p5};
+        
+        Intended_Program_Term__c ipt = new Intended_Program_Term__c(Academic_Term__c = at.Id, Activate_Application_Date__c = Date.TODAY().addDays(-1), End_Application_Date__c = Date.TODAY().addDays(-1), Applicant_Type__c = Intended_Program_Term__c.Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue());
+        insert ipt;
+		
+        Application__c app2 = new Application__c(Contact__c = con.Id, Intended_Term_of_Entry__c = at.Id);
+        Application__c app3 = new Application__c(Contact__c = con.Id, Intended_Program__c = p3.Id);
+        insert new List<Application__c>{app2, app3};
+        
+		Requirement__c req1 = new Requirement__c(Application_Control__c = appControl.Id, Active__c = true, Name = 'test1', Show_on_Application_Creation__c = true, Application_Creation_Display_Order__c = 'Before Term/Program Questions');
+        Requirement__c req2 = new Requirement__c(Application_Control__c = appControl.Id, Active__c = true, Name = 'test2', Show_on_Application_Creation__c = true, Application_Creation_Display_Order__c = 'After Term/Program Questions');
+        insert new List<Requirement__c>{req1, req2};
+		
+        Requirement_Item__c item1 = new Requirement_Item__c(Requirement__c = req1.Id, Name = 'test1', Active__c = true, RecordTypeId = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByName().get('Question Group').getRecordTypeId());
+        Requirement_Item__c item2 = new Requirement_Item__c(Requirement__c = req2.Id, Name = 'test2', Active__c = true, RecordTypeId = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByName().get('Question Group').getRecordTypeId());
+        insert new List<Requirement_Item__c>{item1, item2};
+        
+		Question__c q1 = new Question__c(Requirement_Item__c = item1.Id, Name = 'test1', Label__c = 'test1', Active__c = true, Picklist_Values__c = 'One\nTwo', RecordTypeId = Schema.SObjectType.Question__c.getRecordTypeInfosByName().get('Picklist').getRecordTypeId());
+        Question__c q2 = new Question__c(Requirement_Item__c = item2.Id, Name = 'test2', Label__c = 'test2', Active__c = true, Picklist_Values__c = 'One\nTwo', RecordTypeId = Schema.SObjectType.Question__c.getRecordTypeInfosByName().get('Picklist').getRecordTypeId());
+        insert new List<Question__c>{q1, q2};
+        
+        insert new Question_Dependency__c(Question__c = q2.Id, Controlling_Question__c = q1.Id, Value__c = 'One', RecordTypeId = Schema.SObjectType.Question_Dependency__c.getRecordTypeInfosByName().get('Picklist').getRecordTypeId());
 	}
 }
