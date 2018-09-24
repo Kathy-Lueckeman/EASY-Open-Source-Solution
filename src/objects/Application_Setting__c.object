@@ -18,7 +18,7 @@
         <externalId>false</externalId>
         <label>Community URL</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

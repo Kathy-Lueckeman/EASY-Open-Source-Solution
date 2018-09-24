@@ -459,6 +459,25 @@
         </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
+    <fields>
+        <fullName>Viewing_Requirement_Formula__c</fullName>
+        <description>Determines if this requirement item must be viewed or not. Returns true if viewing requirement is checked on either the parent requirement or this requirement item</description>
+        <externalId>false</externalId>
+        <formula>Viewing_Requirement__c || Requirement__r.Viewing_Requirement__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Viewing Requirement Formula</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Viewing_Requirement__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Determines whether an applicant must view this requirement item before submission is allowed</description>
+        <externalId>false</externalId>
+        <label>Viewing Requirement</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Requirement Item</label>
     <listViews>
         <fullName>All</fullName>
@@ -672,27 +691,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -899,27 +902,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1129,27 +1116,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

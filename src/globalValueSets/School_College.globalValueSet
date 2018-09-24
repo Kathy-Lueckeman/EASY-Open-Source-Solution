@@ -13,27 +13,11 @@
         <default>false</default>
     </customValue>
     <customValue>
-        <fullName>Registrar&apos;s Office</fullName>
-        <default>false</default>
-    </customValue>
-    <customValue>
         <fullName>School of Business</fullName>
         <default>false</default>
     </customValue>
     <customValue>
         <fullName>School of Education</fullName>
-        <default>false</default>
-    </customValue>
-    <customValue>
-        <fullName>Special</fullName>
-        <default>false</default>
-    </customValue>
-    <customValue>
-        <fullName>Student Life</fullName>
-        <default>false</default>
-    </customValue>
-    <customValue>
-        <fullName>University Library</fullName>
         <default>false</default>
     </customValue>
     <masterLabel>School / College</masterLabel>

@@ -42,9 +42,9 @@ public class ApplicationChecklistTest {
 			riMap.put(ri.RecordType.DeveloperName,ri.Id);
 		}
 
-		Requirement_Response__c rrQG = new Requirement_Response__c(Application__c=app.Id,Requirement_Item__c=riMap.get('Question_Group'));
-		Requirement_Response__c rrDU = new Requirement_Response__c(Application__c=app.Id,Requirement_Item__c=riMap.get('Document_Upload'),ValueTextEntry__c='TEST');
-		Requirement_Response__c rrRO = new Requirement_Response__c(Application__c=app.Id,Requirement_Item__c=riMap.get('Related_Object'),Has_Child_Requirement__c=true);
+		Requirement_Response__c rrQG = new Requirement_Response__c(Application__c = app.Id,Requirement_Item__c = riMap.get('Question_Group'), Viewed__c = true);
+		Requirement_Response__c rrDU = new Requirement_Response__c(Application__c = app.Id,Requirement_Item__c = riMap.get('Document_Upload'), Viewed__c = true, ValueTextEntry__c='TEST');
+		Requirement_Response__c rrRO = new Requirement_Response__c(Application__c = app.Id,Requirement_Item__c = riMap.get('Related_Object'), Viewed__c = true, Has_Child_Requirement__c=true);
 		insert new List<Requirement_Response__c>{rrQG,rrDU,rrRO};
 		insert new Question_Response__c(Requirement_Response__c=rrQG.Id);
 
@@ -54,7 +54,7 @@ public class ApplicationChecklistTest {
 		Test.setCurrentPage(pr);
 		ApplicationChecklist ac = new ApplicationChecklist();
 		ac.init();
-		for(ApplicationChecklist.RequirementWrapper rw : ac.reqMap.values()){
+		for(RequirementWrapper rw : ac.reqMap.values()){
 			System.assertEquals(rw.reqStatus,true);
 		}
 	}
@@ -79,7 +79,7 @@ public class ApplicationChecklistTest {
 		Test.setCurrentPage(pr);
 		ApplicationChecklist ac = new ApplicationChecklist();
 		ac.init();
-		for(ApplicationChecklist.RequirementWrapper rw : ac.reqMap.values()){
+		for(RequirementWrapper rw : ac.reqMap.values()){
 			System.assertEquals(rw.reqStatus,false);
 		}
 	}

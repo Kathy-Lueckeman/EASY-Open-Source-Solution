@@ -59,6 +59,10 @@
                 <behavior>Edit</behavior>
                 <field>Lookup_Where_Clause__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Display_as_Picklist__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

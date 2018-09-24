@@ -68,7 +68,7 @@ public class ApplicationCreate {
                   Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
                   Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Name_Field_API_Name__c,
                   Lookup_Object__c, Lookup_Where_Clause__c, New_Reference_Field__c, Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Static_Text__c,
-                  URL_Parameter__c, Editable_Application_Status__c FROM Questions__r WHERE Active__c = :true ORDER BY Display_Order__c ASC NULLS LAST)
+                  URL_Parameter__c, Editable_Application_Status__c, Display_as_Picklist__c FROM Questions__r WHERE Active__c = :true ORDER BY Display_Order__c ASC NULLS LAST)
                  FROM Requirement_Item__c WHERE Requirement__r.Application_Control__c = :appControl.Id AND Requirement__r.Show_on_Application_Creation__c = :true
                  AND Requirement__r.Active__c = :true AND Active__c = :true ORDER BY Display_Order__c ASC NULLS LAST];
         
@@ -86,14 +86,16 @@ public class ApplicationCreate {
             if ((String.isBlank(i.Requirement__r.Application_Creation_Display_Order__c) || i.Requirement__r.Application_Creation_Display_Order__c.equals('Before Term/Program Questions')) && ApplicationFilter.filter(app, i))
                 groups.add(ApplicationQuestionSection.createQuestionGroup(app, i, null, responses.get(i.Id), null, fields, true));
         
+        ApplicationQuestion programQuestion;
+        
         // Add term and program questions if not hidden
         if (!appControl.Hide_Term_Program__c) {
             
             // Get map of intended programs with id as key
-            intendedPrograms = new Map<Id, Program__c>([SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c FROM Program__c WHERE Active__c = :true ORDER BY Name ASC]);
+            intendedPrograms = new Map<Id, Program__c>([SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true ORDER BY Name ASC]);
             
             // Create new program question and add to list
-            ApplicationQuestion programQuestion = new ApplicationQuestion(app, '', app, 'Intended_Program__c');
+            programQuestion = new ApplicationQuestion(app, '', app, 'Intended_Program__c');
             programQuestion.addQuestionObject(new Question__c(Label__c = 'What program are you applying to?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Program'));
             programQuestion.addIntendedProgramFilteringList(intendedPrograms.values());
             
@@ -137,6 +139,9 @@ public class ApplicationCreate {
         // Create new section out of groups
         section = new ApplicationQuestionSection(groups);
         section.addDependencies(dQuestions, null);
+        
+        if (programQuestion != null)
+            programQuestion.section = section;
     }
 	
     /*******************************************************************************
@@ -144,6 +149,7 @@ public class ApplicationCreate {
     ********************************************************************************/
     public PageReference save() {
         
+        section.pushValuesToObjects();
         Savepoint sp = Database.setSavepoint(); // Set savepoint in case we need to roll-back
         Boolean dmlException = false;
         

@@ -37,7 +37,6 @@ public class ApplicationChecklist {
     * @description Initialize the page - Checks if requirements have been completed
     ********************************************************************************/
     public void init() {
-        system.debug('**CB** in the initialization function');
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
@@ -68,9 +67,10 @@ public class ApplicationChecklist {
         }
 
         Map<Id,Boolean> completedRequirement = new Map<Id,Boolean>();
+        Map<Id,Boolean> viewedRequirement = new Map<Id,Boolean>();
         
         Set<Id> riIds = new Set<Id>();
-        riList = [SELECT Id, Required__c, Requirement__c, Internal_Only__c, Internal_Only_Show_on_Checklist__c, Active__c,Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Requirement__r.Label__c, Name, Label__c, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, (SELECT Id, Active__c,Hardcoded_value__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Application_Field__c, External_Email_Field__c, Editable_Application_Status__c, New_Reference_Field__c, URL_Parameter__c,Static_Text__c FROM Questions__r ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c in :reqIds ORDER BY Display_Order__c ASC NULLS LAST];
+        riList = [SELECT Id, Required__c, Requirement__c, Internal_Only__c, Internal_Only_Show_on_Checklist__c, Active__c,Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Requirement__r.Label__c, Name, Label__c, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, (SELECT Id, Active__c,Hardcoded_value__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Application_Field__c, External_Email_Field__c, Editable_Application_Status__c, New_Reference_Field__c, URL_Parameter__c,Static_Text__c, Display_as_Picklist__c FROM Questions__r ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c in :reqIds ORDER BY Display_Order__c ASC NULLS LAST];
         for(Requirement_Item__c ri : riList){
             Boolean isValid = ApplicationFilter.filter(app,ri);
             if(isValid){
@@ -79,11 +79,16 @@ public class ApplicationChecklist {
             }
         }
         checkRequirementCompletion();
-        for(Requirement_Response__c rr : [Select Id, Requirement_Item__r.Required__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,Fulfilled_On__c,Incomplete_Questions__c,Question_Group_Requirement_Fulfilled_On__c,HasDocument__c,Document_Requirement_Fulfilled_On__c,Has_Child_Requirement__c,Child_Requirement_Fulfilled_On__c,Send_Reminder__c,External_Email__c from Requirement_Response__c WHERE Application__c = :applicationId and Requirement_Item__r.Requirement__c in :reqIds]){
+        for(Requirement_Response__c rr : [Select Id, Requirement_Item__r.Required__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,Fulfilled_On__c,Incomplete_Questions__c,Question_Group_Requirement_Fulfilled_On__c,HasDocument__c,Document_Requirement_Fulfilled_On__c,Has_Child_Requirement__c,Child_Requirement_Fulfilled_On__c,Send_Reminder__c,External_Email__c,Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c from Requirement_Response__c WHERE Application__c = :applicationId and Requirement_Item__r.Requirement__c in :reqIds]){
             if(riIds.contains(rr.Requirement_Item__c)){
                 Boolean itemCompleted = true;
                 if(!completedRequirement.containsKey(rr.Requirement_Item__r.Requirement__c)){
                     completedRequirement.put(rr.Requirement_Item__r.Requirement__c,true);
+                }
+                if(!rr.Viewed__c && rr.Requirement_Item__r.Viewing_Requirement_Formula__c){
+                    completedRequirement.put(rr.Requirement_Item__r.Requirement__c,false);
+                    viewedRequirement.put(rr.Requirement_Item__r.Requirement__c,false);
+                    itemCompleted = false;                    
                 }
                 if(rr.Incomplete_Questions__c > 0){
                     completedRequirement.put(rr.Requirement_Item__r.Requirement__c,false);
@@ -105,9 +110,13 @@ public class ApplicationChecklist {
                 reqMap.get(rId).reqStatus = true;
             }
         }
+        for(Id rId : viewedRequirement.keySet()){
+            if(viewedRequirement.get(rId) == false && reqMap.containsKey(rId)){
+                reqMap.get(rId).viewed = false;
+            }
+        }
         for(RequirementWrapper rw : reqMap.values()){
             if(rw.reqStatus == false){
-                system.debug(rw);
                 allowSubmit = false;
                 break;
             }
@@ -316,37 +325,4 @@ public class ApplicationChecklist {
         return pr;
     }
 
-    public class RequirementWrapper{
-        public Requirement__c req{get;set;}
-        public Boolean reqStatus{get;set;}
-        public Boolean display {
-            get {
-                return !req.Internal_Only__c || req.Internal_Only_Show_on_Checklist__c || UserInfo.getUserType().equals('Standard');
-            }
-        }
-        public Map<Id,RequirementItemWrapper> reqItemMap{get;set;}
-        public List<RequirementItemWrapper> reqItems{
-            get{
-                return reqItemMap.values();
-            }
-        }
-        public RequirementWrapper(Requirement__c req){
-            this.req = req;
-            this.reqStatus = false;
-            this.reqItemMap = new Map<Id,RequirementItemWrapper>();
-        }
-    }
-    public class RequirementItemWrapper{
-        public Requirement_Item__c reqItem{get;set;}
-        public Boolean reqItemStatus{get;set;}
-        public Boolean display {
-            get {
-                return !reqItem.Internal_Only__c || reqItem.Internal_Only_Show_on_Checklist__c || UserInfo.getUserType().equals('Standard');
-            }
-        }
-        public RequirementItemWrapper(Requirement_Item__c reqItem){
-            this.reqItem = reqItem;
-            this.reqItemStatus = false;
-        }
-    }
 }

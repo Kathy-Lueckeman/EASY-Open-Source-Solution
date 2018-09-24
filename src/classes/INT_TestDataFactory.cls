@@ -57,7 +57,7 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'First_Name__c',
             Target_Field_API_Name__c = 'FirstName',
-			Skip_Mapping__c = 'Webform',            
+			Skip_Mapping__c = 'Webform',
             Active__c = true
         );
         testMappingsToInsert.add(contactFirstNameMapping);
@@ -85,7 +85,7 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'Last_Name__c',
             Target_Field_API_Name__c = 'LastName',
-			Skip_Mapping__c = 'Webform',            
+			Skip_Mapping__c = 'Webform',
             Active__c = true
         );
         testMappingsToInsert.add(contactLastNameMapping);
@@ -402,7 +402,7 @@ public class INT_TestDataFactory {
     public static List<Interaction__c> createBulkTestInteractions() {
         List<Interaction__c> testInteractionsToInsert = new List<Interaction__c>();
 
-        for (Integer i = 0; i < 500; i++) {
+        for (Integer i = 0; i < 100; i++) {
             Interaction__c testInt = new Interaction__c(
                 First_Name__c = 'Test' + i,
                 Last_Name__c = 'Person' + i,

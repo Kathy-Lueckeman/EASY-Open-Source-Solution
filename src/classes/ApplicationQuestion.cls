@@ -45,35 +45,54 @@ public class ApplicationQuestion {
     public Boolean placeholderQuestion{get;set;}
     public Object resp{get;set;}
     private Requirement_Response__c reqResponse;
+    public ApplicationQuestionSection section {private get; set;}
+    
     /*******************************************************************************
     * @description Returns the list of selct options for picklists/multiselect picklists and radios. For Intended Programs we also filter out programs that should not be shown.
     ********************************************************************************/
     public List<SelectOption> options {
-        get { 
-            if(intendedPrograms != null){
-                options = new List<SelectOption>();
-                options.add(new SelectOption('','--None--'));
-                for(Program__c ip : intendedPrograms){
-                    if(showIntendedProgram(ip)){
-                        options.add(new SelectOption(ip.Id,(String.isNotBlank(ip.Program_Name_on_Application__c)?ip.Program_Name_on_Application__c:ip.Name)));
-                    }
-                }
+        get {
+            
+            if (intendedPrograms != null) {
+                if (section != null) section.pushValuesToObjects();
+                options = new List<SelectOption>{new SelectOption('', '--None--')};
+                
+                for (Program__c ip:intendedPrograms)
+                    if (showIntendedProgram(ip))
+                        options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
+                
                 return options;
-            }else if (dependentOptions == null){
+                
+            } else if (dependentOptions == null) {
                 return options;
             }
+            
             return dependentOptions.get(controllingQuestion.response.ValueText__c);
     	}
         private set;
     }
-
-    public List<String> multiPicklistValues;
-    public Question__c question {get;
-        //Added by Chris Boulden (next 8 lines). Setter writes question response if a URL parameter is available to prepopulate
-        set{
+	
+   	public List<String> multiPicklistValues;
+   	public Question__c question { get;
+        set {
+            
             this.question = value;
-            if (value.URL_Parameter__c != null && ApexPages.currentPage().getParameters().containsKey(question.URL_Parameter__c)) {
+            
+            if (String.isNotBlank(value.URL_Parameter__c) && ApexPages.currentPage().getParameters().keySet().contains(question.URL_Parameter__c))
                 this.writeResponse(ApexPages.currentPage().getParameters().get(value.URL_Parameter__c));
+            
+            if (question.RecordType != null && question.RecordType.DeveloperName.equals('Reference') && String.isNotBlank(question.Lookup_Object__c) && question.Display_as_Picklist__c) {
+				
+                options = new List<SelectOption>{new SelectOption('', '--None--')};
+                
+                String nameField = String.isBlank(question.Name_Field_API_Name__c) ? 'Name' : question.Name_Field_API_Name__c;
+                
+                String queryString = 'SELECT ' + nameField + ', Id FROM ' + question.Lookup_object__c;
+                if (String.isNotBlank(question.Lookup_Where_Clause__c))
+                    queryString += ' WHERE ' + question.Lookup_Where_Clause__c;
+                
+                for (SObject sObj:database.query(queryString))
+                    options.add(new SelectOption(sObj.Id, (String)sObj.get(nameField)));
             }
         }
     }
@@ -93,9 +112,10 @@ public class ApplicationQuestion {
     public Boolean radio {get;set;}
     public List<Question_Dependency__c> dQuestions {get;set;}
     public Map<Id, ApplicationQuestion> controllingQuestions {get;set;}
+    private Map<Id, Object> controllingResponses {get;set;}
 
     public static Boolean stateAndCountryPicklistEnabled = false;
-    public static Boolean getStateAndCountryPicklistEnabled(){return stateAndCountryPicklistEnabled;}
+    public static Boolean getStateAndCountryPicklistEnabled() { return stateAndCountryPicklistEnabled; }
     static{
         Map<String, Schema.SObjectField> accountFields = Account.sObjectType.getDescribe().fields.getMap();
 		stateAndCountryPicklistEnabled = accountFields.containsKey('BillingCountryCode');
@@ -107,13 +127,13 @@ public class ApplicationQuestion {
     /*******************************************************************************
     * @description Determines if this question is editable based on the application status
     ********************************************************************************/
-    public Boolean isEditable{
-        get{
-            if(UserInfo.getUserType() != 'Standard' || Test.isRunningTest()){
-                if(application != null && String.isNotBlank(application.Application_Status__c)){
-                    if(question != null && (String.isBlank(question.Editable_Application_Status__c) || (String.isNotBlank(question.Editable_Application_Status__c) && new Set<String>(question.Editable_Application_Status__c.split(';')).contains(application.Application_Status__c)))){
+    public Boolean isEditable {
+        get {
+            if (!UserInfo.getUserType().equals('Standard') || Test.isRunningTest()) {
+                if (application != null && String.isNotBlank(application.Application_Status__c)) {
+                    if (question != null && (String.isBlank(question.Editable_Application_Status__c) || (String.isNotBlank(question.Editable_Application_Status__c) && new Set<String>(question.Editable_Application_Status__c.split(';')).contains(application.Application_Status__c))))
                         return true;
-                    }
+                    
                     return question == null;
                 }
             }
@@ -124,7 +144,7 @@ public class ApplicationQuestion {
     /*******************************************************************************
     * @description calculates if this specific program should be shown
     ********************************************************************************/
-    public Boolean showIntendedProgram(Program__c ip){
+    public Boolean showIntendedProgram(Program__c ip) {
         if ((String.isNotBlank(ip.Hide_Applicant_Type__c) && (String.isNotBlank(application.Applicant_Type__c) && (new Set<String>(ip.Hide_Applicant_Type__c.split(';'))).contains(application.Applicant_Type__c))) || (String.isNotBlank(ip.Applicant_Type__c) && (String.isBlank(application.Applicant_Type__c) || !(new Set<String>(ip.Applicant_Type__c.split(';'))).contains(application.Applicant_Type__c))))
             return false;
 
@@ -139,16 +159,14 @@ public class ApplicationQuestion {
     /*******************************************************************************
     * @description checks the answer to multiple questions to decide if a dependent question should be shown
     ********************************************************************************/
-    public Boolean checkMultiControllingQuestion(){
-        Boolean retValue = true;
-        if(multiControllingQuestions != null){
-            for(ApplicationQuestion aq : multiControllingQuestions.keySet()){
-                if(aq.response == null || String.isBlank(aq.response.ValueText__c) || !multiControllingQuestions.get(aq).contains(aq.response.ValueText__c)){
-                    retValue = false;
-                }
-            }
-        }
-        return retValue;
+    public Boolean checkMultiControllingQuestion() {
+        
+        if (multiControllingQuestions != null)
+            for (ApplicationQuestion aq:multiControllingQuestions.keySet())
+                if (aq.response == null || String.isBlank(aq.response.ValueText__c) || !multiControllingQuestions.get(aq).contains(aq.response.ValueText__c))
+                    return false;
+		
+        return true;
     }
 	
     public Boolean getShowQuestion() {
@@ -169,13 +187,16 @@ public class ApplicationQuestion {
         if (forceShowQuestion == true)
             return returnShowQuestion(true, obj);
         
-        if (application != null && question != null && !ApplicationFilter.filter(application,question))
+        if (application != null && question != null && !ApplicationFilter.filter(application, question))
             return returnShowQuestion(false, obj);
         
         if (dQuestions == null || controllingQuestions == null || dQuestions.isEmpty() || controllingQuestions.isEmpty())
             return returnShowQuestion(true, obj);
         
         Boolean satisfied;
+        
+        if (controllingResponses == null && (question == null || String.isBlank(question.Related_Object_Field__c)))
+            controllingResponses = new Map<Id, Object>();
         
         // Based on Question_Dependency records, should this question be shown.
         if (String.isBlank(question.Dependency_Logic__c) || question.Dependency_Logic__c.equals('AND')) {
@@ -187,8 +208,18 @@ public class ApplicationQuestion {
                 if (controllingQuestions.containsKey(qd.Controlling_Question__c)) {
                     
                     ApplicationQuestion cq = controllingQuestions.get(qd.Controlling_Question__c);
-                    cq.getShowQuestion(obj);
-                    Object resp = cq.getResponseObject(obj);
+                    
+                    Object resp;
+                    if (question != null && String.isNotBlank(question.Related_Object_Field__c)) {
+                        cq.getShowQuestion(obj);
+                        resp = cq.getResponseObject(obj);
+                    } else {
+                        if (!controllingResponses.containsKey(qd.Controlling_Question__c)) {
+                    		cq.getShowQuestion(obj);
+                    		controllingResponses.put(qd.Controlling_Question__c, cq.getResponseObject(obj));
+                        }
+                        resp = controllingResponses.get(qd.Controlling_Question__c);
+                    }
                     
                     if (qd.RecordType.DeveloperName.equals('Checkbox') && Boolean.valueOf(qd.ValueCheckbox__c) != (Boolean)resp) {
                         satisfied = false;
@@ -198,7 +229,7 @@ public class ApplicationQuestion {
                         break;
                     } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
                         
-                        if (String.isNotBlank(String.valueOf(resp)) && String.isNotBlank(qd.Value__c)) {
+                        if (String.isNotBlank((String)resp) && String.isNotBlank(qd.Value__c)) {
                             
                             Set<String> multiItems = new Set<String>(((String)resp).split(';'));
                             
@@ -235,8 +266,18 @@ public class ApplicationQuestion {
                 }
                 
                 ApplicationQuestion cq = controllingQuestions.get(qd.Controlling_Question__c);
-                cq.getShowQuestion(obj);
-                Object resp = cq.getResponseObject(obj);
+                
+                Object resp;
+                if (question != null && String.isNotBlank(question.Related_Object_Field__c)) {
+                    cq.getShowQuestion(obj);
+                    resp = cq.getResponseObject(obj);
+                } else {
+                    if (!controllingResponses.containsKey(qd.Controlling_Question__c)) {
+                        cq.getShowQuestion(obj);
+                        controllingResponses.put(qd.Controlling_Question__c, cq.getResponseObject(obj));
+                    }
+                    resp = controllingResponses.get(qd.Controlling_Question__c);
+                }
                 
                 if (qd.RecordType.DeveloperName.equals('Checkbox') && Boolean.valueOf(qd.ValueCheckbox__c) == (Boolean)resp) {
                     satisfied = true;
@@ -246,9 +287,9 @@ public class ApplicationQuestion {
                     break;
                 } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
                     
-                    if (String.isNotBlank(String.valueOf(resp)) && String.isNotBlank(qd.Value__c)) {
+                    if (String.isNotBlank((String)resp) && String.isNotBlank(qd.Value__c)) {
                         
-                        Set<String> multiItems = new Set<String>(((String)resp).split(';'));
+                        Set<String> multiItems = resp == null ? new Set<String>() : new Set<String>(((String)resp).split(';'));
                         
                         Boolean foundValue = false;
                         for (String controlItem : qd.Value__c.split(';')) {
@@ -292,21 +333,28 @@ public class ApplicationQuestion {
                 response.ValueTextArea__c = null;
                 response.ValueLongTextArea__c = null;
                 response.ValueURL__c = null;
-                
-            } else if (String.isNotBlank(question.Related_Object_Field__c)) {
+            }
+            
+            if (obj != null && String.isNotBlank(question.Related_Object_Field__c))
                 obj.put(question.Related_Object_Field__c, null);
+            
+            if (String.isNotBlank(question.Application_Field__c)) {
+                if (obj != null && obj instanceof Application__c) obj.put(question.Application_Field__c, null);
+                if (application != null) application.put(question.Application_Field__c, null);
             }
             
         } else if (question != null && String.isNotBlank(question.Hardcoded_Value__c) && (fieldType.equals('Text') || fieldType.equals('Radio') || fieldType.contains('Picklist'))) {
             
             if (response != null)
                 response.ValueText__c = question.Hardcoded_Value__c;
-            else if (String.isNotBlank(question.Related_Object_Field__c))
-                obj.put(question.Related_Object_Field__c, null);
             
-            return false;
+            ret = false;
         }
         
+        if (question == null || String.isBlank(question.Related_Object_Field__c)) {
+            resp = getResponseObject(obj);
+        	controllingResponses = null;
+        }
         return ret;
     }
 
@@ -348,17 +396,16 @@ public class ApplicationQuestion {
         }
         this.question = question;
         this.tableBased = true;
-
-        //this.fieldName = fieldNames.get(question.RecordType.DeveloperName);
+		
         if (question.Length__c == null || (question.Length__c > 255 && !fieldType.equals('LongTextArea')))
             this.length = 255;
         else
             this.length = (Integer)question.Length__c;
-
+		
         this.placeholder = question.Placeholder__c;
-
+		
         this.label = question.Label__c;
-
+		
         this.helpText = question.Help_Text__c;
         this.con = new Contact();
         if(String.isNotBlank(fieldType)){
@@ -517,7 +564,7 @@ public class ApplicationQuestion {
     * @description Find the relevant response value and prepares the question response to be saved
     ********************************************************************************/
     public void processValue() {
-        
+
         if (response != null) {
             
             if (fieldType.equals('Address')) {
@@ -549,11 +596,14 @@ public class ApplicationQuestion {
     }
     
     public Object getResponseObject(SObject obj) {
-        if (obj != null)
+        
+        if (obj != null && question != null && String.isNotBlank(question.Related_Object_Field__c))
             return obj.get(question.Related_Object_Field__c);
+        else if (response == null)
+            return null;
         else if (String.isNotBlank(response.ValueText__c))
 			return response.ValueText__c;
-		else if (fieldType.equals('Checkbox'))
+		else if (fieldType != null && fieldType.equals('Checkbox'))
 			return response.ValueCheckbox__c;
 		else if (String.isNotBlank(response.ValuePhone__c))
 			return response.ValuePhone__c;
@@ -577,10 +627,12 @@ public class ApplicationQuestion {
 			return response.ValueURL__c;
 		else if (String.isNotBlank(response.ValueTextEncrypted__c))
 			return response.ValueTextEncrypted__c;
+        else if (String.isNotBlank(response.State__c) && String.isNotBlank(response.Street__c) && String.isNotBlank(response.PostalCode__c) && String.isNotBlank(response.Country__c) && String.isNotBlank(response.City__c))
+            return response.Street__c + ', ' + response.City__c + ', ' + response.State__c + ', ' + response.Country__c + ', ' + response.PostalCode__c;
         return null;
     }
     
-    // ADDED by Chris Boulden. Writes a string to the response based on the questions type
+    // Writes a string to the response based on the questions type
     public void writeResponse(String resp) {
         try {
             
@@ -614,7 +666,7 @@ public class ApplicationQuestion {
             if (response.PopulatedOn__c == null)
                 response.PopulatedOn__c = System.NOW();
             response.IsPopulated__c = true;
-        } catch (Exception e) {} //TO DO: CB Handle errors
+        } catch (Exception e) {}
     }
 	
     /*******************************************************************************

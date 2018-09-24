@@ -201,6 +201,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Display_as_Picklist__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, this reference question will display as a picklist instead of a typeahead.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, this reference question will display as a picklist instead of a typeahead.</inlineHelpText>
+        <label>Display as Picklist</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Editable_Application_Status__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Application status(es) that applicants can edit this question for (applies to all if blank)</inlineHelpText>
@@ -624,27 +634,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -824,27 +818,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1024,27 +1002,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1224,27 +1186,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1424,27 +1370,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1624,27 +1554,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1824,27 +1738,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2024,27 +1922,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2224,27 +2106,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2424,27 +2290,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2624,27 +2474,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2824,27 +2658,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3024,27 +2842,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3223,27 +3025,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3422,27 +3208,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3622,27 +3392,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3822,27 +3576,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4022,27 +3760,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4222,27 +3944,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

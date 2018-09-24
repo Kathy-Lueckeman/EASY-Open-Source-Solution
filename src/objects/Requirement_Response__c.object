@@ -205,6 +205,15 @@ null)</formula>
         <type>Html</type>
         <visibleLines>25</visibleLines>
     </fields>
+    <fields>
+        <fullName>Viewed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether the applicant has viewed the requirement and related questions yet. Enables application architect to prevent submission until all requirements have been viewed.</description>
+        <externalId>false</externalId>
+        <label>Viewed</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Requirement Response</label>
     <listViews>
         <fullName>All</fullName>

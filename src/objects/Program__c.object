@@ -290,6 +290,16 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Hide_from_Application__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, this field will not show up as an option on the application.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, this field will not show up as an option on the application.</inlineHelpText>
+        <label>Hide from Application</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Number_of_Applications_Limit__c</fullName>
         <description>One Application (Any other applications, don&apos;t allow creation)
 One Application Per Term (Only one application for the selected term)
@@ -689,27 +699,11 @@ One Application Per Term Per Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -910,27 +904,11 @@ One Application Per Term Per Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
-                <fullName>Registrar%27s Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>School of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Special</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student Life</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>University Library</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -6,6 +6,9 @@
     <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
     <apex:attribute name="nextId" description="ApplicationSettings" type="Id" required="false" />    
     <apex:attribute name="prevId" description="ApplicationSettings" type="Id" required="false" />
+    <apex:attribute name="requirementId" description="Current requirement" type="String" required="false"/>
+    <apex:attribute name="reqs" description="All rquirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
+    <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
    
     <script>
     var jq = jQuery.noConflict();
@@ -13,25 +16,22 @@
         
         var checkitem = function() {
             //Added by Chris 5-15
-            
-                if (jq("#myCarousel .carousel-inner .item:first").hasClass("active") && "{!prevID}" == ""){
+                if (jq("#myCarousel .carousel-inner .item:first").hasClass("active") && !isPrev()){
                     jq(".leftNav").hide();
                 } else {
                     jq(".leftNav").show();
-                } if (jq("#myCarousel .carousel-inner .item:last").hasClass("active") && "{!nextID}" == "") {
+                } if (jq("#myCarousel .carousel-inner .item:last").hasClass("active") && !isNext()) {
                     jq(".rightNav").hide();
-                } else {
-                    jq(".rightNav").show(); 
-                }
-				
-            	if (jq("#myCarousel .carousel-inner .item:first").hasClass("active") && jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
                     jq(".appCreateSave").show();
-                } else if (jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
-                    jq(".appCreateSave").show();
+                    jq(".checklistNav").css('float','right');
+                    jq(".checklistNav").html('Review and Submit');
                 } else {
+                    jq(".rightNav").show();
                     jq(".appCreateSave").hide();
+                    jq(".checklistNav").css('float','left');
+                    jq(".checklistNav").html('Back to Checklist'); 
                 }
-            	
+
                 if (jq("#myCarousel .carousel-inner .item:first").hasClass("active")){
                     jq(".left.createSlide").hide();
                 } else {
@@ -49,8 +49,14 @@
             })
         }
 
+
     </script>
     <apex:form id="theForm" >
+    <c:ApplicationProgressBar prevReqId="{!prevId}"
+        nextReqId="{!nextId}"
+        requirementId="{!requirementId}"
+        reqs="{!reqs}"
+        progress="{!progress}"/>
         <apex:outputPanel id="formPageMessages">
             <apex:pageMessages />
         </apex:outputPanel>

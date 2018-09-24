@@ -16,6 +16,8 @@ private class ApplicationRegistrationTest {
 		
         Test.startTest();
         
+        ApplicationRegistration.lookupSearch('Program__c', 'Name != \'not_test\'', 'Name', 'test');
+        
         Test.setCurrentPage(pr);
         ApplicationRegistration ar = new ApplicationRegistration();
         pr.getParameters().put('at', 'test');

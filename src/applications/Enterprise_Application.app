@@ -4,12 +4,10 @@
     <description>Enterprise Application Solution for Yield (EASY)</description>
     <formFactors>Large</formFactors>
     <label>Enterprise Application</label>
-    <tab>standard-Contact</tab>
-    <tab>Interaction__c</tab>
     <tab>Application__c</tab>
     <tab>Application_Review__c</tab>
+    <tab>standard-Contact</tab>
     <tab>Application_Control__c</tab>
     <tab>Requirement__c</tab>
-    <tab>Program__c</tab>
-    <tab>Academic_Term__c</tab>
+    <tab>Interaction__c</tab>
 </CustomApplication>

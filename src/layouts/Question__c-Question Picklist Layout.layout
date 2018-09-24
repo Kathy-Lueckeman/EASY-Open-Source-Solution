@@ -197,6 +197,12 @@
         <fields>RECORDTYPE</fields>
         <relatedList>Question_Dependency__c.Question__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Question__c</fields>
+        <fields>RECORDTYPE</fields>
+        <relatedList>Question_Dependency__c.Controlling_Question__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

@@ -69,7 +69,13 @@ public class ApplicationRequirementTest {
 		ApplicationRequirement ac = new ApplicationRequirement();
 		ac.init();
 		System.assertEquals(ac.title,'Test Req');
-		ac.submit();
+        ac.redirectPage = 'something';
+        ac.submit();
+		ac.redirectPage = 'submit';
+        ac.submit();
+        ac.redirectPage = 'checklist';
+        ac.submit();
+        
 	}
 	public static TestMethod void testDocumentUpload(){
 		Application__c app = [Select Id from Application__c limit 1];

@@ -1,0 +1,97 @@
+<apex:component >
+
+    <apex:attribute name="prevReqId" description="The previous requirement" type="String" required="false"/>
+    <apex:attribute name="nextReqId" description="The next requirement" type="String" required="false"/>
+    <apex:attribute name="requirementId" description="Current requirement" type="String" required="false"/>
+    <apex:attribute name="reqs" description="All rquirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
+    <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
+
+	<apex:slds />
+	<script>
+	        function redirect(redirectTo){
+	            var jq = jQuery.noConflict();
+	            if (redirectTo == 'forwards' && jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
+	                appShowLoadingSpinner();
+	                performDocUploadSave("{!nextReqId}");
+	                
+	            } else if(redirectTo == 'forwards') {
+	                jq("#myCarousel").carousel("next");
+	            } else if (redirectTo == 'back' && jq("#myCarousel .carousel-inner .item:first").hasClass("active")) {
+	                appShowLoadingSpinner();
+	                performDocUploadSave("{!prevReqId}");
+	                
+	            } else if (redirectTo == 'back') {
+	                jq("#myCarousel").carousel("prev");
+	            } else {
+	            	console.log(redirectTo);
+	            	appShowLoadingSpinner();
+	                performDocUploadSave(redirectTo);
+	                           	
+	            }
+	        }
+
+	        function isNext(){
+	        	return {!nextReqId != null};
+	        }
+
+	        function isPrev(){
+	        	return {!prevReqId != null};
+	        }
+	</script>
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	    <!--<div class="progress" type="Integer">
+	        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+	             aria-valuemin="0" aria-valuemax="100" style="width:{!progress}%;background-color:#{!appControl.Arrow_Color__c};">
+	        </div>
+	    </div>-->
+		<apex:outputPanel rendered="{!$CurrentPage.Name == 'ApplicationRequirement' ||$CurrentPage.Name == 'ApplicationChecklist'}">
+		<div style="padding:3.5rem 1rem 0">
+		<div class="slds-progress">
+			<ol class="slds-progress__list">
+			  	<apex:repeat value="{!reqs}" var="r">
+				    <li class="slds-progress__item {!IF(requirementId == r.req.Id,'',IF(r.reqStatus,'slds-is-completed','slds-has-error'))}">
+				    	<!--"{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!app.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}"-->
+				    <button onclick="appShowLoadingSpinner();redirect('{!r.req.Id}');return false;" class="slds-button {!IF(r.reqStatus,'slds-button_icon slds-button_icon slds-progress__marker_icon','slds-button_icon slds-button_icon slds-progress__marker_icon')} slds-progress__marker " >
+				      		<div class="progress-tooltip" >
+							    <span class="progress-tooltip-text">{!r.req.Name}</span>
+					      		<apex:outputPanel rendered="{!r.reqStatus  && requirementId != r.req.Id}">
+						      		<svg class="slds-button__icon slds-icon_small icon-Complete" aria-hidden="true">
+							          <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#success"></use>
+							        </svg>
+							    </apex:outputPanel>
+					      		<apex:outputPanel rendered="{!!r.reqStatus && requirementId != r.req.Id && r.viewed}">
+						      		<svg class="slds-button__icon slds-icon_small icon-warn" aria-hidden="true">
+							          <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#clear"></use>
+							        </svg>
+							    </apex:outputPanel>
+					      		<apex:outputPanel rendered="{!requirementId == r.req.Id}">
+						      		<svg class="slds-button__icon slds-icon_small icon-CurrentPage" aria-hidden="true">
+							          <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#record"></use>
+							        </svg>
+							    </apex:outputPanel>
+					      		<apex:outputPanel rendered="{!requirementId != r.req.Id && !r.reqStatus && !r.viewed}">
+						      		<svg class="slds-button__icon slds-icon_small icon-not-Visited" aria-hidden="true">
+							          <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#record"></use>
+							        </svg>
+							    </apex:outputPanel>
+							</div>
+				      </button>
+				    </li>
+				</apex:repeat>
+		 	</ol>
+		  <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{!progress}" role="progressbar">
+		    <span class="slds-progress-bar__value" style="width:{!progress}%">
+		      <span class="slds-assistive-text">Progress: 0%</span>
+		    </span>
+		  </div>
+		</div>
+		 <!-- <apex:repeat value="{!reqs}" var="r" >
+		  <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom" role="tooltip" id="step-{!r.req.Name}-tooltip" style="position:absolute;top:1rem;left:calc(50% + 6px);transform:translateX(-50%)">
+		    <div class="slds-popover__body">{!r.req.Name}</div>
+		  </div>
+		</apex:repeat>-->
+		</div>
+		</apex:outputPanel>
+    <!--{!progress}% Complete-->
+    </html>
+</apex:component>

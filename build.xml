@@ -24,6 +24,7 @@
          <runTest>ApplicationCreateTest</runTest>
          <runTest>ApplicationFilterTest</runTest>
          <runTest>ApplicationPortalTest</runTest>
+         <runTest>ApplicationProgressBarTest</runTest>
          <runTest>ApplicationRegistrationTest</runTest>
          <runTest>ApplicationRequirementTest</runTest>
          <runTest>ApplicationRequirementPreviewTest</runTest>
@@ -34,6 +35,7 @@
          <runTest>INT_OpportunityContactRoleHandler_TEST</runTest>
          <runTest>RelatedDocumentUploadTest</runTest>
          <runTest>RelatedObjectReviewTest</runTest>
+         <runTest>RequirementWrapperTest</runTest>
          <runTest>UserApplicationTriggerHandlerTest</runTest>
       </sf:deploy>
     </target>

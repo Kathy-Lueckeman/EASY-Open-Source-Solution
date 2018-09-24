@@ -65,6 +65,10 @@
                 <behavior>Readonly</behavior>
                 <field>Fulfilled_On__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Viewed__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

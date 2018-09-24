@@ -68,7 +68,27 @@ public class ApplicationQuestionGroup {
     public Map<String,Map<String,Object>> fieldResultMap{get;set;}
 
     public String selectedRelatedId{get;set;}
+	
+    public class MultiPicklistWrapper {
+        
+        public SObject obj {get;set;}
+        public String fieldName {get;set;}
+        public List<String> multiPicklistValues;
+        
+        public List<String> getMultiPicklistValues() {
+        	return String.isNotBlank((String)(obj.get(fieldName))) ? ((String)(obj.get(fieldName))).split(';') : new List<String>();
+    	}
 
+    	public void setMultiPicklistValues(List<String> v) {
+        	obj.put(fieldName, String.join(v, ';'));
+    	}
+        
+        public MultiPicklistWrapper(SObject obj, String fieldName) {
+            this.obj = obj;
+            this.fieldName = fieldName;
+        }
+    }
+    
     public class SObjectWrapper{
         private ApplicationQuestionGroup aqg;
         public SObject obj{get;set;}
@@ -82,19 +102,20 @@ public class ApplicationQuestionGroup {
         public Map<ApplicationQuestion, Boolean> showQuestions {
             get {
                 showQuestions = new Map<ApplicationQuestion, Boolean>();
-                for (ApplicationQuestion aq:aqg.questions)
-                    showQuestions.put(aq, aq.getShowQuestion(obj));
+                for (ApplicationQuestion question:aqg.questions)
+                    showQuestions.put(question, question.getShowQuestion(obj));
+                
                 return showQuestions;
             } set;
         }
         
-        public Map<String, List<String>> multiPicklistValues {
+        public Map<String, MultiPicklistWrapper> multiPicklistValues {
             get {
                 if (multiPicklistValues == null) {
-                    multiPicklistValues = new Map<String, List<String>>();
+                    multiPicklistValues = new Map<String, MultiPicklistWrapper>();
                     for (ApplicationQuestion question:aqg.questions)
                         if (question.question.RecordType.DeveloperName.equals('MultiPicklist'))
-                            multiPicklistValues.put(question.question.Related_Object_Field__c, obj.get(question.question.Related_Object_Field__c) != null ? String.valueOf(obj.get(question.question.Related_Object_Field__c)).split(';') : new List<String>());
+                            multiPicklistValues.put(question.question.Related_Object_Field__c, new MultiPicklistWrapper(obj, question.question.Related_Object_Field__c));
                 }
                 
                 return multiPicklistValues;
@@ -132,9 +153,6 @@ public class ApplicationQuestionGroup {
             }
         }
         public void enableConfirmMode(){
-            
-            for (String fn:multiPicklistValues.keySet())
-                obj.put(fn, String.join(multiPicklistValues.get(fn), ';'));
             
             if(checkValid()){
                 isEditMode = false;
@@ -608,12 +626,16 @@ public class ApplicationQuestionGroup {
                 }
             }
         }catch(DmlException e){
-            att.VersionData = null;
-            att.Title = null;
+            if (att != null) {
+            	att.VersionData = null;
+            	att.Title = null;
+            }
             throw e;
         }catch(Exception e){
-            att.VersionData = null;
-            att.Title = null;
+            if (att != null) {
+            	att.VersionData = null;
+            	att.Title = null;
+            }
             throw e;
         }
     }

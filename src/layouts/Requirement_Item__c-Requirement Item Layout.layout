@@ -39,6 +39,10 @@
                 <behavior>Edit</behavior>
                 <field>Internal_Only_Applicant_Instructions__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Viewing_Requirement__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>

@@ -282,6 +282,15 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Viewing_Requirement__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Determines whether applicants need to view all items within a requirement before submission</description>
+        <externalId>false</externalId>
+        <label>Viewing Requirement</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Requirement</label>
     <listViews>
         <fullName>All</fullName>

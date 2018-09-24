@@ -36,6 +36,10 @@
                 <behavior>Edit</behavior>
                 <field>Internal_Only_Applicant_Instructions__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Viewing_Requirement_Formula__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

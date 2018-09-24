@@ -41,11 +41,11 @@
     <apex:attribute name="groupNewRelatedRecord" description="" type="ApexPages.Action" required="true"/>
     <apex:attribute name="obj" description="" type="sObject" required="false"/>
     <apex:outputPanel styleClass="{!if(group.isEditable,'','fieldNotEditable')}" id="theSection">
-        <div class="progress">
+        <!--<div class="progress">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
                  aria-valuemin="0" aria-valuemax="100" style="width:{!group.progress}%;background-color:#{!appControl.Arrow_Color__c};">
             </div>
-        </div>
+        </div>-->
         <apex:outputPanel rendered="{!group.instructions != null && group.instructions != ''}" >
             <p><apex:outputText value="{!group.instructions}" escape="false" /></p>
             <br />
@@ -640,7 +640,7 @@
                         }
                     </style>
                     <div class="form-group" >
-                        <apex:selectCheckboxes id="multiPicklistField1" value="{!rr.multiPicklistValues[question.question.Related_Object_Field__c]}" layout="pageDirection" styleClass="selectCheckboxes {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" >
+                        <apex:selectCheckboxes id="multiPicklistField1" value="{!rr.multiPicklistValues[question.question.Related_Object_Field__c].multiPicklistValues}" layout="pageDirection" styleClass="selectCheckboxes {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" >
                             <apex:selectOptions value="{!question.options}" />
                             <apex:actionSupport event="onchange" reRender="theTable" />
                         </apex:selectCheckboxes>

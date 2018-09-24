@@ -7,6 +7,19 @@ Revision (s):
 public class ApplicationQuestionSection {
 
     public List<ApplicationQuestionGroup> groups {get;private set;}
+    private Application__c application {
+        get {
+        	if (application == null && groups != null) {
+                for (ApplicationQuestionGroup g:groups) {
+                    if (g.app != null) {
+                        application = g.app;
+                        break;
+                    }
+                }
+            }
+            return application;
+   	 	} set;
+    }
 
     public ApplicationQuestionSection(List<ApplicationQuestionGroup> groups) {
         this.groups = groups;
@@ -15,7 +28,7 @@ public class ApplicationQuestionSection {
 
     public ApplicationQuestionSection(Application__c app, List<Requirement_Item__c> items, Map<Id, List<Question_Dependency__c>> dQuestions, Map<Id, Requirement_Response__c> responses, Map<Id, List<Question_Response__c>> dResponses, Map<String,Map<String,Schema.SObjectField>> fieldDescribeMap) {
         groups = new List<ApplicationQuestionGroup>();
-
+		application = app;
         for (Requirement_Item__c i:items){
             if(ApplicationFilter.filter(app,i)){
                 groups.add(ApplicationQuestionSection.createQuestionGroup(app, i, dQuestions, responses.get(i.Id), dResponses.get(i.Id),fieldDescribeMap));
@@ -72,6 +85,33 @@ public class ApplicationQuestionSection {
                 addData = (Map<String,Object>)additionalData.get(g.item.Id);
             }
             g.processValues(addData);
+        }
+    }
+    
+    public void pushValuesToObjects() {
+        
+        if (application == null) return;
+        
+        Set<String> allFields = new Set<String>();
+        Map<String, Object> values = new Map<String, Object>();
+        for (ApplicationQuestionGroup g:groups) {
+            if (g.questionGroup) {
+                for (ApplicationQuestion q:g.questions) {
+                    if (q.question != null && String.isNotBlank(q.question.Application_Field__c)) {
+                        allFields.add(q.question.Application_Field__c.toLowerCase());
+                        q.getShowQuestion();
+                        
+                        if (q.resp != null)
+                            values.put(q.question.Application_Field__c.toLowerCase(), q.resp);
+                    }
+                }
+            }
+        }
+        
+        for (String f:allFields) {
+            try {
+                application.put(f, values.get(f));
+            } catch (Exception e) {}
         }
     }
 }

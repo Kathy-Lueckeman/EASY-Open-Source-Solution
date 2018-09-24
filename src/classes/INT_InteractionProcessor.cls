@@ -226,21 +226,19 @@ public class INT_InteractionProcessor {
         if (contactsToUpdate.size() > 0) {
             logPossibleErrors(Database.update(contactsToUpdate, false));
         }
-
+		
         // Upsert Affiliations using the Upsert_Key__c
-        if (heda && affiliationsToUpsert.size() > 0) {
-            List<SObject> affiliationsToInsert = new List<SObject>();
-            List<SObject> affiliationsToUpdate = new List<SObject>();
-            for (SObject so:affiliationsToUpsert) {
-                if (so.Id == null) {
-                    affiliationsToInsert.add(so);
-                } else {
-                    affiliationsToUpdate.add(so);
-                }
+        List<SObject> affiliationsToInsert = new List<SObject>();
+        List<SObject> affiliationsToUpdate = new List<SObject>();
+        for (SObject so:affiliationsToUpsert) {
+            if (so.Id == null) {
+                affiliationsToInsert.add(so);
+            } else {
+                affiliationsToUpdate.add(so);
             }
-            logPossibleErrors(Database.insert(affiliationsToUpsert, false));
-            logPossibleErrors(Database.update(affiliationsToUpsert, false));
         }
+        logPossibleErrors(Database.insert(affiliationsToUpsert, false));
+        logPossibleErrors(Database.update(affiliationsToUpsert, false));
 
         // Upsert CampaignMembers
         if (campaignMembersToUpsert.size() > 0) {

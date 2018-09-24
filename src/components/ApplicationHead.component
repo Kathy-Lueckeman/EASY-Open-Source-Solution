@@ -32,6 +32,37 @@
             .dateFormat {
             	padding: 0 0px;
             }
+            div.slds-progress{
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+            .progress-tooltip {
+                position: relative;
+                display: inline-block;
+            }
+
+            /* Tooltip text */
+            .progress-tooltip .progress-tooltip-text {
+                visibility: hidden;
+                width: 120px;
+                background-color:#005290 !important;
+                color: #fff;
+                font-family:"Salesforce Sans", Arial, sans-serif;
+                font-size:10px;
+                text-align: center;
+                padding: 5px 0;
+                border-radius: 6px;
+                position: absolute;
+                z-index: 1;
+                top:-22px;
+                left:calc(50% + 6px);
+                transform:translateX(-50%);
+            }
+
+            /* Show the tooltip text when you mouse over the tooltip container */
+            .progress-tooltip:hover .progress-tooltip-text {
+                visibility: visible;
+            }
         </style>
     </head>
 </apex:component>
