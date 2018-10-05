@@ -63,6 +63,10 @@
             .progress-tooltip:hover .progress-tooltip-text {
                 visibility: visible;
             }
+            
+            .ui-autocomplete{
+                overflow: scroll; /*Needed to make the autocomplete results scroll*/
+            }
         </style>
     </head>
 </apex:component>

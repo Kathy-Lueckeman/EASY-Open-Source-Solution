@@ -207,6 +207,8 @@ public class ApplicationCreate {
             }
         }
         
+        section.pushValuesToObjects();
+        
         // Check to see if term/program are valid if not hidden
         if (!appControl.Hide_Term_Program__c) {
             

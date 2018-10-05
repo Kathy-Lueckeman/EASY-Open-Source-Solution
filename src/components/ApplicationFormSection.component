@@ -131,6 +131,7 @@
                             <script>
                                 jQuery('.statePicklist').unbind('DOMNodeInserted').on('DOMNodeInserted',function(){
                                     jQuery('.statePicklist select:not(.form-control)').addClass('form-control');
+                                    makeNonEditable();
                                 });
                             </script>
                         </apex:outputPanel>
@@ -533,6 +534,7 @@
                             <script>
                                 jQuery('.statePicklist').unbind('DOMNodeInserted').on('DOMNodeInserted',function(){
                                     jQuery('.statePicklist select:not(.form-control)').addClass('form-control');
+                                    makeNonEditable();
                                 });
                             </script>
                         </apex:outputPanel>
@@ -836,13 +838,16 @@
                                 var uiDropPos = uiDrop.position().top;
                                 uiDrop.css('max-height',(carHeight-uiDropPos)+'px');
                             },
-                                select: function( event, ui ) {
+                            select: function( event, ui ) {
                                 if(ui.item.value == '**createnew**'){
                                     lookupCreateOpenJS{!group.item.Id}(jQuery(autocompleteItem));
                                 }else{
                                     jQuery(autocompleteItem).val(ui.item.label);
                                     jQuery(autocompleteItem).closest('.form-group').find('.inputHidden').val(ui.item.value);
                                 }
+                                event.preventDefault();
+                            },
+                            focus: function( event, ui ) {
                                 event.preventDefault();
                             }
                         });

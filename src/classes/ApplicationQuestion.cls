@@ -54,7 +54,7 @@ public class ApplicationQuestion {
         get {
             
             if (intendedPrograms != null) {
-                if (section != null) section.pushValuesToObjects();
+                
                 options = new List<SelectOption>{new SelectOption('', '--None--')};
                 
                 for (Program__c ip:intendedPrograms)
@@ -92,7 +92,7 @@ public class ApplicationQuestion {
                     queryString += ' WHERE ' + question.Lookup_Where_Clause__c;
                 
                 for (SObject sObj:database.query(queryString))
-                    options.add(new SelectOption(sObj.Id, (String)sObj.get(nameField)));
+                    options.add(new SelectOption(sObj.Id, String.isBlank((String)sObj.get(nameField)) ? String.valueOf(sObj.Id) : (String)sObj.get(nameField)));
             }
         }
     }
@@ -176,14 +176,19 @@ public class ApplicationQuestion {
     /*******************************************************************************
     * @description Calculates whether to render the question or not
     ********************************************************************************/
+    public Boolean dependencyCalculated = false;
     public Boolean showQuestion {
         get {
-            return getShowQuestion(null);
-        }
+            return dependencyCalculated ? showQuestion : getShowQuestion(null);
+    	}
+        set;
     }
     
     public Boolean getShowQuestion(SObject obj) {
-        
+
+        if (dependencyCalculated)
+            return showQuestion;
+
         if (forceShowQuestion == true)
             return returnShowQuestion(true, obj);
         
@@ -194,8 +199,7 @@ public class ApplicationQuestion {
             return returnShowQuestion(true, obj);
         
         Boolean satisfied;
-        
-        if (controllingResponses == null && (question == null || String.isBlank(question.Related_Object_Field__c)))
+        if (controllingResponses == null)
             controllingResponses = new Map<Id, Object>();
         
         // Based on Question_Dependency records, should this question be shown.
@@ -209,17 +213,12 @@ public class ApplicationQuestion {
                     
                     ApplicationQuestion cq = controllingQuestions.get(qd.Controlling_Question__c);
                     
-                    Object resp;
-                    if (question != null && String.isNotBlank(question.Related_Object_Field__c)) {
-                        cq.getShowQuestion(obj);
-                        resp = cq.getResponseObject(obj);
-                    } else {
-                        if (!controllingResponses.containsKey(qd.Controlling_Question__c)) {
-                    		cq.getShowQuestion(obj);
-                    		controllingResponses.put(qd.Controlling_Question__c, cq.getResponseObject(obj));
-                        }
-                        resp = controllingResponses.get(qd.Controlling_Question__c);
+                    if (!controllingResponses.containsKey(qd.Controlling_Question__c)) {
+                    	cq.getShowQuestion(obj);
+                    	controllingResponses.put(qd.Controlling_Question__c, cq.getResponseObject(obj));
                     }
+                    
+                    Object resp = controllingResponses.get(qd.Controlling_Question__c);
                     
                     if (qd.RecordType.DeveloperName.equals('Checkbox') && Boolean.valueOf(qd.ValueCheckbox__c) != (Boolean)resp) {
                         satisfied = false;
@@ -229,7 +228,7 @@ public class ApplicationQuestion {
                         break;
                     } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
                         
-                        if (String.isNotBlank((String)resp) && String.isNotBlank(qd.Value__c)) {
+                        if (String.isNotBlank(String.valueOf(resp)) && String.isNotBlank(qd.Value__c)) {
                             
                             Set<String> multiItems = new Set<String>(((String)resp).split(';'));
                             
@@ -267,17 +266,12 @@ public class ApplicationQuestion {
                 
                 ApplicationQuestion cq = controllingQuestions.get(qd.Controlling_Question__c);
                 
-                Object resp;
-                if (question != null && String.isNotBlank(question.Related_Object_Field__c)) {
+                if (!controllingResponses.containsKey(qd.Controlling_Question__c)) {
                     cq.getShowQuestion(obj);
-                    resp = cq.getResponseObject(obj);
-                } else {
-                    if (!controllingResponses.containsKey(qd.Controlling_Question__c)) {
-                        cq.getShowQuestion(obj);
-                        controllingResponses.put(qd.Controlling_Question__c, cq.getResponseObject(obj));
-                    }
-                    resp = controllingResponses.get(qd.Controlling_Question__c);
+                    controllingResponses.put(qd.Controlling_Question__c, cq.getResponseObject(obj));
                 }
+                
+                Object resp = controllingResponses.get(qd.Controlling_Question__c);
                 
                 if (qd.RecordType.DeveloperName.equals('Checkbox') && Boolean.valueOf(qd.ValueCheckbox__c) == (Boolean)resp) {
                     satisfied = true;
@@ -287,9 +281,9 @@ public class ApplicationQuestion {
                     break;
                 } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
                     
-                    if (String.isNotBlank((String)resp) && String.isNotBlank(qd.Value__c)) {
+                    if (String.isNotBlank(String.valueOf(resp)) && String.isNotBlank(qd.Value__c)) {
                         
-                        Set<String> multiItems = resp == null ? new Set<String>() : new Set<String>(((String)resp).split(';'));
+                        Set<String> multiItems = new Set<String>(((String)resp).split(';'));
                         
                         Boolean foundValue = false;
                         for (String controlItem : qd.Value__c.split(';')) {
@@ -315,6 +309,8 @@ public class ApplicationQuestion {
     }
     
     private Boolean returnShowQuestion(Boolean ret, SObject obj) {
+
+        dependencyCalculated = true;
         
         if (!ret) {
             
@@ -351,10 +347,9 @@ public class ApplicationQuestion {
             ret = false;
         }
         
-        if (question == null || String.isBlank(question.Related_Object_Field__c)) {
-            resp = getResponseObject(obj);
-        	controllingResponses = null;
-        }
+        resp = getResponseObject();
+        controllingResponses = null;
+        showQuestion = ret;
         return ret;
     }
 

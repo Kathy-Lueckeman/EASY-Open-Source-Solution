@@ -98,6 +98,7 @@ public class ApplicationQuestionSection {
             if (g.questionGroup) {
                 for (ApplicationQuestion q:g.questions) {
                     if (q.question != null && String.isNotBlank(q.question.Application_Field__c)) {
+                        
                         allFields.add(q.question.Application_Field__c.toLowerCase());
                         q.getShowQuestion();
                         
@@ -107,6 +108,10 @@ public class ApplicationQuestionSection {
                 }
             }
         }
+        
+        for (ApplicationQuestionGroup g:groups)
+            for (ApplicationQuestion q:g.questions)
+                q.dependencyCalculated = false;
         
         for (String f:allFields) {
             try {
