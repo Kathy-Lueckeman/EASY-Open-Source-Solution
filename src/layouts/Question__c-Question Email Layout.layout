@@ -53,6 +53,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Contact_Field__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>External_Email_Field__c</field>
             </layoutItems>
         </layoutColumns>

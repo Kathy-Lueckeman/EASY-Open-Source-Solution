@@ -77,8 +77,9 @@
     </fields>
     <fields>
         <fullName>Application_Field__c</fullName>
+        <description>API name of the field on the Application object that this question maps to. If left blank, data from this question will be stored in the Question Response object.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Field on the Application object that this question maps to. If left blank, data from this question will be stored in the Question Response object.</inlineHelpText>
+        <inlineHelpText>API name of the field on the Application object that this question maps to. If left blank, data from this question will be stored in the Question Response object.</inlineHelpText>
         <label>Application Field</label>
         <length>255</length>
         <required>false</required>
@@ -113,6 +114,18 @@
             <valueSetName>Citizenship_Types</valueSetName>
         </valueSet>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Contact_Field__c</fullName>
+        <description>API name of the field on the Contact object that this question maps to. If left blank, data from this question will be stored in the Question Response object.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>API name of the field on the Contact object that this question maps to. If left blank, data from this question will be stored in the Question Response object.</inlineHelpText>
+        <label>Contact Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Degree_Type__c</fullName>

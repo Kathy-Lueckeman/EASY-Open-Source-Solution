@@ -53,9 +53,13 @@ public class ApplicationAdminViewTest {
 		Question__c q1 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Text'),Name='Test',Label__c='Test',Requirement_Item__c=riQG.Id);
 		Question__c q2 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Text'),Name='Test2',Label__c='Test2',Requirement_Item__c=riQG2.Id);
 		Question__c q3 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Text'),Name='Test3',Label__c='Test3',Requirement_Item__c=riQG.Id);
-		insert new List<Question__c>{q1,q2,q3};
+        Question__c q4 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Picklist'),Picklist_Values__c='test1\ntest2\ntest3',Name='Test',Label__c='Test',Requirement_Item__c=riQG.Id);
+        Question__c q5 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Text'),Name='Test',Label__c='Test',Contact_Field__c='FirstName',Requirement_Item__c=riQG.Id);
+        Question__c q6 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Address'),Name='Test',Label__c='Test',Contact_Field__c='MailingAddress',Requirement_Item__c=riQG.Id);
+        Question__c q7 = new Question__c(Active__c = true,RecordTypeId=rtMap.get('Picklist'),Picklist_Values__c=Application__c.Student_Type__c.getDescribe().getPicklistValues()[0].getValue(),Name='Test',Label__c='Test',Application_Field__c = 'Student_Type__c', Requirement_Item__c=riQG.Id);
+		insert new List<Question__c>{q1, q2, q3, q4, q5, q6, q7};
 
-		Question_Dependency__c qd1 = new Question_Dependency__c(Question__c=q1.Id,Controlling_Question__c=q2.Id,Value__c='Test');
+		Question_Dependency__c qd1 = new Question_Dependency__c(Question__c=q1.Id,Controlling_Question__c=q2.Id,Value__c='Test',RecordTypeId=rtMapQD.get('Picklist'));
 		Question_Dependency__c qd2 = new Question_Dependency__c(Question__c=q1.Id,Controlling_Question__c=q3.Id,Value__c='Test;Test2;Test3',RecordTypeId=rtMapQD.get('Multi_Select_Picklist'));
 		insert new List<Question_Dependency__c>{qd1,qd2};
 

@@ -3,14 +3,14 @@
 @author Huron Consulting Group
 *******************************************************************************/
 public class ApplicationRegistration {
-	
+    
     public ApplicationCreate appCreate {get;set;}
     public Interaction__c interaction {get;set;}
     public Interaction__c extraFields {get;set;}
     private User loginUser {get;set;}
     private String loginPassword {get;set;}
     private String loginUrl {get;set;}
-	
+    
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
     ********************************************************************************/
@@ -26,15 +26,15 @@ public class ApplicationRegistration {
             return;
         
         // Create questions for first name, last name, email, password, and password confirmation
-        ApplicationQuestion firstName = new ApplicationQuestion(appCreate.app, '', interaction, 'First_Name__c');
+        ApplicationQuestion firstName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'First_Name__c');
         firstName.addQuestionObject(new Question__c(Label__c = 'First Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
-        ApplicationQuestion lastName = new ApplicationQuestion(appCreate.app, '', interaction, 'Last_Name__c');
+        ApplicationQuestion lastName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Last_Name__c');
         lastName.addQuestionObject(new Question__c(Label__c = 'Last Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
-        ApplicationQuestion email = new ApplicationQuestion(appCreate.app, '', interaction, 'Email__c');
+        ApplicationQuestion email = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Email__c');
         email.addQuestionObject(new Question__c(Label__c = 'Email', Required__c = appCreate.app.Application_Status__c, Active__c = true));
-        ApplicationQuestion portalPassword = new ApplicationQuestion(appCreate.app, '', extraFields, 'Last_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
+        ApplicationQuestion portalPassword = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'Last_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
         portalPassword.addQuestionObject(new Question__c(Label__c = 'What password would you like to use for saving your application?', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
-        ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(appCreate.app, '', extraFields, 'First_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
+        ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'First_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
         portalPasswordConfirmation.addQuestionObject(new Question__c(Label__c = 'Please enter your password again.', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
         
         // Create question groups
@@ -66,10 +66,10 @@ public class ApplicationRegistration {
                 throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
             
             // Insert interaction to create/update Contact
-            
             insert interaction;
             interaction = [SELECT Id, Contact__c, First_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
             Contact con = [SELECT Id, FirstName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
+            appCreate.con.Id = con.Id;
             
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty())
@@ -91,7 +91,7 @@ public class ApplicationRegistration {
             u.Username = con.Email;
             u.CommunityNickname = (u.Email.length() > 40) ? u.Email.substring(0, 40) : u.Email;
             u.ContactId = con.Id;
-			
+            
             // Create user
             String pass = extraFields.Last_Name__c;
             String passConfirm = extraFields.First_Name__c;
@@ -101,10 +101,10 @@ public class ApplicationRegistration {
             if (!Test.isRunningTest() && pass.equals(passConfirm)) {
                 uId = Site.createExternalUser(u, con.AccountId, pass, true);
                 if (uId == null)
-                	throw new ApplicationUtilities.ApplicationException('Error occured when creating user.', true, true);
+                    throw new ApplicationUtilities.ApplicationException('Error occured when creating user.', true, true);
                 loginUser = new User(Id = uId, Username = u.Username);
-            	loginPassword = pass;
-            	loginUrl = checklistUrl;
+                loginPassword = pass;
+                loginUrl = checklistUrl;
             }
             
         } catch (DmlException err) {
@@ -119,7 +119,7 @@ public class ApplicationRegistration {
             
         } catch (Exception err) {
             if (!dmlException) {
-            	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getMessage()));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getMessage()));
                 Database.rollback(sp);
             }
             dmlException = false;

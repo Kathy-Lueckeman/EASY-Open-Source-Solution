@@ -111,9 +111,9 @@ public class INT_InteractionProcessor {
         // Apply Interaction Mappings to all Leads
         List<Lead> leadsToUpdate = new List<Lead>();
         for (String leadId : leadIdToInteractionMap.keySet()) {
-        	Lead leadToUpdate = new Lead(Id = leadId);
+            Lead leadToUpdate = new Lead(Id = leadId);
             intMappingService.applyDataToSObject(leadIdToInteractionMap.get(leadId), leadToUpdate);
-        	leadsToUpdate.add(leadToUpdate);
+            leadsToUpdate.add(leadToUpdate);
         }
 
         // Update Leads with data from the mapping service.
@@ -226,7 +226,7 @@ public class INT_InteractionProcessor {
         if (contactsToUpdate.size() > 0) {
             logPossibleErrors(Database.update(contactsToUpdate, false));
         }
-		
+        
         // Upsert Affiliations using the Upsert_Key__c
         List<SObject> affiliationsToInsert = new List<SObject>();
         List<SObject> affiliationsToUpdate = new List<SObject>();
@@ -420,6 +420,25 @@ public class INT_InteractionProcessor {
      * @return leadsToReconvert, a List of possible Database.LeadConvert error records to try and reconvert.
      */
     private List<Database.LeadConvert> convertLeads(List<Database.LeadConvert> leadsToConvert) {
+        
+        // Get set of all lead converts where contact has been specified but not account
+        Set<Id> contactIdsMissingAccount = new Set<Id>();
+        for (Database.LeadConvert lc:leadsToConvert) {
+            if (lc.getContactId() != null && lc.getAccountId() == null) {
+                contactIdsMissingAccount.add(lc.getContactId());
+            }
+        }
+        
+        // Query for contact's account and set it on lead convert
+        if (!contactIdsMissingAccount.isEmpty()) {
+            Map<Id, Contact> contacts = new Map<Id, Contact>([SELECT Id, AccountId FROM Contact WHERE Id IN :contactIdsMissingAccount]);
+            for (Database.LeadConvert lc:leadsToConvert) {
+                if (lc.getContactId() != null && lc.getAccountId() == null && contacts.containsKey(lc.getContactId())) {
+                    lc.setAccountId(contacts.get(lc.getContactId()).AccountId);
+                }
+            }
+        }
+        
         List<Database.LeadConvert> leadsToReconvert = new List<Database.LeadConvert>();
         Database.LeadConvertResult[] leadConvertResults = Database.convertLead(leadsToConvert, false); // Convert Leads
 
@@ -495,7 +514,7 @@ public class INT_InteractionProcessor {
         if (existingAffiliations.containsKey(upsertKey)) {
             newAffil = existingAffiliations.get(upsertKey);
         } else {
-        	newAffil = Schema.getGlobalDescribe().get('hed__Affiliation__c').newSObject();
+            newAffil = Schema.getGlobalDescribe().get('hed__Affiliation__c').newSObject();
         }
         
         newAffil.put('hed__Status__c', 'Current');

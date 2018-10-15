@@ -3,13 +3,16 @@
 @author Huron Consulting Group
 *******************************************************************************/
 public class ApplicationCreate {
-	
+    
+    public Id contactId {get;set;}
+    public Contact con {get;set;}
     public Application__c app {get;set;}
     public ApplicationQuestionSection section {get;set;}
     public List<Requirement_Item__c> items {get;set;}
     public Map<Id, Program__c> intendedPrograms {get;set;}
     public transient String additionalDataString {get;set;}
-   	
+    public Set<String> contactFields {get;set;}
+    
     public Application_Control__c appControl {
         get {
             if (appControl == null)
@@ -22,22 +25,22 @@ public class ApplicationCreate {
     * @description Initialize the page - Sets up requirements
     ********************************************************************************/
     public PageReference init() {
-		
+        
         // Exit if there is no Application Control to reference
         if (appControl == null)
             return null;
         
-        setup(null, null); // Do setup of all objects
-        
         // Get contact id from user or URL parameter if standard user
-        Id contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
+        contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
         if (UserInfo.getUserType().equals('Standard'))
             contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
+        
+        setup(null, null); // Do setup of all objects
         
         app.Contact__c = contactId; // Assign contact to application
         
         // Take user straight to checklist if we don't want to ask any questions
-		if (section.groups.isEmpty())
+        if (section.groups.isEmpty())
             return save();
         
         return null; // Return null by default
@@ -48,9 +51,10 @@ public class ApplicationCreate {
     ********************************************************************************/
     public void setup(ApplicationQuestionGroup firstGroup, ApplicationQuestionGroup lastGroup) {
         
-        // Initialize application
+        // Initialize contact and application
+        con = new Contact();
         app = new Application__c(Application_Control__c = appControl.Id, Application_Status__c = appControl.Application_Start_Status__c);
-		
+        
         // List of question groups to display
         List<ApplicationQuestionGroup> groups = new List<ApplicationQuestionGroup>();
         
@@ -67,10 +71,34 @@ public class ApplicationCreate {
                  (SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c,
                   Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
                   Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Name_Field_API_Name__c,
-                  Lookup_Object__c, Lookup_Where_Clause__c, New_Reference_Field__c, Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Static_Text__c,
+                  Lookup_Object__c, Lookup_Where_Clause__c, New_Reference_Field__c, Contact_Field__c, Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Static_Text__c,
                   URL_Parameter__c, Editable_Application_Status__c, Display_as_Picklist__c FROM Questions__r WHERE Active__c = :true ORDER BY Display_Order__c ASC NULLS LAST)
                  FROM Requirement_Item__c WHERE Requirement__r.Application_Control__c = :appControl.Id AND Requirement__r.Show_on_Application_Creation__c = :true
                  AND Requirement__r.Active__c = :true AND Active__c = :true ORDER BY Display_Order__c ASC NULLS LAST];
+        
+        
+        
+        // Query for contact if we have one
+        if (contactId != null) {
+            
+            // Loop over questions and get contact fields
+            contactFields = new Set<String>();
+            for (Requirement_Item__c ri:items)
+                for (Question__c q:ri.Questions__r)
+                    if (String.isNotBlank(q.Contact_Field__c))
+                        contactFields.add(q.Contact_Field__c.toLowerCase());
+            
+            // Query for contact
+            if (!contactFields.isEmpty()) {
+                contactFields.addAll(new Set<String>{'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode'});
+                if (Account.sObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode'))
+                    contactFields.addAll(new Set<String>{'mailingstatecode', 'mailingcountrycode', 'otherstatecode', 'othercountrycode'});
+                else
+                    contactFields.addAll(new Set<String>{'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'});
+                String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
+                con = ((List<Contact>)Database.query(query)).get(0);
+            }
+        }
         
         // Get map of requirement responses
         Map<Id, Requirement_Response__c> responses = new Map<Id, Requirement_Response__c>();
@@ -84,7 +112,7 @@ public class ApplicationCreate {
         // Create question groups for requirements we should display
         for (Requirement_Item__c i:items)
             if ((String.isBlank(i.Requirement__r.Application_Creation_Display_Order__c) || i.Requirement__r.Application_Creation_Display_Order__c.equals('Before Term/Program Questions')) && ApplicationFilter.filter(app, i))
-                groups.add(ApplicationQuestionSection.createQuestionGroup(app, i, null, responses.get(i.Id), null, fields, true));
+                groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
         
         ApplicationQuestion programQuestion;
         
@@ -95,7 +123,7 @@ public class ApplicationCreate {
             intendedPrograms = new Map<Id, Program__c>([SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true ORDER BY Name ASC]);
             
             // Create new program question and add to list
-            programQuestion = new ApplicationQuestion(app, '', app, 'Intended_Program__c');
+            programQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Program__c');
             programQuestion.addQuestionObject(new Question__c(Label__c = 'What program are you applying to?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Program'));
             programQuestion.addIntendedProgramFilteringList(intendedPrograms.values());
             
@@ -105,7 +133,7 @@ public class ApplicationCreate {
                 termMap.put(at.Id, at.Name);
             
             // Create new term question and add to list
-            ApplicationQuestion termQuestion = new ApplicationQuestion(app, '', app, 'Intended_Term_of_Entry__c');
+            ApplicationQuestion termQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Term_of_Entry__c');
             termQuestion.addQuestionObject(new Question__c(Label__c = 'What term are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Term'));
             termQuestion.setReferenceOptions(termMap);
             
@@ -116,13 +144,13 @@ public class ApplicationCreate {
         // Create question groups for requirements we should display
         for (Requirement_Item__c i:items)
             if (String.isNotBlank(i.Requirement__r.Application_Creation_Display_Order__c) && i.Requirement__r.Application_Creation_Display_Order__c.equals('After Term/Program Questions') && ApplicationFilter.filter(app, i))
-                groups.add(ApplicationQuestionSection.createQuestionGroup(app, i, null, responses.get(i.Id), null, fields, true));
+                groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
         
         // Get map of Question Dependencies with Question ids as key
         Map<Id, List<Question_Dependency__c>> dQuestions = new Map<Id, List<Question_Dependency__c>>();
         for (Question_Dependency__c dq:[SELECT Id, Question__c, Controlling_Question__c, Value__c, ValueCheckbox__c, RecordType.DeveloperName
-                                		FROM Question_Dependency__c WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appControl.Id
-                                		AND Question__r.Requirement_Item__r.Requirement__r.Show_on_Application_Creation__c = :true]) {
+                                        FROM Question_Dependency__c WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appControl.Id
+                                        AND Question__r.Requirement_Item__r.Requirement__r.Show_on_Application_Creation__c = :true]) {
             
             // Add new list to map if we don't have one yet
             if (!dQuestions.containsKey(dq.Question__c))
@@ -143,7 +171,7 @@ public class ApplicationCreate {
         if (programQuestion != null)
             programQuestion.section = section;
     }
-	
+    
     /*******************************************************************************
     * @description Saves a new application based on the answers from the VisualForce page
     ********************************************************************************/
@@ -175,7 +203,7 @@ public class ApplicationCreate {
             
         } catch (Exception err) {
             if (!dmlException) {
-            	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getMessage()));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getMessage()));
                 Database.rollback(sp);
             }
             dmlException = false;
@@ -258,6 +286,8 @@ public class ApplicationCreate {
         
         app.Id = null;
         insert app; // Insert application
+        
+        if (con.Id != null) update con; // Update contact
         
         // Serialize additionalData if we have it
         transient Map<String, Object> additionalData;

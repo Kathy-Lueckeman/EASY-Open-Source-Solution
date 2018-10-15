@@ -36,6 +36,7 @@ public class ApplicationQuestion {
     public Decimal decimalValue;
     public Datetime datetimeValue;
     public Date dateValue;
+    public String textEncryptedValue;
     public Integer integerValue;
     public String placeholder {get; set;}
     public Integer length {get;set;}
@@ -54,7 +55,7 @@ public class ApplicationQuestion {
         get {
             
             if (intendedPrograms != null) {
-                
+                if (section != null) section.pushValuesToObjects();
                 options = new List<SelectOption>{new SelectOption('', '--None--')};
                 
                 for (Program__c ip:intendedPrograms)
@@ -68,12 +69,12 @@ public class ApplicationQuestion {
             }
             
             return dependentOptions.get(controllingQuestion.response.ValueText__c);
-    	}
+        }
         private set;
     }
-	
-   	public List<String> multiPicklistValues;
-   	public Question__c question { get;
+    
+    public List<String> multiPicklistValues;
+    public Question__c question { get;
         set {
             
             this.question = value;
@@ -82,7 +83,7 @@ public class ApplicationQuestion {
                 this.writeResponse(ApexPages.currentPage().getParameters().get(value.URL_Parameter__c));
             
             if (question.RecordType != null && question.RecordType.DeveloperName.equals('Reference') && String.isNotBlank(question.Lookup_Object__c) && question.Display_as_Picklist__c) {
-				
+                
                 options = new List<SelectOption>{new SelectOption('', '--None--')};
                 
                 String nameField = String.isBlank(question.Name_Field_API_Name__c) ? 'Name' : question.Name_Field_API_Name__c;
@@ -99,7 +100,8 @@ public class ApplicationQuestion {
     private Boolean tableBased {get;set;}
     public Question_Response__c response {get;set;}
     public String helpText {get;set;}
-
+    
+    public Contact contact {get;set;}
     public Application__c application {get;set;}
     public ApplicationQuestion controllingQuestion {get;set;}
     public List<SObject> filteringValues;
@@ -118,7 +120,7 @@ public class ApplicationQuestion {
     public static Boolean getStateAndCountryPicklistEnabled() { return stateAndCountryPicklistEnabled; }
     static{
         Map<String, Schema.SObjectField> accountFields = Account.sObjectType.getDescribe().fields.getMap();
-		stateAndCountryPicklistEnabled = accountFields.containsKey('BillingCountryCode');
+        stateAndCountryPicklistEnabled = accountFields.containsKey('BillingCountryCode');
     }
 
     private Boolean forceShowQuestion = false;
@@ -165,10 +167,10 @@ public class ApplicationQuestion {
             for (ApplicationQuestion aq:multiControllingQuestions.keySet())
                 if (aq.response == null || String.isBlank(aq.response.ValueText__c) || !multiControllingQuestions.get(aq).contains(aq.response.ValueText__c))
                     return false;
-		
+        
         return true;
     }
-	
+    
     public Boolean getShowQuestion() {
         return this.showQuestion;
     }
@@ -180,7 +182,7 @@ public class ApplicationQuestion {
     public Boolean showQuestion {
         get {
             return dependencyCalculated ? showQuestion : getShowQuestion(null);
-    	}
+        }
         set;
     }
     
@@ -214,8 +216,8 @@ public class ApplicationQuestion {
                     ApplicationQuestion cq = controllingQuestions.get(qd.Controlling_Question__c);
                     
                     if (!controllingResponses.containsKey(qd.Controlling_Question__c)) {
-                    	cq.getShowQuestion(obj);
-                    	controllingResponses.put(qd.Controlling_Question__c, cq.getResponseObject(obj));
+                        cq.getShowQuestion(obj);
+                        controllingResponses.put(qd.Controlling_Question__c, cq.getResponseObject(obj));
                     }
                     
                     Object resp = controllingResponses.get(qd.Controlling_Question__c);
@@ -334,6 +336,11 @@ public class ApplicationQuestion {
             if (obj != null && String.isNotBlank(question.Related_Object_Field__c))
                 obj.put(question.Related_Object_Field__c, null);
             
+            if (String.isNotBlank(question.Contact_Field__c)) {
+                if (obj != null && obj instanceof Contact) obj.put(question.Contact_Field__c, null);
+                if (contact != null) contact.put(question.Contact_Field__c, null);
+            }
+            
             if (String.isNotBlank(question.Application_Field__c)) {
                 if (obj != null && obj instanceof Application__c) obj.put(question.Application_Field__c, null);
                 if (application != null) application.put(question.Application_Field__c, null);
@@ -377,8 +384,16 @@ public class ApplicationQuestion {
     public ApplicationQuestion(SObject obj, Question__c question, Question_Response__c response) {
         
         this.response = response;
-
-        if(obj.getSObjectType() == Application__c.sObjectType){
+        
+        if (obj != null && obj.getSObjectType() == Schema.getGlobalDescribe().get('Contact')) {
+            this.contact = (Contact)obj;
+            if (String.isNotBlank(question.Contact_Field__c))
+                fieldName = question.Contact_Field__c;
+            if (String.isNotBlank(question.Contact_Field__c) && String.isNotBlank(question.Hardcoded_Value__c)) {
+                this.response.ValueText__c = question.Hardcoded_Value__c;
+                this.contact.put(question.Contact_Field__c, question.Hardcoded_Value__c);
+            }
+        } else if (obj != null && obj.getSObjectType() == Application__c.SObjectType) {
             this.application = (Application__c)obj;
             if (String.isNotBlank(question.Application_Field__c))
                 fieldName = question.Application_Field__c;
@@ -386,22 +401,26 @@ public class ApplicationQuestion {
                 this.response.ValueText__c = question.Hardcoded_Value__c;
                 this.application.put(question.Application_Field__c, question.Hardcoded_Value__c);
             }
-        }else{
+        } else {
             this.obj = obj;
         }
+        
         this.question = question;
         this.tableBased = true;
-		
+        
         if (question.Length__c == null || (question.Length__c > 255 && !fieldType.equals('LongTextArea')))
             this.length = 255;
         else
             this.length = (Integer)question.Length__c;
-		
+        
         this.placeholder = question.Placeholder__c;
-		
+        
         this.label = question.Label__c;
-		
+        
         this.helpText = question.Help_Text__c;
+        
+        populateContactFieldOnResponse();
+        
         this.con = new Contact();
         if(String.isNotBlank(fieldType)){
             if (fieldType.contains('Picklist') || fieldType.equals('Radio')) {
@@ -420,26 +439,27 @@ public class ApplicationQuestion {
         }
     }
     
-    public ApplicationQuestion(Application__c app, String label, sObject obj, String fieldName) {
-        init(app, label, obj, fieldName, '', null);
+    public ApplicationQuestion(Contact con, Application__c app, String label, sObject obj, String fieldName) {
+        init(con, app, label, obj, fieldName, '', null);
     }
     
-    public ApplicationQuestion(Application__c app, String label, sObject obj, String fieldName, String placeholder) {
-        init(app, label, obj, fieldName, placeholder, null);
+    public ApplicationQuestion(Contact con, Application__c app, String label, sObject obj, String fieldName, String placeholder) {
+        init(con, app, label, obj, fieldName, placeholder, null);
     }
     
-    public ApplicationQuestion(Application__c app, String label, sObject obj, String fieldName, Schema.DisplayType displayType, Boolean placeholderQuestion) {
-        init(app, label, obj, fieldName, '', displayType);
+    public ApplicationQuestion(Contact con, Application__c app, String label, sObject obj, String fieldName, Schema.DisplayType displayType, Boolean placeholderQuestion) {
+        init(con, app, label, obj, fieldName, '', displayType);
         this.placeholderQuestion = placeholderQuestion;
     }
     
     /*******************************************************************************
     * @description Sets up the question based on the input object and display type
     ********************************************************************************/
-    private void init(Application__c app, String label, sObject obj, String fieldName, String placeholder, Schema.DisplayType dType) {
+    private void init(Contact con, Application__c app, String label, sObject obj, String fieldName, String placeholder, Schema.DisplayType dType) {
         
         this.tableBased = false;
-		this.application = app;
+        this.contact = con;
+        this.application = app;
         this.label = label;
         this.obj = obj;
         this.fieldName = fieldName;
@@ -461,6 +481,27 @@ public class ApplicationQuestion {
                 options.add(new SelectOption('', '--None--'));
             for (Schema.PicklistEntry ple:dfr.getPicklistValues())
                 options.add(new SelectOption(ple.getValue(), ple.getLabel()));
+        }
+        
+        populateContactFieldOnResponse();
+    }
+    
+    public void populateContactFieldOnResponse() {
+        if (contact != null && String.isNotBlank(fieldName)) {
+            try {
+                if (response != null && contact.get(fieldName) != null) {
+                    if (fieldName == 'MailingAddress' || fieldName == 'OtherAddress') {
+                        String prefix = question.Contact_Field__c.equals('MailingAddress') ? 'Mailing' : 'Other';
+                        response.Street__c = (String)contact.get(prefix + 'Street');
+                        response.City__c = (String)contact.get(prefix + 'City');
+                        response.PostalCode__c = (String)contact.get(prefix + 'PostalCode');
+                        response.State__c = (String)contact.get(prefix + (stateAndCountryPicklistEnabled ? 'StateCode' : 'State'));
+                        response.Country__c = (String)contact.get(prefix + (stateAndCountryPicklistEnabled ? 'CountryCode' : 'Country'));
+                    } else {
+                        writeResponse(String.valueOf(contact.get(fieldName)));
+                    }
+                }
+            } catch (Exception e) {}
         }
     }
     
@@ -565,6 +606,15 @@ public class ApplicationQuestion {
             if (fieldType.equals('Address')) {
                 response.State__c = (String)con.get(stateAndCountryPicklistEnabled ? 'MailingStateCode' : 'MailingState');
                 response.Country__c = (String)con.get(stateAndCountryPicklistEnabled ? 'MailingCountryCode' : 'MailingCountry');
+                
+                if (contact != null && question != null && (question.Contact_Field__c == 'MailingAddress' || question.Contact_Field__c == 'OtherAddress')) {
+                    String prefix = question.Contact_Field__c.equals('MailingAddress') ? 'Mailing' : 'Other';
+                    contact.put(prefix + 'Street', response.Street__c);
+                    contact.put(prefix + 'City', response.City__c);
+                    contact.put(prefix + 'PostalCode', response.PostalCode__c);
+                    contact.put(prefix + (stateAndCountryPicklistEnabled ? 'StateCode' : 'State'), response.State__c);
+                    contact.put(prefix + (stateAndCountryPicklistEnabled ? 'CountryCode' : 'Country'), response.Country__c);
+                }
             }
             
             response.IsShown__c = showQuestion;
@@ -597,31 +647,31 @@ public class ApplicationQuestion {
         else if (response == null)
             return null;
         else if (String.isNotBlank(response.ValueText__c))
-			return response.ValueText__c;
-		else if (fieldType != null && fieldType.equals('Checkbox'))
-			return response.ValueCheckbox__c;
-		else if (String.isNotBlank(response.ValuePhone__c))
-			return response.ValuePhone__c;
-		else if (String.isNotBlank(response.ValueEmail__c))
-			return response.ValueEmail__c;
-		else if (response.ValueCurrency__c != null)
-			return response.ValueCurrency__c;
-		else if (response.ValueDate__c != null)
-			return response.ValueDate__c;
-		else if (response.ValueDateTime__c != null)
-			return response.ValueDateTime__c;
-		else if (response.ValueNumber__c != null)
-			return response.ValueNumber__c;
-		else if (response.ValuePercent__c != null)
-			return response.ValuePercent__c;
-		else if (String.isNotBlank(response.ValueTextArea__c))
-			return response.ValueTextArea__c;
-		else if (String.isNotBlank(response.ValueLongTextArea__c))
-			return response.ValueLongTextArea__c;
-		else if (String.isNotBlank(response.ValueURL__c))
-			return response.ValueURL__c;
-		else if (String.isNotBlank(response.ValueTextEncrypted__c))
-			return response.ValueTextEncrypted__c;
+            return response.ValueText__c;
+        else if (fieldType != null && fieldType.equals('Checkbox'))
+            return response.ValueCheckbox__c;
+        else if (String.isNotBlank(response.ValuePhone__c))
+            return response.ValuePhone__c;
+        else if (String.isNotBlank(response.ValueEmail__c))
+            return response.ValueEmail__c;
+        else if (response.ValueCurrency__c != null)
+            return response.ValueCurrency__c;
+        else if (response.ValueDate__c != null)
+            return response.ValueDate__c;
+        else if (response.ValueDateTime__c != null)
+            return response.ValueDateTime__c;
+        else if (response.ValueNumber__c != null)
+            return response.ValueNumber__c;
+        else if (response.ValuePercent__c != null)
+            return response.ValuePercent__c;
+        else if (String.isNotBlank(response.ValueTextArea__c))
+            return response.ValueTextArea__c;
+        else if (String.isNotBlank(response.ValueLongTextArea__c))
+            return response.ValueLongTextArea__c;
+        else if (String.isNotBlank(response.ValueURL__c))
+            return response.ValueURL__c;
+        else if (String.isNotBlank(response.ValueTextEncrypted__c))
+            return response.ValueTextEncrypted__c;
         else if (String.isNotBlank(response.State__c) && String.isNotBlank(response.Street__c) && String.isNotBlank(response.PostalCode__c) && String.isNotBlank(response.Country__c) && String.isNotBlank(response.City__c))
             return response.Street__c + ', ' + response.City__c + ', ' + response.State__c + ', ' + response.Country__c + ', ' + response.PostalCode__c;
         return null;
@@ -663,7 +713,7 @@ public class ApplicationQuestion {
             response.IsPopulated__c = true;
         } catch (Exception e) {}
     }
-	
+    
     /*******************************************************************************
     * @description Set the Requirement Response for this Application Question
     ********************************************************************************/
@@ -703,5 +753,13 @@ public class ApplicationQuestion {
 
     public void setMultiPicklistValues(List<String> v) {
         response.ValueText__c = String.join(v, ';');
+    }
+    
+    public String getTextEncryptedValue() {
+        return response.ValueTextEncrypted__c;
+    }
+
+    public void setTextEncryptedValue(String v) {
+        response.ValueTextEncrypted__c = v;
     }
 }

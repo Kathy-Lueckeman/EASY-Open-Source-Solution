@@ -224,7 +224,7 @@
                    </script>
                     <div class="form-group" >
                         <label for="textEncryptedField" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!question.response.ValueTextEncrypted__c}" maxlength="{!if(question.length == null || question.length > 175, 175, question.length)}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#676767;font-weight:400;font-size:14px;height:36px;"/>
+                        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!question.textEncryptedValue}" maxlength="{!if(question.length == null || question.length > 175, 175, question.length)}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#676767;font-weight:400;font-size:14px;height:36px;"/>
                     </div>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" >
