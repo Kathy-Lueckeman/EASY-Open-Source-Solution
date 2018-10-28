@@ -82,7 +82,7 @@ public class ApplicationRequirement {
         if (String.isBlank(applicationId)) {
             if (ApexPages.currentPage().getParameters().containsKey('applicationId')) {
                 applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
-                
+				
                 app = [SELECT Id, Intended_Program__c, Applicant_Type__c, Citizenship__c, Delivery_Type__c, Student_Type__c, Contact__c, School_College__c, Residency__c, Application_Status__c, Application_Control__c FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId];
                 appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
             }
@@ -114,14 +114,14 @@ public class ApplicationRequirement {
             contactFields.addAll(new Set<String>{'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'});
         for (Requirement_Item__c ri:items)
             for (Question__c q:ri.Questions__r)
-                if (String.isNotBlank(q.Contact_Field__c))
-                    contactFields.add(q.Contact_Field__c.toLowerCase());
+            	if (String.isNotBlank(q.Contact_Field__c))
+            		contactFields.add(q.Contact_Field__c.toLowerCase());
             
         // Query for contact
         Id contactId = app.Contact__c;
         String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
         if (contactId != null)
-            con = ((List<Contact>)Database.query(query)).get(0);
+        	con = ((List<Contact>)Database.query(query)).get(0);
 
         // Question Dependencies
         Map<Id, List<Question_Dependency__c>> dQuestions = new Map<Id, List<Question_Dependency__c>>();
@@ -206,7 +206,7 @@ public class ApplicationRequirement {
         
         if (preventUpdates == false)
             insert newResponses;
-        
+		
         section = new ApplicationQuestionSection(con, app, riLst, dQuestions, responses, dResponses, relatedFieldDescribes);
     }
     
@@ -249,6 +249,27 @@ public class ApplicationRequirement {
     ********************************************************************************/
     public PageReference submit() {
         try {
+            
+            Boolean hasError = false;
+            for (ApplicationQuestionGroup g:section.groups) {
+                if (g.relatedObject == true) {
+                    if (g.creatingNewRelatedRecord == true) {
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please finish editing all ' + (String.isBlank(g.item.Label__c) ? g.item.Name : g.item.Label__c) + ' records'));
+                        hasError = true;
+                    } else if (g.relatedObjects != null) {
+                        for (ApplicationQuestionGroup.SObjectWrapper sow:g.relatedObjects) {
+                            if (sow.isEditMode) {
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please finish editing all ' + (String.isBlank(g.item.Label__c) ? g.item.Name : g.item.Label__c) + ' records'));
+                        		hasError = true;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if (hasError)
+                return null;
+            
             transient Map<String, Object> additionalData;
             if (String.isNotBlank(additionalDataString) && additionalDataString != '{}')
                 additionalData = (Map<String,Object>)JSON.deserializeUntyped(additionalDataString);
