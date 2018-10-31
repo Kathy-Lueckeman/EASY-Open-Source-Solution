@@ -5,7 +5,7 @@
 Revision (s): 
 *******************************************************************************/
 public class ApplicationQuestionGroup {
-    
+	
     public Contact con {get;private set;}
     public Application__c app {get;private set;}
     public List<ApplicationQuestion> questions {get;private set;}
@@ -69,7 +69,7 @@ public class ApplicationQuestionGroup {
     public Map<String,Map<String,Object>> fieldResultMap{get;set;}
 
     public String selectedRelatedId{get;set;}
-    
+	
     public class MultiPicklistWrapper {
         
         public SObject obj {get;set;}
@@ -77,12 +77,12 @@ public class ApplicationQuestionGroup {
         public List<String> multiPicklistValues;
         
         public List<String> getMultiPicklistValues() {
-            return String.isNotBlank((String)(obj.get(fieldName))) ? ((String)(obj.get(fieldName))).split(';') : new List<String>();
-        }
+        	return String.isNotBlank((String)(obj.get(fieldName))) ? ((String)(obj.get(fieldName))).split(';') : new List<String>();
+    	}
 
-        public void setMultiPicklistValues(List<String> v) {
-            obj.put(fieldName, String.join(v, ';'));
-        }
+    	public void setMultiPicklistValues(List<String> v) {
+        	obj.put(fieldName, String.join(v, ';'));
+    	}
         
         public MultiPicklistWrapper(SObject obj, String fieldName) {
             this.obj = obj;
@@ -102,9 +102,14 @@ public class ApplicationQuestionGroup {
         
         public Map<ApplicationQuestion, Boolean> showQuestions {
             get {
+                SObject objCopy = obj.clone(true, true, true, true);
                 showQuestions = new Map<ApplicationQuestion, Boolean>();
-                for (ApplicationQuestion question:aqg.questions)
-                    showQuestions.put(question, question.getShowQuestion(obj));
+                for (ApplicationQuestion aq:aqg.questions)
+                    showQuestions.put(aq, aq.getShowQuestion(obj));
+                
+                for (ApplicationQuestion aq:showQuestions.keySet())
+                    if (showQuestions.get(aq))
+                        obj.put(aq.question.Related_Object_Field__c, objCopy.get(aq.question.Related_Object_Field__c));
                 
                 return showQuestions;
             } set;
@@ -131,7 +136,7 @@ public class ApplicationQuestionGroup {
             isEditMode = false;
             isDeleted = false;
             isValid = true;
-            
+			
             if(((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks')) != null && ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks')).size()>0){
                 att = ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks'))[0];
             }
@@ -446,7 +451,7 @@ public class ApplicationQuestionGroup {
                     qMap.put(qr.Question__c, new ApplicationQuestion(app, new Question__c(Active__c = true, Id = qr.Question__c), qr));
             else if (relatedObject)
                 for (ApplicationQuestion aq:questions)
-                    qMap.put(aq.question.Id, aq);
+                	qMap.put(aq.question.Id, aq);
             
             for (ApplicationQuestion aq:questions)
                 if (aq.question != null && dQuestions.containsKey(aq.question.Id))
@@ -462,7 +467,7 @@ public class ApplicationQuestionGroup {
         if (newReferenceObjectType.toLowerCase().equals('account') && !UserInfo.getUserType().equals('Guest')) {
             newReferenceObject = [SELECT Id, Name FROM Account LIMIT 1];
         } else {
-            newReferenceObject = Schema.getGlobalDescribe().get(newReferenceObjectType).newSObject();
+        	newReferenceObject = Schema.getGlobalDescribe().get(newReferenceObjectType).newSObject();
         }
         if(String.isNotBlank(newReferenceObjectSelectedWrapperName)){
             newReferenceObject.put('Name',newReferenceObjectSelectedWrapperName);
@@ -489,13 +494,13 @@ public class ApplicationQuestionGroup {
                         Object questionValue = aq.question.Hardcoded_Value__c;
                         
                         if (aq.question.RecordType.DeveloperName == 'Checkbox')
-                            questionValue = Boolean.valueOf(aq.question.Hardcoded_Value__c);
+                        	questionValue = Boolean.valueOf(aq.question.Hardcoded_Value__c);
                         else if (aq.question.RecordType.DeveloperName == 'Currency' || aq.question.RecordType.DeveloperName == 'Number' || aq.question.RecordType.DeveloperName == 'Percent')
-                            questionValue = Decimal.valueOf(aq.question.Hardcoded_Value__c);
+                        	questionValue = Decimal.valueOf(aq.question.Hardcoded_Value__c);
                         else if (aq.question.RecordType.DeveloperName == 'Date')
-                            questionValue = Date.valueOf(aq.question.Hardcoded_Value__c);
+                        	questionValue = Date.valueOf(aq.question.Hardcoded_Value__c);
                         else if (aq.question.RecordType.DeveloperName == 'Datetime')
-                            questionValue = DateTime.valueOf(aq.question.Hardcoded_Value__c);
+                        	questionValue = DateTime.valueOf(aq.question.Hardcoded_Value__c);
                         
                         newReferenceObject.put(aq.question.Related_Object_Field__c, questionValue);
                     }
@@ -558,7 +563,7 @@ public class ApplicationQuestionGroup {
                         response.Child_Requirement_Fulfilled_On__c = null;
                     } else if (item.Required_Number_of_Children__c == null || item.Required_Number_of_Children__c <= childCount) {
                         if (!response.Has_Child_Requirement__c || response.Child_Requirement_Fulfilled_On__c == null)
-                            response.Child_Requirement_Fulfilled_On__c = System.NOW();
+                        	response.Child_Requirement_Fulfilled_On__c = System.NOW();
                         response.Has_Child_Requirement__c = true;
                     }
                     
@@ -591,7 +596,7 @@ public class ApplicationQuestionGroup {
                                 try {
                                     
                                     if (q.fieldType.equals('Address') && (q.question.Contact_Field__c == 'MailingAddress' || q.question.Contact_Field__c == 'OtherAddress')) {
-                                        
+                						
                                         String prefix = q.question.Contact_Field__c.equals('MailingAddress') ? 'Mailing' : 'Other';
                                         con.put(prefix + 'Street', q.response.Street__c);
                                         con.put(prefix + 'City', q.response.City__c);
@@ -655,14 +660,14 @@ public class ApplicationQuestionGroup {
             }
         }catch(DmlException e){
             if (att != null) {
-                att.VersionData = null;
-                att.Title = null;
+            	att.VersionData = null;
+            	att.Title = null;
             }
             throw e;
         }catch(Exception e){
             if (att != null) {
-                att.VersionData = null;
-                att.Title = null;
+            	att.VersionData = null;
+            	att.Title = null;
             }
             throw e;
         }
