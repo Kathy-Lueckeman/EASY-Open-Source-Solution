@@ -365,6 +365,8 @@ public class ApplicationQuestionGroup {
                     }
                     
                     ApplicationQuestion aq = new ApplicationQuestion(String.isNotBlank(q.Contact_Field__c) ? (SObject)con : (SObject)app, q, qResponses.get(q.Id));
+                    if (aq.application == null)
+                        aq.application = app;
                     aq.setRequirementResponse(response);
                     questions.add(aq);
                 }

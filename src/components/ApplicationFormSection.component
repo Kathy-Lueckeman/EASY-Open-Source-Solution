@@ -395,9 +395,9 @@
             <apex:outputField value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && (preventUpdates || !group.isEditable)}"/>
             
             <apex:outputText style="font-weight:bold" value="Previously Uploaded Document: "/>
-            <apex:outputText value="{!group.att.Title}" label="Previously Uploaded Document:" rendered="{!!preventUpdates && group.isEditable}"/>
+            <apex:outputText value="{!group.att.Title}" label="Previously Uploaded Document:" rendered="{!!preventUpdates && group.isEditable && !ISPICKVAL($User.UserType,'Standard')}"/>
             
-            <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!group.oldAttVersion.Id}" rendered="{!(preventUpdates || !group.isEditable) && NOT(ISBLANK(group.oldAttVersion.Id))}" target="_blank">{!group.att.Title}</apex:outputLink>
+            <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!group.oldAttVersion.Id}" rendered="{!(preventUpdates || !group.isEditable || ISPICKVAL($User.UserType,'Standard')) && NOT(ISBLANK(group.oldAttVersion.Id))}" target="_blank">{!group.att.Title}</apex:outputLink>
             
             <br/><br/>
             <apex:outputPanel rendered="{!!preventUpdates && group.isEditable}">
@@ -790,7 +790,7 @@
                                     </apex:outputLink>
                                 </td>
                             </apex:outputPanel>
-                            <apex:outputPanel layout="none" rendered="{!ISPICKVAL($User.UserType,'Standard') && preventUpdates==false}">
+                            <apex:outputPanel layout="none" rendered="{!ISPICKVAL($User.UserType,'Standard') && preventUpdates==false && rr.obj.Id != null}">
                                 <td class="ui-front">
                                     <apex:commandLink action="{!group.RelatedUpload}" reRender="theTable" oncomplete="if('{!group.selectedRelatedId}')window.open('{!$Page.RelatedDocumentUpload+'?Id='+group.selectedRelatedId}','_blank');">Upload
                                         <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>

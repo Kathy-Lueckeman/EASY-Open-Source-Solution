@@ -293,6 +293,9 @@ public class ApplicationRequirement {
                             qResponses.add(q.response);
             
             upsert qResponses;
+            
+            section.pushValuesToObjects();
+            
             update app;
             update con;
 
