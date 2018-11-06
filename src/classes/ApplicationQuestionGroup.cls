@@ -107,9 +107,11 @@ public class ApplicationQuestionGroup {
                 for (ApplicationQuestion aq:aqg.questions)
                     showQuestions.put(aq, aq.getShowQuestion(obj));
                 
-                for (ApplicationQuestion aq:showQuestions.keySet())
-                    if (showQuestions.get(aq))
+                for (ApplicationQuestion aq:showQuestions.keySet()) {
+                    aq.dependencyCalculated = false;
+                    if (showQuestions.get(aq) && String.isNotBlank(aq.question.Related_Object_Field__c))
                         obj.put(aq.question.Related_Object_Field__c, objCopy.get(aq.question.Related_Object_Field__c));
+                }
                 
                 return showQuestions;
             } set;
