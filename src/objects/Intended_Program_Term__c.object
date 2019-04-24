@@ -155,6 +155,66 @@ Activate_Application_Date__c  &lt;=  TODAY() &amp;&amp; End_Application_Date__c 
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Generic_Filter_1__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_1</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_2__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_2</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_3__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 3</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_3</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_4__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 4</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_4</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Intended_Program__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>

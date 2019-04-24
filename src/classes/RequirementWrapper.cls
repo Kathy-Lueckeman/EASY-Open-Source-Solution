@@ -5,7 +5,7 @@ public class RequirementWrapper {
         public Boolean viewed{get;set;}
         public Boolean display {
             get {
-                return !req.Internal_Only__c || req.Internal_Only_Show_on_Checklist__c || UserInfo.getUserType().equals('Standard');
+                return req.Display_on_Checklist__c && (!req.Internal_Only__c || req.Internal_Only_Show_on_Checklist__c || UserInfo.getUserType().equals('Standard'));
             }
         }
         public Map<Id,RequirementItemWrapper> reqItemMap{get;set;}

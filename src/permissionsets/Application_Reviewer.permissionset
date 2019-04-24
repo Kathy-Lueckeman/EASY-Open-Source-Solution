@@ -363,6 +363,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Application__c.Degree_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Application__c.Delivery_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -374,6 +379,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Application__c.Educational_Background__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Generic_Filter_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Generic_Filter_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Generic_Filter_3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Generic_Filter_4__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -464,6 +489,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Intended_Program_Term__c.End_Application_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Intended_Program_Term__c.Generic_Filter_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Intended_Program_Term__c.Generic_Filter_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Intended_Program_Term__c.Generic_Filter_3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Intended_Program_Term__c.Generic_Filter_4__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -873,11 +918,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.Last_Campaign_Source__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Opportunity.Opportunity_Key__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -943,6 +983,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Program__c.Generic_Filter_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Program__c.Generic_Filter_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Program__c.Generic_Filter_3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Program__c.Generic_Filter_4__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Program__c.Hide_Applicant_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -959,12 +1019,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Program__c.Hide_from_Application__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Program__c.Number_of_Applications_Limit__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1169,7 +1229,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Question__c.Contact_Field__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1199,7 +1259,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Question__c.Display_as_Picklist__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Display_on_Admin_Review_Pages__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1209,6 +1274,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Question__c.External_Email_Field__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Generic_Filter_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Generic_Filter_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Generic_Filter_3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Generic_Filter_4__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1249,7 +1334,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Question__c.Name_Field_API_Name__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1299,11 +1384,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Question__c.URL_Parameter__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Allow_Supporting_Documentation_Upload__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1343,12 +1433,42 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Requirement_Item__c.Display_on_Admin_Review_Pages__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Display_on_Checklist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Requirement_Item__c.Editable_Application_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.File_Types__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Generic_Filter_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Generic_Filter_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Generic_Filter_3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Generic_Filter_4__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1369,12 +1489,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Internal_Only_Applicant_Instructions__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Internal_Only_Show_on_Checklist__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1389,12 +1509,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Label__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Maximum_Number_of_Children__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1423,6 +1543,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Requirement_Item__c.Required_Supporting_Documentation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Requirement_Item__c.Required__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1444,12 +1569,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Viewing_Requirement_Formula__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Viewing_Requirement__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1534,7 +1659,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement__c.Application_Creation_Display_Order__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1563,13 +1688,43 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Requirement__c.Display_on_Admin_Review_Pages__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement__c.Display_on_Checklist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement__c.Generic_Filter_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement__c.Generic_Filter_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement__c.Generic_Filter_3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement__c.Generic_Filter_4__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Requirement__c.Intended_Program__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement__c.Internal_Only_Show_on_Checklist__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1579,7 +1734,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement__c.Label__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1604,12 +1759,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement__c.URL_Parameter__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement__c.Viewing_Requirement__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Application Reviewer</label>

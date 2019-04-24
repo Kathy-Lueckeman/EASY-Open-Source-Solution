@@ -21,10 +21,10 @@
     </script>
     <c:ApplicationHead />
     <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occured and you do not have access to this page.','')}" appControl="{!appControl}">
-       <c:ApplicationForm section="{!section}" rendered="{!!showSuccess && !isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
+        <c:ApplicationForm id="applicationForm" section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
         requirementId="{!requirementId}"
         reqs="{!reqs}"
-        progress="{!progress}"> 
+        progress="{!progress}" > 
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
@@ -43,37 +43,13 @@
                         <div class="col-xs-6 col-md-4 col-md-offset-2">
                             <center>
                                 <apex:commandLink styleClass="btn btn-lg btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; width:100%; margin: 10px;" value="Back to Checklist" reRender="none" onclick="performDocUploadSave('checklist');appShowLoadingSpinner();" rendered="{!!isExternalUser}" />
-                                <apex:commandLink styleClass="btn btn-lg btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; width:100%; margin: 10px;" value="Save" reRender="none" onclick="performDocUploadSave('');appShowLoadingSpinner();" rendered="{!isExternalUser}" />
+                                <apex:commandLink styleClass="btn btn-lg btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; width:100%; margin: 10px;" value="Save" reRender="none" onclick="performDocUploadSave('');appShowLoadingSpinner();" oncomplete="appShowConfimation();" rendered="{!isExternalUser}" />
                             </center>
                         </div>
-                        <div class="col-xs-3 col-md-2 col-md-offset-2"><apex:commandLink onclick="redirect('forwards');" styleClass="btn btn-lg rightNav btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; float:right; width:100%; margin: 10px;" value="Next"  reRender="none" /></div>     
+                        <div class="col-xs-3 col-md-2 col-md-offset-2"><apex:commandLink onclick="redirect('forwards');" styleClass="btn btn-lg rightNav btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; float:right; width:100%; margin: 10px;" value="Next"  reRender="none" /></div>
                     </div>
                 </div>
             </div>
         </c:ApplicationForm>
-        <apex:outputPanel rendered="{!showSuccess}">
-            <div class="row" >
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <div>
-                        <div class="row" style="display:flex;" >
-                            <div class="col-lg-8 col-xs-10" >
-                                <div role="listbox">
-                                    <div class="item active" >
-                                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                                            <h1 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:600;font-size:36px;margin-bottom:20px;margin-top:30px;" >Thank you for your submission.</h1>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" >
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
-                </div>
-            </div>
-        </apex:outputPanel>
     </c:ApplicationBody>
 </apex:page>

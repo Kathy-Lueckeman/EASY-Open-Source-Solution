@@ -1,6 +1,6 @@
 @isTest
 public class ApplicationTestUtilities {
-	
+    
     public static Application_Control__c createApplicationControl() {
         
         Application_Control__c appControl = new Application_Control__c(

@@ -224,6 +224,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Display_on_Admin_Review_Pages__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Checked if this Question should display on the Admin and Review pages.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked if this Question should display on the Admin and Review pages.</inlineHelpText>
+        <label>Display on Admin/Review Pages</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Editable_Application_Status__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Application status(es) that applicants can edit this question for (applies to all if blank)</inlineHelpText>
@@ -245,6 +255,66 @@
         <label>External Email Field</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_1__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_1</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_2__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_2</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_3__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 3</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_3</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_4__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 4</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_4</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Hardcoded_Value__c</fullName>
@@ -622,6 +692,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -802,6 +916,50 @@
             </values>
             <values>
                 <fullName>OR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -990,6 +1148,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -1170,6 +1372,50 @@
             </values>
             <values>
                 <fullName>OR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1358,6 +1604,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -1538,6 +1828,50 @@
             </values>
             <values>
                 <fullName>OR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1726,6 +2060,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -1906,6 +2284,50 @@
             </values>
             <values>
                 <fullName>OR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2094,6 +2516,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -2274,6 +2740,50 @@
             </values>
             <values>
                 <fullName>OR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2462,6 +2972,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -2642,6 +3196,50 @@
             </values>
             <values>
                 <fullName>OR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2830,6 +3428,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -3013,6 +3655,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -3192,6 +3878,50 @@
             </values>
             <values>
                 <fullName>OR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3380,6 +4110,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -3560,6 +4334,50 @@
             </values>
             <values>
                 <fullName>OR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3748,6 +4566,50 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Residency_Types</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
@@ -3928,6 +4790,50 @@
             </values>
             <values>
                 <fullName>OR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

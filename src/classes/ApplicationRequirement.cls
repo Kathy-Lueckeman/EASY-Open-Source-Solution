@@ -51,6 +51,8 @@ public class ApplicationRequirement {
         items = new List<Requirement_Item__c>();
     }
     public ApplicationRequirement(Id contactId, Id applicationId, Id requirementId,List<Requirement_Item__c> items, List<Requirement_Response__c> requirementResponses, List<Question_Response__c> questionResponses, List<Question_Dependency__c> questionDependencies){
+        this.contactId = contactId;
+        this.applicationId = applicationId;
         this.requirementId = requirementId;
         this.items = items;
         this.requirementResponses = requirementResponses;
@@ -79,21 +81,12 @@ public class ApplicationRequirement {
             }
         }
         
-        if (String.isBlank(applicationId)) {
-            if (ApexPages.currentPage().getParameters().containsKey('applicationId')) {
-                applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
-				
-                app = [SELECT Id, Intended_Program__c, Applicant_Type__c, Citizenship__c, Delivery_Type__c, Student_Type__c, Contact__c, School_College__c, Residency__c, Application_Status__c, Application_Control__c FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId];
-                appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
-            }
-        }
-
         if (String.isBlank(requirementId))
             requirementId = Id.valueOf(ApexPages.currentPage().getParameters().get('requirementId'));
         
         if (queryItems == true) {
             
-            String itemQuery = 'SELECT Id, Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Active__c, Required__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Requirement__r.Label__c, Name, Label__c, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, (SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Contact_Field__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c, Editable_Application_Status__c, URL_Parameter__c, New_Reference_Field__c ,Static_Text__c, Display_as_Picklist__c FROM Questions__r WHERE Active__c = true ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c = :requirementId AND Requirement__r.Show_on_Application_Creation__c = false AND Requirement__r.Active__c = true AND Active__c = true';
+            String itemQuery = 'SELECT Id, Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Active__c, Required__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Requirement__r.Label__c, Name, Label__c, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c , Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Contact_Field__c, Application_Field__c, External_Email_Field__c,Hardcoded_Value__c, Editable_Application_Status__c, URL_Parameter__c, New_Reference_Field__c ,Static_Text__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Questions__r WHERE Active__c = true ORDER BY Display_Order__c ASC NULLS LAST) FROM Requirement_Item__c WHERE Requirement__c = :requirementId AND Requirement__r.Show_on_Application_Creation__c = false AND Requirement__r.Active__c = true AND Active__c = true';
             
             if (isExternalUser)
                 itemQuery += ' AND Internal_Requirement_Item__c=\''+ApexPages.currentPage().getParameters().get('r') + '\'';
@@ -105,23 +98,40 @@ public class ApplicationRequirement {
             items = database.query(itemQuery);
         }
         
-        Set<String> contactFields = new Set<String>();
-        // Loop over questions and get contact fields
-        contactFields = new Set<String>{'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode'};
-        if (Account.sObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode'))
-            contactFields.addAll(new Set<String>{'mailingstatecode', 'mailingcountrycode', 'otherstatecode', 'othercountrycode'});
-        else
-            contactFields.addAll(new Set<String>{'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'});
-        for (Requirement_Item__c ri:items)
-            for (Question__c q:ri.Questions__r)
-            	if (String.isNotBlank(q.Contact_Field__c))
-            		contactFields.add(q.Contact_Field__c.toLowerCase());
+        if ((String.isBlank(applicationId) || app == null) && ApexPages.currentPage().getParameters().containsKey('applicationId')) {
             
-        // Query for contact
-        Id contactId = app.Contact__c;
-        String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
-        if (contactId != null)
-        	con = ((List<Contact>)Database.query(query)).get(0);
+            applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
+            
+            Set<String> appFields = new Set<String>{'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c', 'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'application_control__c', 'generic_filter_1__c', 'generic_filter_2__c', 'generic_filter_3__c', 'generic_filter_4__c'};
+            for (Requirement_Item__c ri:items)
+                for (Question__c q:ri.Questions__r)
+                	if (String.isNotBlank(q.Application_Field__c))
+                		appFields.add(q.Application_Field__c.toLowerCase());
+            
+            String query = 'SELECT ' + String.join(new List<String>(appFields), ',') + ' FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId';
+            
+            app = ((List<Application__c>)Database.query(query)).get(0);
+            appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
+        }
+        
+        if (con == null) {
+	        
+	        // Loop over questions and get contact fields
+	        Set<String> contactFields = new Set<String>{'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode'};
+	        if (Account.sObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode'))
+	            contactFields.addAll(new Set<String>{'mailingstatecode', 'mailingcountrycode', 'otherstatecode', 'othercountrycode'});
+	        else
+	            contactFields.addAll(new Set<String>{'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'});
+	        for (Requirement_Item__c ri:items)
+	            for (Question__c q:ri.Questions__r)
+	            	if (String.isNotBlank(q.Contact_Field__c))
+	            		contactFields.add(q.Contact_Field__c.toLowerCase());
+	            
+	        // Query for contact
+	        String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
+	        if (contactId != null)
+	        	con = ((List<Contact>)Database.query(query)).get(0);
+        }
 
         // Question Dependencies
         Map<Id, List<Question_Dependency__c>> dQuestions = new Map<Id, List<Question_Dependency__c>>();
@@ -298,12 +308,15 @@ public class ApplicationRequirement {
             
             update app;
             update con;
-
+			
+            if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h'))&& String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))){
+                showSuccess = true;
+                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Your response has been submitted successfully. Thank you!'));
+            }
+            
             if (String.isNotBlank(redirectPage)) {
                 
-                if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h'))&& String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))){
-                    showSuccess = true;
-                } else if (redirectPage == 'checklist') {
+                if (redirectPage == 'checklist') {
                     PageReference pr = new PageReference('/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + contactId+(ApexPages.currentPage().getParameters().containsKey('at')?'&at='+ApexPages.currentPage().getParameters().get('at'):''));
                     pr.setRedirect(true);
                     return pr;

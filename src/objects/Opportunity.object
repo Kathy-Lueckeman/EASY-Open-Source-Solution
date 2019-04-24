@@ -141,10 +141,10 @@
         <fullName>Career__c</fullName>
         <description>Returns the Career from the Academic Program if there is one, otherwise it returns the Career from the Recruitment Program if there is one. Used in building the Opportunity Key for the Interaction Processor to determine whether to create a new Opportunity or update an existing Opportunity.</description>
         <externalId>false</externalId>
-        <formula>/*If an Academic Program exists for the Opportunity, retrieve the associated Career from the Academic Program Account*/ 
-IF(NOT(ISBLANK(Academic_Program__c)),TEXT(Academic_Program__r.Career__c), 
+        <formula>/*If an Academic Program exists for the Opportunity, retrieve the associated Career from the Academic Program Account*/
+IF(NOT(ISBLANK(Academic_Program__c)),TEXT(Academic_Program__r.Career__c),
 
-/*IF not, retrieve the associated Career from the Recruitment Program Account on the Opportunity*/ 
+/*IF not, retrieve the associated Career from the Recruitment Program Account on the Opportunity*/
 TEXT(Recruitment_Program__r.Career__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Career</label>
@@ -171,10 +171,10 @@ TEXT(Recruitment_Program__r.Career__c))</formula>
         <fullName>Department__c</fullName>
         <description>Returns the Department from the Academic Program if there is one, otherwise it returns the Department from the Recruitment Program if there is one.</description>
         <externalId>false</externalId>
-        <formula>/*If an Academic Program exists for the Opportunity, retrieve the associated School/College from the Academic Program Account*/ 
-IF(NOT(ISBLANK(Academic_Program__c)),(  Academic_Program__r.Department__r.Name  ), 
+        <formula>/*If an Academic Program exists for the Opportunity, retrieve the associated School/College from the Academic Program Account*/
+IF(NOT(ISBLANK(Academic_Program__c)),(  Academic_Program__r.Department__r.Name  ),
 
-/*IF not, retrieve the associated School/College from the Recruitment Program Account on the Opportunity*/ 
+/*IF not, retrieve the associated School/College from the Recruitment Program Account on the Opportunity*/
 (  Recruitment_Program__r.Department__r.Name  ))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Department</label>
@@ -219,19 +219,6 @@ IF(NOT(ISBLANK(Academic_Program__c)),(  Academic_Program__r.Department__r.Name  
         <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Last_Campaign_Source__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Last Campaign Source</label>
-        <referenceTo>Campaign</referenceTo>
-        <relationshipLabel>Opportunities from Latest Campaign Source</relationshipLabel>
-        <relationshipName>Campaigns2</relationshipName>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Opportunity_Key__c</fullName>
@@ -353,11 +340,7 @@ IF(NOT(ISBLANK(Academic_Program__c)),(  Academic_Program__r.Department__r.Name  
         <picklistValues>
             <picklist>Type</picklist>
             <values>
-                <fullName>Existing Business</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>New Business</fullName>
+                <fullName>New Customer</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -416,11 +399,7 @@ IF(NOT(ISBLANK(Academic_Program__c)),(  Academic_Program__r.Department__r.Name  
         <picklistValues>
             <picklist>Type</picklist>
             <values>
-                <fullName>Existing Business</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>New Business</fullName>
+                <fullName>New Customer</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

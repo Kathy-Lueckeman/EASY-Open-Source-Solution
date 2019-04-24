@@ -248,6 +248,66 @@
         <visibleLines>25</visibleLines>
     </fields>
     <fields>
+        <fullName>Generic_Filter_1__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_1</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_2__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_2</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_3__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 3</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_3</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_4__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 4</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_4</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Hide_Applicant_Type__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Applicant type(s) that this program does not apply to (applies to all if blank)</inlineHelpText>
@@ -629,6 +689,50 @@ One Application Per Term Per Program (Only one application for the selected term
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Number_of_Applications_Limit__c</picklist>
             <values>
                 <fullName>One Application</fullName>
@@ -830,6 +934,50 @@ One Application Per Term Per Program (Only one application for the selected term
             </values>
             <values>
                 <fullName>Online</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

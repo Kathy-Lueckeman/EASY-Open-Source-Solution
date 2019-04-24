@@ -57,7 +57,7 @@ private class INT_InteractionMappingService_TEST {
 
         // Assert
         // Interaction data should NOT be copied over since we exclude Webform Sources
-       	System.assert(c.FirstName == 'Something');
-       	System.assert(c.LastName == 'Else');
+        System.assert(c.FirstName == 'Something');
+        System.assert(c.LastName == 'Else');
     }
 }

@@ -40,6 +40,18 @@
                 <behavior>Edit</behavior>
                 <field>Viewing_Requirement__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Display_on_Admin_Review_Pages__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Display_on_Checklist__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Required_Supporting_Documentation__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -78,6 +90,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Related_List_Object_Master_Field__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Allow_Supporting_Documentation_Upload__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -145,6 +161,14 @@
                 <behavior>Edit</behavior>
                 <field>Degree_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_2__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -162,6 +186,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Residency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_3__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_4__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -213,7 +245,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000MF4O</masterLabel>
+        <masterLabel>00h1U00000370xA</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -57,11 +57,11 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'First_Name__c',
             Target_Field_API_Name__c = 'FirstName',
-			Skip_Mapping__c = 'Webform',
+            Skip_Mapping__c = 'Webform',            
             Active__c = true
         );
         testMappingsToInsert.add(contactFirstNameMapping);
-		
+        
         if (Schema.getGlobalDescribe().get('Contact').getDescribe().fields.getMap().containsKey('hed__Gender__c')) {
             Interaction_Mapping__c contactGenderMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'Contact',
@@ -85,7 +85,7 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'Last_Name__c',
             Target_Field_API_Name__c = 'LastName',
-			Skip_Mapping__c = 'Webform',
+            Skip_Mapping__c = 'Webform',            
             Active__c = true
         );
         testMappingsToInsert.add(contactLastNameMapping);
@@ -361,7 +361,7 @@ public class INT_TestDataFactory {
             Active__c = true
         );
         testMappingsToInsert.add(opportunityStageMapping);
-		       
+               
         if (gd.containsKey('hed__Term__c') && gd.get('Opportunity').getDescribe().fields.getMap().containsKey('Term__c')) {
             Interaction_Mapping__c opportunityTermMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'Opportunity',

@@ -9,7 +9,7 @@ private class INT_InteractionProcessor_TEST {
         // Create and insert Interaction Mapping Test Data
         List<Interaction_Mapping__c> testMappings = INT_TestDataFactory.createTestMappings();
         insert testMappings;
-        
+
     }
 
     static testMethod void testInsertDupeLeadsOnlyInImport() {
@@ -112,10 +112,10 @@ private class INT_InteractionProcessor_TEST {
             'Lead count expected to be at 0. Once converted, the Leads should be deleted');
 
         Map<Id, Contact> contactMap = new Map<Id, Contact>([SELECT Name, Account.Name FROM Contact]);
-        System.assert(contactMap.size() == 102, '102 Contacts Expected - 1 for each of the 502 Interactions');
+        System.assert(contactMap.size() == 102, '102 Contacts Expected - 1 for each of the 102 Interactions');
 
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Name FROM Account]);
-        System.assert(accountMap.size() == 102, '102 Accounts Expected - 1 for each of the 502 Interactions');
+        System.assert(accountMap.size() == 102, '102 Accounts Expected - 1 for each of the 102 Interactions');
 
         List<Interaction__c> interactions = [
             SELECT First_Name__c, Last_Name__c, Contact__r.Name, Contact__c, Contact_Account_ID__c, Opportunity__c,
@@ -196,10 +196,10 @@ private class INT_InteractionProcessor_TEST {
         Boolean hasProgram = gd.containsKey('Program__c') && gd.get('Opportunity').getDescribe().fields.getMap().containsKey('Academic_Program__c') && gd.get('Opportunity').getDescribe().fields.getMap().containsKey('Recruitment_Program__c');
         Boolean hasTerm = gd.containsKey('hed__Term__c') && gd.get('Opportunity').getDescribe().fields.getMap().containsKey('Term__c');
         Boolean hasAffl = gd.containsKey('hed__Affiliation__c');
-        
+
         SObject recruitProgram;
         SObject acadProgram;
-        
+
         if (hasProgram) {
             recruitProgram = Schema.getGlobalDescribe().get('Program__c').newSObject();
             recruitProgram.put('Name', 'BA - English');
@@ -208,9 +208,9 @@ private class INT_InteractionProcessor_TEST {
             recruitProgram.put('Department__c', testCollege.Id);
             recruitProgram.put('Career__c', 'Undergraduate');
             recruitProgram.put('Active__c', true);
-            
+
             insert recruitProgram;
-    
+
             acadProgram = Schema.getGlobalDescribe().get('Program__c').newSObject();
             acadProgram.put('Name', 'Business Administration BA');
             acadProgram.put('Program_Record_Type__c', 'Academic Program');
@@ -218,7 +218,7 @@ private class INT_InteractionProcessor_TEST {
             acadProgram.put('Department__c', testCollege.Id);
             acadProgram.put('Career__c', 'Undergraduate');
             acadProgram.put('Active__c', true);
-            
+
             insert acadProgram;
         }
 
@@ -248,11 +248,11 @@ private class INT_InteractionProcessor_TEST {
             Affiliation_Role__c = 'Student',
             Primary_Affiliation__c = true
         );
-        
+
         if (hasProgram) {
             testInt.put('Academic_Program__c', acadProgram.Id);
         }
-        
+
         if (hasTerm) {
             testInt.put('Term__c', testFallTerm.Id);
         }
@@ -282,7 +282,7 @@ private class INT_InteractionProcessor_TEST {
             FROM Contact
             WHERE Id = :assertInteraction.Contact__c
         ];
-        
+
         System.assertEquals(assertInteraction.Contact_Title__c, assertContact.Title, 'Title should have been copied over to Contact.');
         System.assertEquals(assertInteraction.Birthdate__c, assertContact.Birthdate, 'Birthdate should have been copied over to Contact.');
         //System.assert(assertContact.hed__Affl_Accounts__r.size() == 1, 'Affiliation should have been created.');
@@ -324,7 +324,7 @@ private class INT_InteractionProcessor_TEST {
         List<Account> accountMap = new List<Account>([SELECT Name FROM Account]);
         System.assert(accountMap.size() == 1, '1 Account Expected');
     }
-    
+
     static testMethod void testCampaignMemberCreation() {
         // Arrange
         List<Campaign> testCampaigns = new List<Campaign>();
@@ -334,7 +334,7 @@ private class INT_InteractionProcessor_TEST {
         testCampaigns.add(testCampaign);
         testCampaigns.add(testAddlCampaign);
         insert testCampaigns;
-        
+
         Interaction__c testInt = new Interaction__c(
             First_Name__c = 'Test',
             Last_Name__c = 'Man',

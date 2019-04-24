@@ -62,6 +62,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Allow_Supporting_Documentation_Upload__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, applicants will be able to upload supporting documentation as files to each related object record.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, applicants will be able to upload supporting documentation as files to each related object record.</inlineHelpText>
+        <label>Allow Supporting Documentation Upload</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Allow_Text_Entry__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -153,6 +163,26 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Display_on_Admin_Review_Pages__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Checked if this Requirement Item should display on the Admin and Review pages.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked if this Requirement Item should display on the Admin and Review pages.</inlineHelpText>
+        <label>Display on Admin/Review Pages</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Display_on_Checklist__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If checked, this Requirement Item will display on the Application Checklist.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, this Requirement Item will display on the Application Checklist.</inlineHelpText>
+        <label>Display on Checklist</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Editable_Application_Status__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Application status(es) that this requirement item can be edited on (applies to all if blank)</inlineHelpText>
@@ -203,6 +233,66 @@
                     <default>false</default>
                 </value>
             </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_1__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_1</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_2__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_2</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_3__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 3</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_3</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_4__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 4</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_4</valueSetName>
         </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
@@ -392,6 +482,21 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Required_Supporting_Documentation__c</fullName>
+        <description>Status(es) when this Related Object Requirement Item also requires supporting documentation for each record.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status(es) when this Related Object Requirement Item also requires supporting documentation for each record.</inlineHelpText>
+        <label>Required Supporting Documentation</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Application_Status</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Required__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Application status(es) that this requirement is required for (applies to none if blank)</inlineHelpText>
@@ -523,6 +628,10 @@
         <picklistValues>
             <picklist>Application_Status</picklist>
             <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Complete-Decision Made</fullName>
                 <default>false</default>
             </values>
@@ -640,6 +749,50 @@
             </values>
             <values>
                 <fullName>TXT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -734,6 +887,10 @@
         <picklistValues>
             <picklist>Application_Status</picklist>
             <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Complete-Decision Made</fullName>
                 <default>false</default>
             </values>
@@ -851,6 +1008,50 @@
             </values>
             <values>
                 <fullName>TXT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -944,6 +1145,10 @@
         <picklistValues>
             <picklist>Application_Status</picklist>
             <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Complete-Decision Made</fullName>
                 <default>false</default>
             </values>
@@ -1061,6 +1266,50 @@
             </values>
             <values>
                 <fullName>TXT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_1</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_2</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_3</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Generic_Filter_4</picklist>
+            <values>
+                <fullName>Generic Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -1,6 +1,6 @@
 @isTest
 private class ApplicationFilterTest {
-	
+    
     @isTest
     static void test_application_filter() {
         
@@ -61,6 +61,36 @@ private class ApplicationFilterTest {
         r.Student_Type__c = Requirement__c.Student_Type__c.getDescribe().getPicklistValues()[0].getValue();
         System.assert(!ApplicationFilter.filter(app, r));
         app.Student_Type__c = r.Student_Type__c;
+        System.assert(ApplicationFilter.filter(app, r));
+        
+        // Degree Type
+        r.Degree_Type__c = Requirement__c.Degree_Type__c.getDescribe().getPicklistValues()[0].getValue();
+        System.assert(!ApplicationFilter.filter(app, r));
+        app.Degree_Type__c = r.Degree_Type__c;
+        System.assert(ApplicationFilter.filter(app, r));
+        
+        // Generic Filter 1
+        r.Generic_Filter_1__c = Requirement__c.Generic_Filter_1__c.getDescribe().getPicklistValues()[0].getValue();
+        System.assert(!ApplicationFilter.filter(app, r));
+        app.Generic_Filter_1__c = r.Generic_Filter_1__c;
+        System.assert(ApplicationFilter.filter(app, r));
+        
+        // Generic Filter 2
+        r.Generic_Filter_2__c = Requirement__c.Generic_Filter_2__c.getDescribe().getPicklistValues()[0].getValue();
+        System.assert(!ApplicationFilter.filter(app, r));
+        app.Generic_Filter_2__c = r.Generic_Filter_2__c;
+        System.assert(ApplicationFilter.filter(app, r));
+        
+        // Generic Filter 3
+        r.Generic_Filter_3__c = Requirement__c.Generic_Filter_3__c.getDescribe().getPicklistValues()[0].getValue();
+        System.assert(!ApplicationFilter.filter(app, r));
+        app.Generic_Filter_3__c = r.Generic_Filter_3__c;
+        System.assert(ApplicationFilter.filter(app, r));
+        
+        // Generic Filter 4
+        r.Generic_Filter_4__c = Requirement__c.Generic_Filter_4__c.getDescribe().getPicklistValues()[0].getValue();
+        System.assert(!ApplicationFilter.filter(app, r));
+        app.Generic_Filter_4__c = r.Generic_Filter_4__c;
         System.assert(ApplicationFilter.filter(app, r));
         
         // Status

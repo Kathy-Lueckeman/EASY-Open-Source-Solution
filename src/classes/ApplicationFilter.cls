@@ -22,6 +22,11 @@ public class ApplicationFilter {
         String deliveryTypes = objFields.contains('delivery_type__c') ? String.valueOf(obj.get('delivery_type__c')) : null;
         String residency = objFields.contains('residency__c') ? String.valueOf(obj.get('residency__c')) : null;
         String studentTypes = objFields.contains('student_type__c') ? String.valueOf(obj.get('student_type__c')) : null;
+        String degreeTypes = objFields.contains('degree_type__c') ? String.valueOf(obj.get('degree_type__c')) : null;
+        String genericFilters1 = objFields.contains('generic_filter_1__c') ? String.valueOf(obj.get('generic_filter_1__c')) : null;
+        String genericFilters2 = objFields.contains('generic_filter_2__c') ? String.valueOf(obj.get('generic_filter_2__c')) : null;
+        String genericFilters3 = objFields.contains('generic_filter_3__c') ? String.valueOf(obj.get('generic_filter_3__c')) : null;
+        String genericFilters4 = objFields.contains('generic_filter_4__c') ? String.valueOf(obj.get('generic_filter_4__c')) : null;
         String appStatuses = objFields.contains('application_status__c') ? String.valueOf(obj.get('application_status__c')) : null;
         
         if (app == null)
@@ -41,6 +46,16 @@ public class ApplicationFilter {
         if (String.isNotBlank(residency) && (String.isBlank(app.Residency__c) || !residency.equals(app.Residency__c)))
             return false;
         if (String.isNotBlank(studentTypes) && (String.isBlank(app.Student_Type__c) || !(new Set<String>(studentTypes.split(';'))).contains(app.Student_Type__c)))
+            return false;
+        if (String.isNotBlank(degreeTypes) && (String.isBlank(app.Degree_Type__c) || !(new Set<String>(degreeTypes.split(';'))).contains(app.Degree_Type__c)))
+            return false;
+        if (String.isNotBlank(genericFilters1) && (String.isBlank(app.Generic_Filter_1__c) || !(new Set<String>(genericFilters1.split(';'))).contains(app.Generic_Filter_1__c)))
+            return false;
+        if (String.isNotBlank(genericFilters2) && (String.isBlank(app.Generic_Filter_2__c) || !(new Set<String>(genericFilters2.split(';'))).contains(app.Generic_Filter_2__c)))
+            return false;
+        if (String.isNotBlank(genericFilters3) && (String.isBlank(app.Generic_Filter_3__c) || !(new Set<String>(genericFilters3.split(';'))).contains(app.Generic_Filter_3__c)))
+            return false;
+        if (String.isNotBlank(genericFilters4) && (String.isBlank(app.Generic_Filter_4__c) || !(new Set<String>(genericFilters4.split(';'))).contains(app.Generic_Filter_4__c)))
             return false;
         if (checkStatus && (!UserInfo.getUserType().equals('Standard') || Test.isRunningTest()) && String.isNotBlank(appStatuses) && (String.isBlank(app.Application_Status__c) || !(new Set<String>(appStatuses.split(';'))).contains(app.Application_Status__c)))
             return false;

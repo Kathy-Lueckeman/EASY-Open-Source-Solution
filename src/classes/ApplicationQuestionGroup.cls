@@ -530,6 +530,17 @@ public class ApplicationQuestionGroup {
         
         creatingNewRelatedRecord = false;
     }
+    
+    /*******************************************************************************
+    * @description Send a reminder email for Exteral Requirements
+    ********************************************************************************/
+    public void sendReminder() {
+        if (response != null && response.Id != null && String.isNotBlank(response.External_Email__c)) {
+            response.Send_Reminder__c = !response.Send_Reminder__c;
+            update new Requirement_Response__c(Id = response.Id, Send_Reminder__c = response.Send_Reminder__c);
+        }
+    }
+    
     /*******************************************************************************
     * @description Tells the ApplicationQuestion to prepare to save, Saves updated Salesforce File data, save related object data
     ********************************************************************************/
@@ -556,7 +567,7 @@ public class ApplicationQuestionGroup {
                                     lstInsert.add(objW.obj);
                                 }
                             }
-                            if(objW.isDeleted == false && objW.isValid == true){
+                            if(objW.isDeleted == false && objW.isValid == true && (String.isBlank(item.Required_Supporting_Documentation__c) || !item.Required_Supporting_Documentation__c.contains(app.Application_Status__c) || objW.att != null)){
                                 childCount++;
                             }
                         }

@@ -13,7 +13,7 @@ private class ApplicationRegistrationTest {
         update appControl;
         
         PageReference pr = Page.ApplicationRegistration;
-		
+        
         Test.startTest();
         
         ApplicationRegistration.lookupSearch('Program__c', 'Name != \'not_test\'', 'Name', 'test');
@@ -26,10 +26,10 @@ private class ApplicationRegistrationTest {
         
         for (ApplicationQuestionGroup g:ar.appCreate.section.groups) {
             for (ApplicationQuestion q:g.questions) {
-            	if (q.fieldName != null && q.fieldName.equals('Intended_Program__c'))
-            		q.response.ValueText__c = progId;
+                if (q.fieldName != null && q.fieldName.equals('Intended_Program__c'))
+                    q.response.ValueText__c = progId;
                 else if (q.fieldName != null && q.fieldName.equals('Intended_Term_of_Entry__c'))
-            		q.response.ValueText__c = termId;
+                    q.response.ValueText__c = termId;
                 else if (q.fieldName != null && q.fieldName.equals('First_Name__c') && q.label.equals('First Name'))
                     q.response.ValueText__c = 'test';
                 else if (q.fieldName != null && q.fieldName.equals('Last_Name__c') && q.label.equals('Last Name'))
@@ -60,10 +60,10 @@ private class ApplicationRegistrationTest {
         
         for (ApplicationQuestionGroup g:ar.appCreate.section.groups) {
             for (ApplicationQuestion q:g.questions) {
-            	if (q.fieldName != null && q.fieldName.equals('Intended_Program__c'))
-            		q.response.ValueText__c = progId;
+                if (q.fieldName != null && q.fieldName.equals('Intended_Program__c'))
+                    q.response.ValueText__c = progId;
                 else if (q.fieldName != null && q.fieldName.equals('Intended_Term_of_Entry__c'))
-            		q.response.ValueText__c = termId;
+                    q.response.ValueText__c = termId;
                 else if (q.fieldName != null && q.fieldName.equals('First_Name__c') && q.label.equals('First Name'))
                     q.response.ValueText__c = 'test2';
                 else if (q.fieldName != null && q.fieldName.equals('Last_Name__c') && q.label.equals('Last Name'))
@@ -85,18 +85,18 @@ private class ApplicationRegistrationTest {
     }
     
     @testSetup
-	static void setup() {
+    static void setup() {
         
         Application_Control__c appControl = ApplicationTestUtilities.createApplicationControl();
         
-		Academic_Term__c at = new Academic_Term__c(Name = 'test', Activate_Application_Date__c = Date.TODAY().addDays(-2), End_Application_Date__c = Date.TODAY().addDays(2));
-		insert at;
-		
+        Academic_Term__c at = new Academic_Term__c(Name = 'test', Activate_Application_Date__c = Date.TODAY().addDays(-2), End_Application_Date__c = Date.TODAY().addDays(2));
+        insert at;
+        
         insert new Program__c(Name = 'test');
         
         Interaction_Mapping__c im1 = new Interaction_Mapping__c(Target_Object_API_Name__c = 'Contact', Target_Field_API_Name__c = 'FirstName', Interaction_Source_Field_API_Name__c = 'First_Name__c', Active__c = true);
         Interaction_Mapping__c im2 = new Interaction_Mapping__c(Target_Object_API_Name__c = 'Contact', Target_Field_API_Name__c = 'LastName', Interaction_Source_Field_API_Name__c = 'Last_Name__c', Active__c = true);
         Interaction_Mapping__c im3 = new Interaction_Mapping__c(Target_Object_API_Name__c = 'Contact', Target_Field_API_Name__c = 'Email', Interaction_Source_Field_API_Name__c = 'Email__c', Active__c = true);
         insert new List<Interaction_Mapping__c>{im1, im2, im3};
-	}
+    }
 }

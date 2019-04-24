@@ -161,6 +161,19 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Degree_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Degree Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Degree_Types</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Delivery_Location__c</fullName>
         <externalId>false</externalId>
         <label>Delivery Location</label>
@@ -181,12 +194,13 @@
                     <default>false</default>
                 </value>
                 <value>
-                    <fullName>Scott Air force Base</fullName>
+                    <fullName>Blended</fullName>
                     <default>false</default>
                 </value>
                 <value>
-                    <fullName>Blended</fullName>
+                    <fullName>Scott Air force Base</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -234,6 +248,66 @@
                     <default>false</default>
                 </value>
             </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_1__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 1</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_1</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_2__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 2</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_2</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_3__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 3</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_3</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Generic_Filter_4__c</fullName>
+        <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+        <label>Generic Filter 4</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_Filter_4</valueSetName>
         </valueSet>
     </fields>
     <fields>
