@@ -57,11 +57,11 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'First_Name__c',
             Target_Field_API_Name__c = 'FirstName',
-            Skip_Mapping__c = 'Webform',            
+            Skip_Mapping__c = 'Webform',
             Active__c = true
         );
         testMappingsToInsert.add(contactFirstNameMapping);
-        
+
         if (Schema.getGlobalDescribe().get('Contact').getDescribe().fields.getMap().containsKey('hed__Gender__c')) {
             Interaction_Mapping__c contactGenderMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'Contact',
@@ -85,7 +85,7 @@ public class INT_TestDataFactory {
             Target_Object_API_Name__c = 'Contact',
             Interaction_Source_Field_API_Name__c = 'Last_Name__c',
             Target_Field_API_Name__c = 'LastName',
-            Skip_Mapping__c = 'Webform',            
+            Skip_Mapping__c = 'Webform',
             Active__c = true
         );
         testMappingsToInsert.add(contactLastNameMapping);
@@ -174,7 +174,7 @@ public class INT_TestDataFactory {
                 Active__c = true
             );
             testMappingsToInsert.add(affiliationAccountMapping);
-    
+
             Interaction_Mapping__c affiliationKeyMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'hed__Affiliation__c',
                 Interaction_Source_Field_API_Name__c = 'Affiliation_Key__c',
@@ -182,7 +182,7 @@ public class INT_TestDataFactory {
                 Active__c = true
             );
             testMappingsToInsert.add(affiliationKeyMapping);
-    
+
             Interaction_Mapping__c affiliationRoleMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'hed__Affiliation__c',
                 Interaction_Source_Field_API_Name__c = 'Affiliation_Role__c',
@@ -190,7 +190,7 @@ public class INT_TestDataFactory {
                 Active__c = true
             );
             testMappingsToInsert.add(affiliationRoleMapping);
-    
+
             Interaction_Mapping__c affiliationContactMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'hed__Affiliation__c',
                 Interaction_Source_Field_API_Name__c = 'Contact__c',
@@ -198,7 +198,7 @@ public class INT_TestDataFactory {
                 Active__c = true
             );
             testMappingsToInsert.add(affiliationContactMapping);
-    
+
             Interaction_Mapping__c affiliationPrimaryMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'hed__Affiliation__c',
                 Interaction_Source_Field_API_Name__c = 'Primary_Affiliation__c',
@@ -361,7 +361,7 @@ public class INT_TestDataFactory {
             Active__c = true
         );
         testMappingsToInsert.add(opportunityStageMapping);
-               
+
         if (gd.containsKey('hed__Term__c') && gd.get('Opportunity').getDescribe().fields.getMap().containsKey('Term__c')) {
             Interaction_Mapping__c opportunityTermMapping = new Interaction_Mapping__c(
                 Target_Object_API_Name__c = 'Opportunity',
@@ -402,7 +402,7 @@ public class INT_TestDataFactory {
     public static List<Interaction__c> createBulkTestInteractions() {
         List<Interaction__c> testInteractionsToInsert = new List<Interaction__c>();
 
-        for (Integer i = 0; i < 100; i++) {
+        for (Integer i = 0; i < 50; i++) {
             Interaction__c testInt = new Interaction__c(
                 First_Name__c = 'Test' + i,
                 Last_Name__c = 'Person' + i,
