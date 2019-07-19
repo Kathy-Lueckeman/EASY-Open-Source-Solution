@@ -290,7 +290,7 @@ public class ApplicationQuestion {
                 if (qd.RecordType.DeveloperName.equals('Checkbox') && Boolean.valueOf(qd.ValueCheckbox__c) == (Boolean)resp) {
                     satisfied = true;
                     break;
-                } else if (qd.RecordType.DeveloperName.equals('Picklist') && String.isNotBlank(String.valueOf(resp)) && qd.Value__c.equals((String)cq.response.ValueText__c)) {
+                } else if (qd.RecordType.DeveloperName.equals('Picklist') && String.isNotBlank(String.valueOf(resp)) && qd.Value__c.equals((String)resp)) {
                     satisfied = true;
                     break;
                 } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {

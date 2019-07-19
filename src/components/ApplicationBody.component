@@ -26,6 +26,9 @@
         function appHideLoadingSpinner(){
             jQuery('#apploadingspinner').hide();
         }
+    	function appShowConfimation(){
+            jQuery('#confirmation').show();
+        }
         // By default, replaceAll runs on ALL textarea fields. 
         // modified to run only on the class defined 'ckeditor'
         //CKEDITOR.replaceAll = function(){for(var a=document.getElementsByClassName("ckeditor"),b=0;b<a.length;b++){var d=null,k=a[b];if(k.name||k.id){if("string"==typeof arguments[0]){if(!(new RegExp("(?:^|\\s)"+arguments[0]+"(?:$|\\s)")).test(k.className))continue}else if("function"==typeof arguments[0]&&(d={},!1===arguments[0](k,d)))continue;this.replace(k,d)}}};
@@ -94,6 +97,14 @@
                 </div>
                 <div style="position: fixed; left: 50%; top: 50%; z-index: 1001;font-size:30px;" >
                     <span class='glyphicon glyphicon-refresh spinning'></span> Processing...
+                </div>
+        </div>
+        <div style="display:none" id="confirmation">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1002; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; top: 50%; width: 100%; z-index: 1003;font-size:30px; color:white;" >
+                    <center>Thank you! Your response has been submitted successfully.</center>
                 </div>
         </div>
         <div class="container-fluid" >

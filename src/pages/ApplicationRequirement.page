@@ -24,7 +24,8 @@
         <c:ApplicationForm id="applicationForm" section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
         requirementId="{!requirementId}"
         reqs="{!reqs}"
-        progress="{!progress}" > 
+        progress="{!progress}"
+        isExternalUser="{!isExternalUser}"> 
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">

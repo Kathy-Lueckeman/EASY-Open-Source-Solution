@@ -9,6 +9,7 @@
     <apex:attribute name="requirementId" description="Current requirement" type="String" required="false"/>
     <apex:attribute name="reqs" description="All rquirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
+    <apex:attribute name="isExternalUser" description="Boolean that is true if this is an external user" type="Boolean" required="false" default="false" />
    
     <script>
     var jq = jQuery.noConflict();
@@ -52,11 +53,7 @@
 
     </script>
     <apex:form id="theForm" >
-    <c:ApplicationProgressBar prevReqId="{!prevId}"
-        nextReqId="{!nextId}"
-        requirementId="{!requirementId}"
-        reqs="{!reqs}"
-        progress="{!progress}"/>
+    <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}" />
         <apex:outputPanel id="formPageMessages">
             <apex:pageMessages />
         </apex:outputPanel>
