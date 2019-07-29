@@ -33,6 +33,7 @@ public class RelatedDocumentUploadTest {
         rdu.aqg.att.Title = 'Test123';
         rdu.aqg.att.VersionData = Blob.valueOf('test2');
         rdu.submit();
-        system.assertEquals(1,[Select count() from ContentDocumentLink Where LinkedEntityId = :con.Id]);
+        //due to supporting multiple files we expect to see both files. 
+        system.assertEquals(2,[Select count() from ContentDocumentLink Where LinkedEntityId = :con.Id]);
     }
 }
