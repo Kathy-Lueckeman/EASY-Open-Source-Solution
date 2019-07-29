@@ -400,11 +400,12 @@
             <apex:inputTExtArea styleClass="ckeditor" value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && !preventUpdates}"/>
             <apex:outputField value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && (preventUpdates || !group.isEditable)}"/>
             
-            <apex:outputText style="font-weight:bold" value="Previously Uploaded Document: "/>
-            <apex:outputText value="{!group.att.Title}" label="Previously Uploaded Document:" rendered="{!!preventUpdates && group.isEditable}"/>
-            
-            <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!group.oldAttVersion.Id}" rendered="{!(preventUpdates || !group.isEditable) && NOT(ISBLANK(group.oldAttVersion.Id))}" target="_blank">{!group.att.Title}</apex:outputLink>
-            
+            <apex:outputText style="font-weight:bold" value="Previously Uploaded Document: " rendered="{!!preventUpdates && group.isEditable}"/>            
+    <apex:repeat value="{!group.oldAttVersionList}" var="doc" id="theRepeat">
+        <br/>
+    <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!doc.Id}" rendered="{!(preventUpdates || !group.isEditable) && NOT(ISBLANK(group.oldAttVersionList[0].Id))}"  target="_blank">{!doc.Title}</apex:outputLink>
+</apex:repeat>
+
             <br/><br/>
             <apex:outputPanel rendered="{!!preventUpdates && group.isEditable}">
                 <input class='docUploadInput' data-respid="{!group.item.Id}" type="file"/>

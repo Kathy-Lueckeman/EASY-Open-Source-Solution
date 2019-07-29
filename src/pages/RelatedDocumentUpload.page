@@ -12,7 +12,9 @@
                             <div class="col-lg-8 col-xs-10" >
                                 <div role="listbox">
                                     <div class="item active" >
+                                        <apex:outputPanel id="comp_Upload">
                                         <c:ApplicationDocumentUpload group="{!aqg}" preventUpdates="false"/>
+                                    </apex:outputPanel>
                                     </div>
                                 </div>
                             </div>
@@ -28,10 +30,11 @@
         </c:ApplicationBody>
         <div class="row" >
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="themessages" oncomplete="appHideLoadingSpinner();window.top.close()">
+                <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="themessages,comp_Upload" oncomplete="appHideLoadingSpinner();window.top.close()">
                     <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                 </apex:actionFunction>
-                <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Upload"
+                 reRender="comp_Upload" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
             </div>
         </div>
     </apex:form>

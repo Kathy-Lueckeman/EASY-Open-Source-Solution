@@ -7,10 +7,12 @@ Revision (s):
 public class RelatedDocumentUpload {
     public SObject obj{get;set;}
     public ApplicationQuestionGroup aqg{get;set;}
+    public  Id objId{get;set;}
     public String objName{
         get{
             if(obj != null){
-                return (String)obj.get('Name');
+                //return (String)obj.get('Name');     
+                return String.valueOf(obj.getSObjectType()).remove('__c');       
             }
             return '';
         }set;}
@@ -25,18 +27,23 @@ public class RelatedDocumentUpload {
     }
 
     public transient String additionalDataString{get;set;}
+    
+    
 
     public RelatedDocumentUpload() {
         if(ApexPages.currentPage().getParameters().containsKey('Id')){
-            Id objId = ApexPages.currentPage().getParameters().get('Id');
-            obj = database.query('Select Id,Name, (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks Where ContentDocument.Description = \'Supporting Document\') from ' + objId.getSObjectType() + ' WHERE Id =\''+String.escapeSingleQuotes(objId)+'\'');
-            aqg = new ApplicationQuestionGroup(obj);
+            objId = ApexPages.currentPage().getParameters().get('Id');
+           SetApplicationQuestionGroup();
         }
     }
+    public void SetApplicationQuestionGroup() {
+            obj = database.query('Select Id,Name, (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks Where ContentDocument.Description = \'Supporting Document\') from ' + objId.getSObjectType() + ' WHERE Id =\''+String.escapeSingleQuotes(objId)+'\'');
+            aqg = new ApplicationQuestionGroup(obj);
+            }
     /*******************************************************************************
     * @description Saves the ContentDocument
     ********************************************************************************/
-    public void submit(){
+    public void  submit(){
         transient Map<String,Object> additionalDataMap;
         transient ContentVersion att = new ContentVersion();
         system.debug(additionalDataString);
@@ -61,10 +68,12 @@ public class RelatedDocumentUpload {
                 att.Description = 'Supporting Document';
                 insert att;
                 if(aqg.oldAttLink != null && aqg.oldAttLink.ContentDocumentId != null){
-                    delete new ContentDocument(Id=aqg.oldAttLink.ContentDocumentId);
+                    //delete new ContentDocument(Id=aqg.oldAttLink.ContentDocumentId);
                 }
                 att.VersionData = null;
+               SetApplicationQuestionGroup();
             }
         }
+          
     }
 }
