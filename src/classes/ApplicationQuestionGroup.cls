@@ -668,12 +668,20 @@ public class ApplicationQuestionGroup {
                 }
                 if (documentUpload == true && att != null && att.Title != null && att.VersionData != null && response != null) {
                     
-                    att.PathOnClient = att.Title;
+
+                    att.PathOnClient = att.Title;       
                     att.firstPublishLocationId = response.Id;
                     if(!Test.isRunningTest()){
                         att.put('NetworkId',Network.getNetworkId());
                     }
                     insert att;
+                    //link the document to the application as well
+                    ContentVersion insertedCV=[select id, ContentDocumentId from ContentVersion where id=:att.id];
+                    ContentDocumentLink applicationLink = new ContentDocumentLink();
+                    applicationLink.ContentDocumentId =insertedCV.ContentDocumentId ;
+                    applicationLink.LinkedEntityId =app.Id;
+                    applicationLink.ShareType= 'V';
+                    insert applicationLink;
                     att.VersionData = null;
                     if(oldAttLink != null && oldAttLink.ContentDocumentId != null){
                         delete new ContentDocument(Id=oldAttLink.ContentDocumentId);
