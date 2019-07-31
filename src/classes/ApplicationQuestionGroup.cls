@@ -99,6 +99,7 @@ public class ApplicationQuestionGroup {
         public Boolean isDeleted{get;set;}
         public String idx{get;set;}
         public ContentDocumentLink att{get;set;}
+        public List<ContentDocumentLink> AttList{get;set;}
         public Boolean isValid;
         
         public Map<ApplicationQuestion, Boolean> showQuestions {
@@ -142,6 +143,7 @@ public class ApplicationQuestionGroup {
 			
             if(((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks')) != null && ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks')).size()>0){
                 att = ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks'))[0];
+                AttList= ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks'));
             }
         }
         public SObjectWrapper(ApplicationQuestionGroup aqg, String idx,SObject obj, Boolean startEdit){

@@ -35,6 +35,8 @@
                 </apex:actionFunction>
                 <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Upload"
                  reRender="comp_Upload" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                 <apex:commandLink styleClass="btn btn-lg float: right " style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Close"
+                  onclick="window.top.close()"/>
             </div>
         </div>
     </apex:form>
