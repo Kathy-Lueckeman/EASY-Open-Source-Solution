@@ -455,24 +455,6 @@
                 <tbody>
                     <apex:repeat value="{!group.relatedObjects}" var="rr">
                         <tr data-recid="{!rr.idx}" style="border-top: none; border-bottom: 2px solid #ddd;" >
-                            <td style="border-top: none; border-bottom: 1px solid #ddd;" >
-                                <apex:outputPanel layout="none" rendered="{!rr.obj['User_Created__c'] && !rr.isEditMode && !preventUpdates && group.isEditable}">
-                                    <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" value="Edit">
-                                        <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
-                                    </apex:commandLink>&nbsp;|&nbsp;
-                                    <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" value="Del">
-                                        <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
-                                    </apex:commandLink>
-                                </apex:outputPanel>
-                                <apex:outputPanel layout="none" rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}">
-                                    <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" value="Ok">
-                                        <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
-                                    </apex:commandLink>&nbsp;|&nbsp;
-                                    <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" value="Cancel">
-                                        <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
-                                    </apex:commandLink>
-                                </apex:outputPanel>
-                            </td>
                             <apex:repeat value="{!group.questions}" var="question" >
                                 <apex:outputPanel layout="none" rendered="{!rr.showQuestions[question]}">
                                     <td class="ui-front" style="border:none;" data-label="{!question.question.Label__c}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}" >
@@ -821,12 +803,35 @@
                                 </td>
                             </apex:outputPanel>
                         </tr>
+                        <tr data-recid="{!rr.idx}" style="border-top: none; border-bottom: 2px solid #ddd;" >
+                            
+                                <td style=" font-weight: bold; font-size: medium;border-top: none; border-bottom: 1px solid #ddd;" >
+                                    <apex:outputPanel layout="none" rendered="{!rr.obj['User_Created__c'] && !rr.isEditMode && !preventUpdates && group.isEditable}">
+                                        <apex:commandLink styleClass="btn" style="background-color:lightgray;  color:#{!appControl.Button_Color__c};   font-weight: bold; font-size: medium;" action="{!group.enableEditMode}" reRender="theTable" value="Edit">
+                                            <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
+                                        </apex:commandLink>&nbsp;|&nbsp;
+                                        <apex:commandLink styleClass="btn" style="background-color:lightgray; color:#{!appControl.Button_Color__c};    font-weight: bold; font-size: medium;" action="{!group.enableDeleteMode}"  reRender="theTable" value="Delete">
+                                            <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
+                                        </apex:commandLink>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}">
+                                        <apex:commandLink styleClass="btn" style="background-color:lightgray;  color:#{!appControl.Button_Color__c};  font-weight: bold; font-size: medium;" action="{!group.enableConfirmMode}" reRender="theTable" value="Save">
+                                            <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
+                                        </apex:commandLink>&nbsp;|&nbsp;
+                                        <apex:commandLink styleClass="btn" style="background-color:lightgray; color:#{!appControl.Button_Color__c};    font-weight: bold; font-size: medium;" action="{!group.enableViewMode}" reRender="theTable" value="Delete">
+                                            <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
+                                        </apex:commandLink>
+                                    </apex:outputPanel>
+                                </td>
+                            
+                            </tr>
                     </apex:repeat>
+                    
                 </tbody>
             </table>
         	</apex:outputPanel>
             <div class="col-lg-8 col-md-10 col-xs-12" >
-                <apex:commandLink styleClass="btn" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="New Record" action="{!group.newRow}" reRender="theTable" rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}"/>
+                <apex:commandLink styleClass="btn" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Add {!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}" action="{!group.newRow}" reRender="theTable" rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}"/>
             </div>
             <apex:outputPanel >
             <script>

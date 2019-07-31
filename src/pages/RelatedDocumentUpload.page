@@ -30,12 +30,12 @@
         </c:ApplicationBody>
         <div class="row" >
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="themessages,comp_Upload" oncomplete="appHideLoadingSpinner();window.top.close()">
+                <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="themessages,comp_Upload" oncomplete="appHideLoadingSpinner();">
                     <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                 </apex:actionFunction>
                 <apex:commandLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Upload"
                  reRender="comp_Upload" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
-                 <apex:commandLink styleClass="btn btn-lg float: right " style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Close"
+                 <apex:commandLink styleClass="btn btn-lg  " style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};float: right" value="Close"
                   onclick="window.top.close()"/>
             </div>
         </div>
