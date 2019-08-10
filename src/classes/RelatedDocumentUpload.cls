@@ -58,7 +58,7 @@ public class RelatedDocumentUpload {
                     att.Title = (String)attData.get('fileName');
                 }
                 if(attData.containsKey('data')){
-                    att.VersionData = Blob.valueOf((String)attData.get('data'));
+                    att.VersionData=EncodingUtil.base64Decode(((String)attData.get('data')).substringAfter(','));
                 }
                 att.PathOnClient = att.Title;
                 att.firstPublishLocationId = obj.Id;
