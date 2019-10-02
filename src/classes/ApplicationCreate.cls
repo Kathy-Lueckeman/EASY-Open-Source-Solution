@@ -271,7 +271,7 @@ public class ApplicationCreate {
             }
             
             // Check to make sure selections are valid for number of applications limit
-            if (String.isNotBlank(ip.Number_of_Applications_Limit__c)) {
+            if (String.isNotBlank(ip.Number_of_Applications_Limit__c) && app.Contact__c!=null) {
                 for (Application__c a:[SELECT Id, Intended_Program__c, Intended_Term_of_Entry__c FROM Application__c WHERE Contact__c = :app.Contact__c]) {
                     if (ip.Number_of_Applications_Limit__c.equals('One Application'))
                         return 'You already have an application. Only one application is allowed.';
