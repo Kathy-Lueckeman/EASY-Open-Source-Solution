@@ -303,7 +303,7 @@ public class ApplicationCreate {
         
         // Process all values for section
         section.processValues(additionalData);
-        
+        /* 10/13/19 Idan Lahat- There is no need to create the requirment responses here, it will be generated in the ApplicationChecklist page which this methods routes to. 
         // Get list of requirement responses to insert
         List<Requirement_Response__c> rrLst = new List<Requirement_Response__c>();
         for (ApplicationQuestionGroup aqg:section.groups) {
@@ -332,7 +332,7 @@ public class ApplicationCreate {
         }
         
         upsert qResponses; // Insert question responses
-        
+        */
         // Return URL for checklist page for new application
         return '/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
     }
