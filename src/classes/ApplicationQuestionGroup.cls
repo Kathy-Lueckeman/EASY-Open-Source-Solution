@@ -20,6 +20,7 @@ public class ApplicationQuestionGroup {
     private Id oldAttId;
     public ContentDocumentLink oldAttLink{get;set;}
     public ContentVersion oldAttVersion{get;set;}
+    public List<ContentVersion> oldAttVersionList{get;set;}
     public Boolean questionGroup {get;set;}
     public Boolean documentUpload {get;set;}
     public Boolean relatedObject {get;set;}
@@ -98,6 +99,7 @@ public class ApplicationQuestionGroup {
         public Boolean isDeleted{get;set;}
         public String idx{get;set;}
         public ContentDocumentLink att{get;set;}
+        public List<ContentDocumentLink> AttList{get;set;}
         public Boolean isValid;
         
         public Map<ApplicationQuestion, Boolean> showQuestions {
@@ -141,6 +143,7 @@ public class ApplicationQuestionGroup {
 			
             if(((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks')) != null && ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks')).size()>0){
                 att = ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks'))[0];
+                AttList= ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks'));
             }
         }
         public SObjectWrapper(ApplicationQuestionGroup aqg, String idx,SObject obj, Boolean startEdit){
@@ -307,9 +310,18 @@ public class ApplicationQuestionGroup {
                 att.Title = title;
             oldAttId = ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks'))[0].Id;
             oldAttLink = ((List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks'))[0];
-            List<ContentVersion> conV = [Select Id from ContentVersion where ContentDocumentId = :oldAttLink.ContentDocumentId order by createddate desc limit 1];
+            List<ContentDocument> docList =new List<ContentDocument>();
+                for (ContentDocumentLink e:(List<ContentDocumentLink>)obj.getSObjects('ContentDocumentLinks'))
+                {
+                    ContentDocument temp = new ContentDocument();
+                    temp.id=e.ContentDocumentId;
+                    docList.Add(temp);
+
+                }
+                List<ContentVersion> conV = [Select Id,Title from ContentVersion where ContentDocumentId in :docList ORDER BY CreatedDate DESC ];
+            
             if(conV.size()>0){
-                oldAttVersion = conV[0];
+                oldAttVersionList = conV;
             }
         }else{
             att = new ContentVersion();
@@ -385,9 +397,19 @@ public class ApplicationQuestionGroup {
                     att.Title = title;
                 oldAttId = response.ContentDocumentLinks[0].Id;
                 oldAttLink = response.ContentDocumentLinks[0];
-                List<ContentVersion> conV = [Select Id from ContentVersion where ContentDocumentId = :oldAttLink.ContentDocumentId order by createddate desc limit 1];
+                system.debug(response.ContentDocumentLinks );
+                List<ContentDocument> docList =new List<ContentDocument>();
+                for (ContentDocumentLink e:response.ContentDocumentLinks)
+                {
+                    ContentDocument temp = new ContentDocument();
+                    temp.id=e.ContentDocumentId;
+                    docList.Add(temp);
+
+                }
+                List<ContentVersion> conV = [Select Id,Title from ContentVersion where ContentDocumentId in :docList ORDER BY CreatedDate DESC];
+                system.debug(conV );
                 if(conV.size()>0){
-                    oldAttVersion = conV[0];
+                    oldAttVersionList = conV;
                 }
             }else{
                 att = new ContentVersion();
@@ -648,12 +670,20 @@ public class ApplicationQuestionGroup {
                 }
                 if (documentUpload == true && att != null && att.Title != null && att.VersionData != null && response != null) {
                     
-                    att.PathOnClient = att.Title;
+
+                    att.PathOnClient = att.Title;       
                     att.firstPublishLocationId = response.Id;
                     if(!Test.isRunningTest()){
                         att.put('NetworkId',Network.getNetworkId());
                     }
                     insert att;
+                    //link the document to the application as well
+                    ContentVersion insertedCV=[select id, ContentDocumentId from ContentVersion where id=:att.id];
+                    ContentDocumentLink applicationLink = new ContentDocumentLink();
+                    applicationLink.ContentDocumentId =insertedCV.ContentDocumentId ;
+                    applicationLink.LinkedEntityId =app.Id;
+                    applicationLink.ShareType= 'V';
+                    insert applicationLink;
                     att.VersionData = null;
                     if(oldAttLink != null && oldAttLink.ContentDocumentId != null){
                         delete new ContentDocument(Id=oldAttLink.ContentDocumentId);

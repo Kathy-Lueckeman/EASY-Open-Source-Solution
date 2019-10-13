@@ -1,17 +1,41 @@
 <apex:component >
+        <script type="text/javascript">
+            function CheckSupportedFileTypes(elemid,fileName, fileTypes) {
+                //alert(elemid);
+                if (!fileName) return;
+                var ext= fileName.substr(fileName.lastIndexOf(".") + 1);
+                
+                //alert(ext);
+                
+                if(fileTypes.indexOf(ext) != -1){ 
+                   // alert('That file is OK!');
+                }else{
+                    alert("Please only upload files that end in types: \n\n" + (fileTypes.join(" .")) + "\n\nPlease select a new file and try again.");
+                    document.getElementById(elemid).value = "";
+                }
+            }
+          </script>
+
     <apex:attribute name="group" description="The ApplicationQuestionGroup for this section" type="ApplicationQuestionGroup" required="true" />
     <apex:attribute name="preventUpdates" description="" type="Boolean" default="false" required="false"/>
 
     <apex:inputTExtArea styleClass="ckeditor" value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && !preventUpdates}"/>
-    <apex:outputField value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && preventUpdates}"/>
+    <apex:outputField value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && preventUpdates}" />
     
-    <apex:outputText style="font-weight:bold" value="Previously Uploaded Document: "/>
-    <apex:outputText value="{!group.att.Title}" label="Previously Uploaded Document:" rendered="{!!preventUpdates}"/>
+    <apex:outputText style="font-weight:bold" value="Upload New Document: "/>
     
-    <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!group.oldAttVersion.Id}" rendered="{!preventUpdates && NOT(ISBLANK(group.oldAttVersion.Id))}" target="_blank">{!group.att.Title}</apex:outputLink>
-    
-    <br/><br/>
     <apex:outputPanel rendered="{!!preventUpdates}">
-        <input class='docUploadInput' data-respid="{!group.item.Id}" type="file"/>
+        <input class='docUploadInput' data-respid="{!group.item.Id}" id="fileUploadInput" type="file" 
+        onchange="CheckSupportedFileTypes(this.id,this.value, ['gif', 'jpg', 'png', 'jpeg', 'pdf','xls','xlsx','zip','txt','docx','doc','png']);"/>
     </apex:outputPanel>
+    
+    <br/>
+    <apex:outputText style="font-weight:bold" value="Previously Uploaded Document: "/>
+   
+    <apex:repeat value="{!group.oldAttVersionList}" var="doc" id="theRepeat">
+            <br/>
+        <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!doc.Id}"   target="_blank">{!doc.Title}</apex:outputLink>
+        
+    </apex:repeat>
+
 </apex:component>

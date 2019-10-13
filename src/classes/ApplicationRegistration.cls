@@ -73,7 +73,7 @@ public class ApplicationRegistration {
             
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty())
-                throw new ApplicationUtilities.ApplicationException('An account with this email already exists.', true, false);
+                throw new ApplicationUtilities.ApplicationException('An account with this email already exists.', true, true);
             
             // Update Account owner to Site admin if owner is current user (guest user)
             if (con.Account.OwnerId == UserInfo.getUserId())

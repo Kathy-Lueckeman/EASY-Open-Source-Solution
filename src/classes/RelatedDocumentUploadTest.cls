@@ -27,12 +27,13 @@ public class RelatedDocumentUploadTest {
         pr.getParameters().put('Id',con.Id);
         Test.setCurrentPage(pr);
         RelatedDocumentUpload rdu = new RelatedDocumentUpload();
-        rdu.additionalDataString = '{"":{"attData":{"fileName":"test","data":"test"}}}';
+        rdu.additionalDataString = '{"":{"attData":{"fileName":"test","data":"a,test"}}}';
         Application_Control__c appControl = rdu.appControl;
         String objName = rdu.objName;
         rdu.aqg.att.Title = 'Test123';
         rdu.aqg.att.VersionData = Blob.valueOf('test2');
         rdu.submit();
-        system.assertEquals(1,[Select count() from ContentDocumentLink Where LinkedEntityId = :con.Id]);
+        //due to supporting multiple files we expect to see both files. 
+        system.assertEquals(2,[Select count() from ContentDocumentLink Where LinkedEntityId = :con.Id]);
     }
 }

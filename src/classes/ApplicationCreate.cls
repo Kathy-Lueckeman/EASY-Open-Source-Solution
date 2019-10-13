@@ -271,7 +271,7 @@ public class ApplicationCreate {
             }
             
             // Check to make sure selections are valid for number of applications limit
-            if (String.isNotBlank(ip.Number_of_Applications_Limit__c)) {
+            if (String.isNotBlank(ip.Number_of_Applications_Limit__c) && app.Contact__c!=null ) {
                 for (Application__c a:[SELECT Id, Intended_Program__c, Intended_Term_of_Entry__c FROM Application__c WHERE Contact__c = :app.Contact__c]) {
                     if (ip.Number_of_Applications_Limit__c.equals('One Application'))
                         return 'You already have an application. Only one application is allowed.';
@@ -303,7 +303,7 @@ public class ApplicationCreate {
         
         // Process all values for section
         section.processValues(additionalData);
-        
+        /* 10/13/19 Idan Lahat- There is no need to create the requirment responses here, it will be generated in the ApplicationChecklist page which this methods routes to. 
         // Get list of requirement responses to insert
         List<Requirement_Response__c> rrLst = new List<Requirement_Response__c>();
         for (ApplicationQuestionGroup aqg:section.groups) {
@@ -332,7 +332,7 @@ public class ApplicationCreate {
         }
         
         upsert qResponses; // Insert question responses
-        
+        */
         // Return URL for checklist page for new application
         return '/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
     }
