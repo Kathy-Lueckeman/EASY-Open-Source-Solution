@@ -65,6 +65,14 @@ public class ApplicationRegistration {
             if (errorMessage != null)
                 throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
             
+            //test that password match
+            String pass = extraFields.Last_Name__c;
+            String passConfirm = extraFields.First_Name__c;
+            if(!pass.equals(passConfirm))
+            {
+                throw new ApplicationUtilities.ApplicationException(' Password do not match.', true, true);
+            }
+            
             // Insert interaction to create/update Contact
             insert interaction;
             interaction = [SELECT Id, Contact__c, First_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
@@ -92,20 +100,20 @@ public class ApplicationRegistration {
             u.CommunityNickname = (u.Email.length() > 40) ? u.Email.substring(0, 40) : u.Email;
             u.ContactId = con.Id;
             
-            // Create user
-            String pass = extraFields.Last_Name__c;
-            String passConfirm = extraFields.First_Name__c;
-            if (!Test.isRunningtest()) Site.validatePassword(u, pass, passConfirm);
             
+           //10/14/19 Idan Lahat, removed becasue it is not throwing an error to do a rollback and only add a massage. createExternalUser will tes tthe password strength.
+           // if (!Test.isRunningtest()) Site.validatePassword(u, pass, passConfirm);
+            // Create user
             Id uId;
-            if (!Test.isRunningTest() && pass.equals(passConfirm)) {
+            if (!Test.isRunningTest()) {
                 uId = Site.createExternalUser(u, con.AccountId, pass, true);
                 if (uId == null)
-                    throw new ApplicationUtilities.ApplicationException('Error occured when creating user.', true, true);
+                    throw new ApplicationUtilities.ApplicationException('', true, true);
                 loginUser = new User(Id = uId, Username = u.Username);
                 loginPassword = pass;
                 loginUrl = checklistUrl;
             }
+            
             
         } catch (DmlException err) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getDMLMessage(0)));
