@@ -3,22 +3,27 @@
     <customValue>
         <fullName>Associate</fullName>
         <default>false</default>
+        <label>Associate</label>
     </customValue>
     <customValue>
         <fullName>Bachelor&apos;s</fullName>
         <default>false</default>
+        <label>Bachelor&apos;s</label>
     </customValue>
     <customValue>
         <fullName>Master&apos;s</fullName>
         <default>false</default>
+        <label>Master&apos;s</label>
     </customValue>
     <customValue>
         <fullName>Doctoral</fullName>
         <default>false</default>
+        <label>Doctoral</label>
     </customValue>
     <customValue>
         <fullName>Certificate</fullName>
         <default>false</default>
+        <label>Certificate</label>
     </customValue>
     <description>Types of a degree.</description>
     <masterLabel>Degree Types</masterLabel>

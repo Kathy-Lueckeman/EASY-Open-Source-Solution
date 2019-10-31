@@ -3,10 +3,12 @@
     <customValue>
         <fullName>Generic Value 1</fullName>
         <default>false</default>
+        <label>Generic Value 1</label>
     </customValue>
     <customValue>
         <fullName>Generic Value 2</fullName>
         <default>false</default>
+        <label>Generic Value 2</label>
     </customValue>
     <masterLabel>Generic Filter 4</masterLabel>
     <sorted>false</sorted>

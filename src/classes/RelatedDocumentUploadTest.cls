@@ -16,6 +16,11 @@ public class RelatedDocumentUploadTest {
         );
         insert appControl;
         
+        Requirement__c r = new Requirement__c(Name = 'test', Application_Control__c = appControl.Id);
+        insert r;
+        
+        insert new Requirement_Item__c(Name = 'test', Requirement__c = r.Id, File_Types__c = 'pdf');
+        
         Contact con =  new Contact(LastName='Test');
         insert con;
         insert new ContentVersion(firstPublishLocationId=con.Id,Title='Test',Description='Supporting Document',VersionData=Blob.valueOf('test'),PathOnClient='Test');
@@ -23,14 +28,20 @@ public class RelatedDocumentUploadTest {
     }
     public static TestMethod void docUpload(){
         Contact con = [Select Id from Contact limit 1];
+        Requirement_Item__c ri = [SELECT Id FROM Requirement_Item__c WHERE Name = :'test'];
         PageReference pr = Page.RelatedDocumentUpload;
         pr.getParameters().put('Id',con.Id);
+        pr.getParameters().put('rId', ri.Id);
         Test.setCurrentPage(pr);
         RelatedDocumentUpload rdu = new RelatedDocumentUpload();
-        rdu.additionalDataString = '{"":{"attData":{"fileName":"test","data":"test"}}}';
         Application_Control__c appControl = rdu.appControl;
         String objName = rdu.objName;
+        rdu.additionalDataString = '{"":{"attData":{"fileName":"test","data":"test,test"}}}';
         rdu.aqg.att.Title = 'Test123';
+        rdu.aqg.att.VersionData = Blob.valueOf('test2');
+        rdu.submit();
+        rdu.additionalDataString = '{"":{"attData":{"fileName":"test.pdf","data":"test,test"}}}';
+        rdu.aqg.att.Title = 'Test123.pdf';
         rdu.aqg.att.VersionData = Blob.valueOf('test2');
         rdu.submit();
         system.assertEquals(1,[Select count() from ContentDocumentLink Where LinkedEntityId = :con.Id]);

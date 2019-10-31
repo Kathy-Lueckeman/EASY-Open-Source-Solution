@@ -3,14 +3,17 @@
     <customValue>
         <fullName>On-Campus</fullName>
         <default>false</default>
+        <label>On-Campus</label>
     </customValue>
     <customValue>
         <fullName>Online</fullName>
         <default>false</default>
+        <label>Online</label>
     </customValue>
     <customValue>
         <fullName>Evenings and Weekends</fullName>
         <default>false</default>
+        <label>Evenings and Weekends</label>
     </customValue>
     <description>Types that a program can be delivered.</description>
     <masterLabel>Delivery Types</masterLabel>

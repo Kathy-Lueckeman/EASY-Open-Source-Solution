@@ -3,10 +3,12 @@
     <customValue>
         <fullName>Domestic</fullName>
         <default>false</default>
+        <label>Domestic</label>
     </customValue>
     <customValue>
         <fullName>International</fullName>
         <default>false</default>
+        <label>International</label>
     </customValue>
     <description>Citizenship types for admissions.</description>
     <masterLabel>Citizenship Types</masterLabel>

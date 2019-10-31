@@ -711,9 +711,9 @@ public class ApplicationQuestion {
             else if (fieldType.equals('Currency'))
                 response.ValueCurrency__c = Double.valueOf(resp);
             else if (fieldType.equals('Date'))
-                response.ValueDate__c = date.parse(resp);
+                response.ValueDate__c = Date.valueOf(resp);
             else if (fieldType.equals('DateTime'))
-                response.ValueDateTime__c = dateTime.parse(resp);
+                response.ValueDateTime__c = Datetime.valueOf(resp);
             else if (fieldType.equals('Email'))
                 response.ValueEmail__c = resp;
             else if (fieldType.equals('Number') || fieldType.equals('Decimal') || fieldType.equals('Integer'))

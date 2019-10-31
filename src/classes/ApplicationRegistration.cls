@@ -97,6 +97,10 @@ public class ApplicationRegistration {
             String passConfirm = extraFields.First_Name__c;
             if (!Test.isRunningtest()) Site.validatePassword(u, pass, passConfirm);
             
+            // Throw exception to rollback if we found an error
+            if (ApexPages.hasMessages(ApexPages.Severity.ERROR) && !Test.isRunningtest())
+                throw new ApplicationUtilities.ApplicationException(null, true);
+            
             Id uId;
             if (!Test.isRunningTest() && pass.equals(passConfirm)) {
                 uId = Site.createExternalUser(u, con.AccountId, pass, true);
@@ -112,8 +116,8 @@ public class ApplicationRegistration {
             dmlException = true;
             Database.rollback(sp);
         } catch (ApplicationUtilities.ApplicationException err) {
-            
-            ApexPages.addMessage(new ApexPages.Message(err.isError ? ApexPages.Severity.ERROR : ApexPages.Severity.CONFIRM, err.getMessage()));
+            if (String.isNotBlank(err.getMessage()))
+            	ApexPages.addMessage(new ApexPages.Message(err.isError ? ApexPages.Severity.ERROR : ApexPages.Severity.CONFIRM, err.getMessage()));
             if (err.doRollback)
                 Database.rollback(sp);
             

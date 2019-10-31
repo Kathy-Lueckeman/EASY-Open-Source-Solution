@@ -3,22 +3,27 @@
     <customValue>
         <fullName>College of Arts and Sciences</fullName>
         <default>false</default>
+        <label>College of Arts and Sciences</label>
     </customValue>
     <customValue>
         <fullName>College of Health Professions</fullName>
         <default>false</default>
+        <label>College of Health Professions</label>
     </customValue>
     <customValue>
         <fullName>Graduate</fullName>
         <default>false</default>
+        <label>Graduate</label>
     </customValue>
     <customValue>
         <fullName>School of Business</fullName>
         <default>false</default>
+        <label>School of Business</label>
     </customValue>
     <customValue>
         <fullName>School of Education</fullName>
         <default>false</default>
+        <label>School of Education</label>
     </customValue>
     <masterLabel>School / College</masterLabel>
     <sorted>false</sorted>

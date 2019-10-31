@@ -68,5 +68,12 @@
                 overflow: scroll; /*Needed to make the autocomplete results scroll*/
             }
         </style>
+        <script>
+        	$(document).keypress(function(event){
+                if (event.which == '13') {
+                    event.preventDefault();
+                }
+			});
+        </script>
     </head>
 </apex:component>

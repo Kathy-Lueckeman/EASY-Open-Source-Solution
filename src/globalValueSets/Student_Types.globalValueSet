@@ -3,10 +3,12 @@
     <customValue>
         <fullName>Traditional</fullName>
         <default>false</default>
+        <label>Traditional</label>
     </customValue>
     <customValue>
         <fullName>Adult</fullName>
         <default>false</default>
+        <label>Adult</label>
     </customValue>
     <description>Student types for admissions.</description>
     <masterLabel>Student Types</masterLabel>

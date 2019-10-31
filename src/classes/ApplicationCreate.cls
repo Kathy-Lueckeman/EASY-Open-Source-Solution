@@ -63,7 +63,7 @@ public class ApplicationCreate {
             groups.add(firstGroup);
         
         // Query for Requirement Items and Questions to display on Application Creation
-        items = [SELECT Id, Requirement__r.Application_Creation_Display_Order__c, Active__c, Required__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Name, Label__c,
+        items = [SELECT Id, File_Types__c, Requirement__r.Application_Creation_Display_Order__c, Active__c, Required__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Name, Label__c,
                  Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c,
                  Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c,
                  Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Holding_Record_Id__c, Internal_Requirement_Item__c, Editable_Application_Status__c,
@@ -271,7 +271,7 @@ public class ApplicationCreate {
             }
             
             // Check to make sure selections are valid for number of applications limit
-            if (String.isNotBlank(ip.Number_of_Applications_Limit__c)) {
+            if (app.Contact__c != null && String.isNotBlank(ip.Number_of_Applications_Limit__c)) {
                 for (Application__c a:[SELECT Id, Intended_Program__c, Intended_Term_of_Entry__c FROM Application__c WHERE Contact__c = :app.Contact__c]) {
                     if (ip.Number_of_Applications_Limit__c.equals('One Application'))
                         return 'You already have an application. Only one application is allowed.';
@@ -279,6 +279,8 @@ public class ApplicationCreate {
                         return 'You already have an application for this term. Only one application per term is allowed.';
                     else if (ip.Number_of_Applications_Limit__c.equals('One Application Per Program') && app.Intended_Program__c == a.Intended_Program__c)
                         return 'You already have an application for this program. Only one application per program is allowed.';
+                    else if (ip.Number_of_Applications_Limit__c.equals('One Application Per Term and Program') && app.Intended_Program__c == a.Intended_Program__c && app.Intended_Term_of_Entry__c == a.Intended_Term_of_Entry__c)
+                        return 'You already have an application for this program and term. Only one application per program and term is allowed.';
                 }
             }
         }

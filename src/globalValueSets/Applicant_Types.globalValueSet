@@ -3,14 +3,17 @@
     <customValue>
         <fullName>Freshman</fullName>
         <default>false</default>
+        <label>Freshman</label>
     </customValue>
     <customValue>
         <fullName>Transfer</fullName>
         <default>false</default>
+        <label>Transfer</label>
     </customValue>
     <customValue>
         <fullName>Graduate</fullName>
         <default>false</default>
+        <label>Graduate</label>
     </customValue>
     <description>Types of an applicant.</description>
     <masterLabel>Applicant Types</masterLabel>

@@ -5,7 +5,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -13,7 +33,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -21,7 +61,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -29,7 +89,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -37,7 +117,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
@@ -48,10 +148,12 @@
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Active__c</fullName>
         <defaultValue>true</defaultValue>
@@ -211,26 +313,32 @@
                 <value>
                     <fullName>PDF</fullName>
                     <default>false</default>
+                    <label>PDF</label>
                 </value>
                 <value>
                     <fullName>DOC</fullName>
                     <default>false</default>
+                    <label>DOC</label>
                 </value>
                 <value>
                     <fullName>TXT</fullName>
                     <default>false</default>
+                    <label>TXT</label>
                 </value>
                 <value>
                     <fullName>RTF</fullName>
                     <default>false</default>
+                    <label>RTF</label>
                 </value>
                 <value>
                     <fullName>JPG</fullName>
                     <default>false</default>
+                    <label>JPG</label>
                 </value>
                 <value>
                     <fullName>PNG</fullName>
                     <default>false</default>
+                    <label>PNG</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -424,14 +532,17 @@
                 <value>
                     <fullName>Applicant</fullName>
                     <default>false</default>
+                    <label>Applicant</label>
                 </value>
                 <value>
                     <fullName>Application</fullName>
                     <default>false</default>
+                    <label>Application</label>
                 </value>
                 <value>
                     <fullName>Contact</fullName>
                     <default>false</default>
+                    <label>Contact</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -450,10 +561,12 @@
                 <value>
                     <fullName>Education_History__c</fullName>
                     <default>false</default>
+                    <label>Education_History__c</label>
                 </value>
                 <value>
                     <fullName>Employment_History__c</fullName>
                     <default>false</default>
+                    <label>Employment_History__c</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -611,7 +724,7 @@
         <description>Document to upload.</description>
         <label>Document Upload</label>
         <picklistValues>
-            <picklist>Applicant_Types</picklist>
+            <picklist>Applicant_Type__c</picklist>
             <values>
                 <fullName>Freshman</fullName>
                 <default>false</default>
@@ -626,7 +739,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Application_Status</picklist>
+            <picklist>Application_Status__c</picklist>
             <values>
                 <fullName>Cancelled</fullName>
                 <default>false</default>
@@ -677,7 +790,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Citizenship_Types</picklist>
+            <picklist>Citizenship__c</picklist>
             <values>
                 <fullName>Domestic</fullName>
                 <default>false</default>
@@ -688,7 +801,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Degree_Types</picklist>
+            <picklist>Degree_Type__c</picklist>
             <values>
                 <fullName>Associate</fullName>
                 <default>false</default>
@@ -711,7 +824,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Delivery_Types</picklist>
+            <picklist>Delivery_Type__c</picklist>
             <values>
                 <fullName>Evenings and Weekends</fullName>
                 <default>false</default>
@@ -722,6 +835,57 @@
             </values>
             <values>
                 <fullName>Online</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Editable_Application_Status__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Decision Made</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Additional Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -753,7 +917,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_1</picklist>
+            <picklist>Generic_Filter_1__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -764,7 +928,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_2</picklist>
+            <picklist>Generic_Filter_2__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -775,7 +939,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_3</picklist>
+            <picklist>Generic_Filter_3__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -786,7 +950,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_4</picklist>
+            <picklist>Generic_Filter_4__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -819,7 +983,109 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Residency_Types</picklist>
+            <picklist>Required_Supporting_Documentation__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Decision Made</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Additional Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Required__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Decision Made</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Additional Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Residency__c</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
                 <default>false</default>
@@ -830,7 +1096,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>School_College</picklist>
+            <picklist>School_College__c</picklist>
             <values>
                 <fullName>College of Arts and Sciences</fullName>
                 <default>false</default>
@@ -853,7 +1119,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Student_Types</picklist>
+            <picklist>Student_Type__c</picklist>
             <values>
                 <fullName>Adult</fullName>
                 <default>false</default>
@@ -870,7 +1136,7 @@
         <description>Group of questions.</description>
         <label>Question Group</label>
         <picklistValues>
-            <picklist>Applicant_Types</picklist>
+            <picklist>Applicant_Type__c</picklist>
             <values>
                 <fullName>Freshman</fullName>
                 <default>false</default>
@@ -885,7 +1151,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Application_Status</picklist>
+            <picklist>Application_Status__c</picklist>
             <values>
                 <fullName>Cancelled</fullName>
                 <default>false</default>
@@ -936,7 +1202,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Citizenship_Types</picklist>
+            <picklist>Citizenship__c</picklist>
             <values>
                 <fullName>Domestic</fullName>
                 <default>false</default>
@@ -947,7 +1213,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Degree_Types</picklist>
+            <picklist>Degree_Type__c</picklist>
             <values>
                 <fullName>Associate</fullName>
                 <default>false</default>
@@ -970,7 +1236,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Delivery_Types</picklist>
+            <picklist>Delivery_Type__c</picklist>
             <values>
                 <fullName>Evenings and Weekends</fullName>
                 <default>false</default>
@@ -981,6 +1247,57 @@
             </values>
             <values>
                 <fullName>Online</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Editable_Application_Status__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Decision Made</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Additional Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1012,7 +1329,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_1</picklist>
+            <picklist>Generic_Filter_1__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -1023,7 +1340,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_2</picklist>
+            <picklist>Generic_Filter_2__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -1034,7 +1351,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_3</picklist>
+            <picklist>Generic_Filter_3__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -1045,7 +1362,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_4</picklist>
+            <picklist>Generic_Filter_4__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -1078,72 +1395,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Residency_Types</picklist>
-            <values>
-                <fullName>Non-Resident</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resident</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>School_College</picklist>
-            <values>
-                <fullName>College of Arts and Sciences</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>College of Health Professions</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Graduate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>School of Business</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>School of Education</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Student_Types</picklist>
-            <values>
-                <fullName>Adult</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Traditional</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Related_Object</fullName>
-        <active>true</active>
-        <label>Related Object</label>
-        <picklistValues>
-            <picklist>Applicant_Types</picklist>
-            <values>
-                <fullName>Freshman</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Graduate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Transfer</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Application_Status</picklist>
+            <picklist>Required_Supporting_Documentation__c</picklist>
             <values>
                 <fullName>Cancelled</fullName>
                 <default>false</default>
@@ -1194,7 +1446,174 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Citizenship_Types</picklist>
+            <picklist>Required__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Decision Made</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Additional Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Residency__c</picklist>
+            <values>
+                <fullName>Non-Resident</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resident</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>School_College__c</picklist>
+            <values>
+                <fullName>College of Arts and Sciences</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>College of Health Professions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Graduate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Business</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Education</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Student_Type__c</picklist>
+            <values>
+                <fullName>Adult</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Traditional</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Related_Object</fullName>
+        <active>true</active>
+        <label>Related Object</label>
+        <picklistValues>
+            <picklist>Applicant_Type__c</picklist>
+            <values>
+                <fullName>Freshman</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Graduate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Application_Status__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Decision Made</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Additional Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Citizenship__c</picklist>
             <values>
                 <fullName>Domestic</fullName>
                 <default>false</default>
@@ -1205,7 +1624,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Degree_Types</picklist>
+            <picklist>Degree_Type__c</picklist>
             <values>
                 <fullName>Associate</fullName>
                 <default>false</default>
@@ -1228,7 +1647,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Delivery_Types</picklist>
+            <picklist>Delivery_Type__c</picklist>
             <values>
                 <fullName>Evenings and Weekends</fullName>
                 <default>false</default>
@@ -1239,6 +1658,57 @@
             </values>
             <values>
                 <fullName>Online</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Editable_Application_Status__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Decision Made</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Additional Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1270,7 +1740,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_1</picklist>
+            <picklist>Generic_Filter_1__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -1281,7 +1751,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_2</picklist>
+            <picklist>Generic_Filter_2__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -1292,7 +1762,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_3</picklist>
+            <picklist>Generic_Filter_3__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -1303,7 +1773,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Generic_Filter_4</picklist>
+            <picklist>Generic_Filter_4__c</picklist>
             <values>
                 <fullName>Generic Value 1</fullName>
                 <default>false</default>
@@ -1340,7 +1810,109 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Residency_Types</picklist>
+            <picklist>Required_Supporting_Documentation__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Decision Made</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Additional Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Required__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Decision Made</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Additional Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete-Pending Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Residency__c</picklist>
             <values>
                 <fullName>Non-Resident</fullName>
                 <default>false</default>
@@ -1351,7 +1923,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>School_College</picklist>
+            <picklist>School_College__c</picklist>
             <values>
                 <fullName>College of Arts and Sciences</fullName>
                 <default>false</default>
@@ -1374,7 +1946,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Student_Types</picklist>
+            <picklist>Student_Type__c</picklist>
             <values>
                 <fullName>Adult</fullName>
                 <default>false</default>
@@ -1387,4 +1959,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

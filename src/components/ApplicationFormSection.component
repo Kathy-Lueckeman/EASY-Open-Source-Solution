@@ -64,7 +64,7 @@
         </apex:outputPanel>
         <apex:outputPanel id="questionGroupWrapper" >
         <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" >
-            <apex:actionFunction name="sendTheReminder" action="{!group.sendReminder}" reRender="none" />
+            <apex:actionFunction name="sendTheReminder{!group.item.Id}" action="{!group.sendReminder}" reRender="none" />
             <apex:actionRegion >
             <apex:repeat value="{!group.questions}" var="question" >
                <div class="row" >
@@ -216,7 +216,7 @@
                         <div class="input-group" >
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                             <apex:inputField id="field" value="{!question.response.ValueEmail__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
-                            <apex:commandLink styleClass="btn-lightning" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
+                            <apex:commandLink styleClass="btn-lightning" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder{!group.item.Id}();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
                         </div>
                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}" ><apex:outputText value="{!question.helpText}" escape="false" /></p>
                     </div>
@@ -232,6 +232,7 @@
                         <label for="textEncryptedField" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
                         <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!question.textEncryptedValue}" maxlength="{!if(question.length == null || question.length > 175, 175, question.length)}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#676767;font-weight:400;font-size:14px;height:36px;"/>
                     </div>
+                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}" ><apex:outputText value="{!question.helpText}" escape="false" /></p>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" >
                     <style>
@@ -641,6 +642,7 @@
                     <div class="form-group" >
                         <apex:inputSecret redisplay="true" id="textEncryptedField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" maxlength="{!if(question.length == null || question.length > 175, 175, question.length)}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#676767;font-weight:400;font-size:14px;height:36px;"/>
                     </div>
+                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}" ><apex:outputText value="{!question.helpText}" escape="false" /></p>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" >
                     <style>
@@ -798,16 +800,16 @@
             </td>
             </apex:outputPanel>
             </apex:repeat>
-                            <apex:outputPanel layout="none" rendered="{!ISPICKVAL($User.UserType,'Standard') || group.item.Allow_Supporting_Documentation_Upload__c}">
+                            <apex:outputPanel layout="none" rendered="{!(ISPICKVAL($User.UserType,'Standard') || group.item.Allow_Supporting_Documentation_Upload__c) && rr.idx != null}">
                                 <td class="ui-front">
                                     <apex:outputLink value="/{!rr.att.ContentDocumentId}" rendered="{!rr.att != null && ISPICKVAL($User.UserType,'Standard')}" target="_blank">View Uploaded Document
                                     </apex:outputLink>
                                     <apex:outputText value="Previously Uploaded Document: {!rr.att.ContentDocument.Title}" rendered="{!rr.att != null && NOT(ISPICKVAL($User.UserType,'Standard'))}" />
                                 </td>
                             </apex:outputPanel>
-                            <apex:outputPanel layout="none" rendered="{!(ISPICKVAL($User.UserType,'Standard') || group.item.Allow_Supporting_Documentation_Upload__c) && !rr.isEditMode && group.isEditable && !preventUpdates}">
+                            <apex:outputPanel layout="none" rendered="{!(ISPICKVAL($User.UserType,'Standard') || group.item.Allow_Supporting_Documentation_Upload__c) && rr.idx != null && !rr.isEditMode && group.isEditable && !preventUpdates}">
                                 <td class="ui-front">
-                                    <apex:commandLink action="{!group.RelatedUpload}" reRender="theTable" oncomplete="if('{!group.selectedRelatedId}')window.open('{!$Page.RelatedDocumentUpload+'?Id='+group.selectedRelatedId}','_blank');">Upload Supporting Documentation
+                                    <apex:commandLink action="{!group.RelatedUpload}" reRender="theTable" oncomplete="if('{!group.selectedRelatedId}')window.open('{!$Page.RelatedDocumentUpload+'?Id='+group.selectedRelatedId+'&rId='+group.item.Id}','_blank');">Upload Supporting Documentation
                                         <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                                     </apex:commandLink>
                                 </td>
@@ -816,6 +818,11 @@
                     </apex:repeat>
                 </tbody>
             </table>
+            <script>
+                jQuery(function(){
+                    makeNonEditable();
+                });
+            </script>
         	</apex:outputPanel>
             <div class="col-lg-8 col-md-10 col-xs-12" >
                 <apex:commandLink styleClass="btn" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="New Record" action="{!group.newRow}" reRender="theTable" rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}"/>
@@ -1068,6 +1075,7 @@
                         <label for="textEncryptedField1" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
                         <apex:inputSecret redisplay="true" id="textEncryptedField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" maxlength="{!if(question.length == null || question.length > 175, 175, question.length)}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#676767;font-weight:400;font-size:14px;height:36px;"/>
                     </div>
+                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}" ><apex:outputText value="{!question.helpText}" escape="false" /></p>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" >
                     <style>

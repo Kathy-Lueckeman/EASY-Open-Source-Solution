@@ -164,7 +164,7 @@
         </processMetadataValues>
         <name>formula_2_myRule_1_A1_6706760711</name>
         <dataType>String</dataType>
-        <expression>RIGHT(TEXT((NOW() - DATETIMEVALUE( &quot;1970-01-01 00:00:00&quot; )) * 86400),5)+RIGHT( $User.Id ,5)+Right($Organization.Id,2)</expression>
+        <expression>RIGHT(TEXT((NOW() - DATETIMEVALUE( &quot;1970-01-01 00:00:00&quot; )) * 86400),5)+RIGHT( {!$User.Id} ,5)+Right({!$Organization.Id},2)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -298,6 +298,7 @@
         <object>Requirement_Response__c</object>
     </recordUpdates>
     <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
+    <status>Draft</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

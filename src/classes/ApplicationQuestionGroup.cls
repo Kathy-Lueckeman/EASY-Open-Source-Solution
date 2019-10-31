@@ -535,9 +535,17 @@ public class ApplicationQuestionGroup {
     * @description Send a reminder email for Exteral Requirements
     ********************************************************************************/
     public void sendReminder() {
+        
         if (response != null && response.Id != null && String.isNotBlank(response.External_Email__c)) {
+            
+            String externalEmail = response.External_Email__c;
+            for (ApplicationQuestion q:questions)
+                if (q.isEditable == true || UserInfo.getUserType() == 'Standard')
+                    if (q.question != null && q.response != null && q.question.External_Email_Field__c && String.isNotBlank(q.response.ValueEmail__c))
+                        externalEmail = q.response.ValueEmail__c;
+      
             response.Send_Reminder__c = !response.Send_Reminder__c;
-            update new Requirement_Response__c(Id = response.Id, Send_Reminder__c = response.Send_Reminder__c);
+            update new Requirement_Response__c(Id = response.Id, Send_Reminder__c = response.Send_Reminder__c, External_Email__c = externalEmail);
         }
     }
     

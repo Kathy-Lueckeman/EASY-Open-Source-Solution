@@ -3,11 +3,13 @@
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Enterprise Application Solution for Yield (EASY)</description>
     <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>Enterprise Application</label>
-    <tab>Application__c</tab>
-    <tab>Application_Review__c</tab>
-    <tab>standard-Contact</tab>
-    <tab>Application_Control__c</tab>
-    <tab>Requirement__c</tab>
-    <tab>Interaction__c</tab>
+    <tabs>Application__c</tabs>
+    <tabs>Application_Review__c</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>Application_Control__c</tabs>
+    <tabs>Requirement__c</tabs>
+    <tabs>Interaction__c</tabs>
 </CustomApplication>

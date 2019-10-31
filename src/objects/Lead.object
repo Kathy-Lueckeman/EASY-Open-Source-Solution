@@ -14,14 +14,17 @@
                 <value>
                     <fullName>New Freshman</fullName>
                     <default>false</default>
+                    <label>New Freshman</label>
                 </value>
                 <value>
                     <fullName>Transfer</fullName>
                     <default>false</default>
+                    <label>Transfer</label>
                 </value>
                 <value>
                     <fullName>Other</fullName>
                     <default>false</default>
+                    <label>Other</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -55,10 +58,12 @@
                 <value>
                     <fullName>Advisor</fullName>
                     <default>false</default>
+                    <label>Advisor</label>
                 </value>
                 <value>
                     <fullName>Student</fullName>
                     <default>false</default>
+                    <label>Student</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -107,10 +112,12 @@
                 <value>
                     <fullName>Hispanic or Latino</fullName>
                     <default>false</default>
+                    <label>Hispanic or Latino</label>
                 </value>
                 <value>
                     <fullName>Not Hispanic or Latino</fullName>
                     <default>false</default>
+                    <label>Not Hispanic or Latino</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -128,14 +135,17 @@
                 <value>
                     <fullName>Female</fullName>
                     <default>false</default>
+                    <label>Female</label>
                 </value>
                 <value>
                     <fullName>Male</fullName>
                     <default>false</default>
+                    <label>Male</label>
                 </value>
                 <value>
                     <fullName>Unknown</fullName>
                     <default>false</default>
+                    <label>Unknown</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -164,22 +174,27 @@
                 <value>
                     <fullName>American Indian or Alaska Native</fullName>
                     <default>false</default>
+                    <label>American Indian or Alaska Native</label>
                 </value>
                 <value>
                     <fullName>Black or African American</fullName>
                     <default>false</default>
+                    <label>Black or African American</label>
                 </value>
                 <value>
                     <fullName>Native Hawaiian or Other Pacific Islander</fullName>
                     <default>false</default>
+                    <label>Native Hawaiian or Other Pacific Islander</label>
                 </value>
                 <value>
                     <fullName>White</fullName>
                     <default>false</default>
+                    <label>White</label>
                 </value>
                 <value>
                     <fullName>Asian</fullName>
                     <default>false</default>
+                    <label>Asian</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

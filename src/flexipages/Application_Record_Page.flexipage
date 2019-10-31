@@ -86,7 +86,9 @@
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>Application Record Page</masterLabel>
-    <pageTemplate>flexipage:recordHomeTemplateDesktop</pageTemplate>
     <sobjectType>Application__c</sobjectType>
+    <template>
+        <name>flexipage:recordHomeTemplateDesktop</name>
+    </template>
     <type>RecordPage</type>
 </FlexiPage>

@@ -3,10 +3,12 @@
     <customValue>
         <fullName>Resident</fullName>
         <default>false</default>
+        <label>Resident</label>
     </customValue>
     <customValue>
         <fullName>Non-Resident</fullName>
         <default>false</default>
+        <label>Non-Resident</label>
     </customValue>
     <description>Residency types for admissions applications.</description>
     <masterLabel>Residency Types</masterLabel>
