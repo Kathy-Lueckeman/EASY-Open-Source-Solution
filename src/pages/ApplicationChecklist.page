@@ -13,7 +13,7 @@
                                 </div>
                                 <div class="col-xs-1" >
                                     <apex:outputPanel rendered="{!!r.reqStatus}" >
-                                        <span class="glyphicon glyphicon-remove" style="color:red;float:right;" ></span>
+                                        <span class="glyphicon glyphicon-minus" style="color:gray;float:right;" ></span>
                                     </apex:outputPanel>
                                     <apex:outputPanel rendered="{!r.reqStatus}" >
                                         <span class="glyphicon glyphicon-ok" style="color:green;float:right;" ></span>
@@ -28,7 +28,7 @@
                                         </div>
                                         <div class="col-xs-1" >
                                             <apex:outputPanel rendered="{!!ri.reqItemStatus}" >
-                                                <span class="glyphicon glyphicon-remove" style="color:red;float:right;" ></span>
+                                                <span class="glyphicon glyphicon-minus" style="color:gray;float:right;" ></span>
                                             </apex:outputPanel>
                                             <apex:outputPanel rendered="{!ri.reqItemStatus}" >
                                                 <span class="glyphicon glyphicon-ok" style="color:green;float:right;" ></span>
