@@ -54,8 +54,11 @@
     </script>
     <apex:form id="theForm" >
     <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}" />
-        <apex:outputPanel id="formPageMessages">
-            <apex:pageMessages />
+        <apex:outputPanel  id="formPageMessages" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-2 col-xs-12" >
+                <apex:pageMessages escape="false"/> 
+                <br></br>
+                </div>
         </apex:outputPanel>
         <div class="row" >
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >

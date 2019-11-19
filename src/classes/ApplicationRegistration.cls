@@ -81,7 +81,7 @@ public class ApplicationRegistration {
             
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty())
-                throw new ApplicationUtilities.ApplicationException('An account with this email already exists.', true, true);
+                throw new ApplicationUtilities.ApplicationException(' An account with that email already exists.<br>To continue, please either  <a href="https://floridapoly.force.com/Apply/login">click here to resume your previously saved application</a> OR continue with a new application using a different email address.<br>', true, true);
             
             // Update Account owner to Site admin if owner is current user (guest user)
             if (con.Account.OwnerId == UserInfo.getUserId())
