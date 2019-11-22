@@ -19,7 +19,9 @@
             );
         }
     </script>
+     
     <c:ApplicationHead />
+    
     <c:ApplicationBody title="New Application" rendered="{!NOT(ISBLANK(appCreate.appControl))}" appControl="{!appCreate.appControl}">
         <c:ApplicationForm section="{!appCreate.section}" appControl="{!appCreate.appControl}">
             <div class="row" >
@@ -28,6 +30,7 @@
                         <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
                     </apex:actionFunction>
                     <apex:actionFunction name="login" action="{!login}" oncomplete="appHideLoadingSpinner();" />
+                    
                     <button Class="btn btn-lg navButton left  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c}; float:left; margin: 10px;" 
                         role="button" data-slide="prev"
                     >Back</button>

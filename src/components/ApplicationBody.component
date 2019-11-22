@@ -111,13 +111,20 @@
             <apex:outputPanel styleClass="row" style="padding:10px;padding-left:15px;" rendered="{!!hideLogo}">
                 <div class="col-xs-12" >
                     <img src="{!URLFOR($Resource[appControl.Logo_Static_Resource__c], appControl.Logo_Static_Resource_Path__c)}" />
+                    
                 </div>
+                
             </apex:outputPanel>
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                        <a Class="btn-lightning btn-lg" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Button_Text_Color__c}
+                        ;background-color:#{!appControl.Button_Color__c};float:right;font-size:16px" 
+                        href="/Apply"
+                        role="button"
+                    >Resume an Application</a>  
                     <h1 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:600;font-size:36px;margin-bottom:20px;margin-top:30px;display: inline;" >{!title} </h1>
                     <apex:outputPanel rendered="{!subtitle != null}" >
-                    <h2 style="font-family:'Open Sans', sans-serif;color:#532d8e;font-weight:400;font-size:30px;margin-bottom:20px;margin-top:30px;display: inline;" >(Click on Each Category to Complete)</h2>
+                    <h2 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Button_Color__c};font-weight:400;font-size:30px;margin-bottom:20px;margin-top:30px;display: inline;" >(Click on Each Category to Complete)</h2>
                         </apex:outputPanel>
                     <apex:outputPanel rendered="{!subtitle != null}" >
                     	<h2 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >{!subtitle}</h2>

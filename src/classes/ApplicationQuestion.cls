@@ -56,7 +56,7 @@ public class ApplicationQuestion {
             
             if (intendedPrograms != null) {
                 if (section != null) section.pushValuesToObjects();
-                options = new List<SelectOption>{new SelectOption('', '--None--')};
+                options = new List<SelectOption>{new SelectOption('', '--Select--')};
                 
                 for (Program__c ip:intendedPrograms)
                     if (showIntendedProgram(ip))
@@ -84,7 +84,7 @@ public class ApplicationQuestion {
             
             if (question.RecordType != null && question.RecordType.DeveloperName.equals('Reference') && String.isNotBlank(question.Lookup_Object__c) && question.Display_as_Picklist__c) {
 				
-                options = new List<SelectOption>{new SelectOption('', '--None--')};
+                options = new List<SelectOption>{new SelectOption('', '--Select--')};
                 
                 String nameField = String.isBlank(question.Name_Field_API_Name__c) ? 'Name' : question.Name_Field_API_Name__c;
                 
@@ -387,7 +387,7 @@ public class ApplicationQuestion {
             if (displayType == Schema.DisplayType.PICKLIST || displayType == Schema.DisplayType.MULTIPICKLIST) {
                 options = new List<SelectOption>();
                 if (displayType == Schema.DisplayType.PICKLIST)
-                    options.add(new SelectOption('', '--None--'));
+                    options.add(new SelectOption('', '--Select--'));
                 for (Schema.PicklistEntry ple:dfr.getPicklistValues())
                     options.add(new SelectOption(ple.getValue(), ple.getLabel()));
             }
@@ -437,7 +437,7 @@ public class ApplicationQuestion {
         if(String.isNotBlank(fieldType)){
             if (fieldType.contains('Picklist') || fieldType.equals('Radio')) {
                 options = new List<SelectOption>();
-                if (fieldType.equals('Picklist')) options.add(new SelectOption('', '--None--'));
+                if (fieldType.equals('Picklist')) options.add(new SelectOption('', '--Select--'));
                 if(String.isNotBlank(question.Picklist_Values__c)){
                     for (String str:question.Picklist_Values__c.split('\n')){
                         options.add(new SelectOption(str.trim(), str.trim()));
@@ -490,7 +490,7 @@ public class ApplicationQuestion {
         if (displayType == Schema.DisplayType.PICKLIST || displayType == Schema.DisplayType.MULTIPICKLIST) {
             options = new List<SelectOption>();
             if (displayType == Schema.DisplayType.PICKLIST)
-                options.add(new SelectOption('', '--None--'));
+                options.add(new SelectOption('', '--Select--'));
             for (Schema.PicklistEntry ple:dfr.getPicklistValues())
                 options.add(new SelectOption(ple.getValue(), ple.getLabel()));
         }
@@ -533,7 +533,7 @@ public class ApplicationQuestion {
             if (fieldType.contains('Picklist') || fieldType.equals('Radio')) {
                 options = new List<SelectOption>();
                 if (fieldType.equals('Picklist'))
-                    options.add(new SelectOption('', '--None--'));
+                    options.add(new SelectOption('', '--Select--'));
                 if (String.isNotBlank(question.Picklist_Values__c))
                     for (String str:question.Picklist_Values__c.split('\n'))
                         options.add(new SelectOption(str.trim(), str.trim()));
@@ -551,7 +551,7 @@ public class ApplicationQuestion {
     * @description Sets the picklist options for this question
     ********************************************************************************/
     public void setPicklistOptions(Map<String, String> options) {
-        this.options = new List<SelectOption>{new SelectOption('', '--None--')};
+        this.options = new List<SelectOption>{new SelectOption('', '--Select--')};
         for (String k:options.keySet())
             this.options.add(new SelectOption(k, options.get(k)));
     }
@@ -559,7 +559,7 @@ public class ApplicationQuestion {
     * @description Sets the picklist options based on a lookup field
     ********************************************************************************/
     public void setReferenceOptions(Map<Id, String> refOptions) {
-        this.options = new List<SelectOption>{new SelectOption('', '--None--')};
+        this.options = new List<SelectOption>{new SelectOption('', '--Select--')};
         for (Id k:refOptions.keySet())
             this.options.add(new SelectOption(String.valueOf(k), refOptions.get(k)));
     }
@@ -567,7 +567,7 @@ public class ApplicationQuestion {
     * @description Sets the picklist options based on a lookup field
     ********************************************************************************/
     public void setReferenceOptions(List<Id> optionValues, List<String> optionLabels) {
-        this.options = new List<SelectOption>{new SelectOption('', '--None--')};
+        this.options = new List<SelectOption>{new SelectOption('', '--Select--')};
         for (Integer i = 0; i < optionValues.size(); i++)
             this.options.add(new SelectOption(String.valueOf(optionValues[i]), optionLabels[i]));
     }
@@ -598,7 +598,7 @@ public class ApplicationQuestion {
     public void addDependentOptions(Map<String, Map<String, String>> depOptions) {
         this.dependentOptions = new Map<String, List<SelectOption>>();
         for (String k:depOptions.keySet()) {
-            List<SelectOption> ops = new List<SelectOption>{new SelectOption('', '--None--')};
+            List<SelectOption> ops = new List<SelectOption>{new SelectOption('', '--Select--')};
             for (String dk:depOptions.get(k).keySet()){
                 if(depOptions.get(k).get(dk) != null){
                 ops.add(new SelectOption(dk, depOptions.get(k).get(dk)));
