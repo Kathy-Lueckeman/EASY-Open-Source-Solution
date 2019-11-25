@@ -3,6 +3,7 @@
     <apex:attribute name="subtitle" description="The subtitle for this page" type="String" required="false" />
     <apex:attribute name="hideLogo" description="Should the logo be hidden" type="Boolean" required="false" />
     <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+    <apex:attribute name="ShowReturnButton" description="Should the return button show" type="Boolean" required="false" />
     <style>
         .glyphicon.spinning {
             animation: spin 1s infinite linear;
@@ -109,7 +110,7 @@
         </div>
         <div class="container-fluid" >
             <apex:outputPanel styleClass="row" style="padding:10px;padding-left:15px;" rendered="{!!hideLogo}">
-                <div class="col-xs-12" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
                     <img src="{!URLFOR($Resource[appControl.Logo_Static_Resource__c], appControl.Logo_Static_Resource_Path__c)}" />
                     
                 </div>
@@ -117,11 +118,13 @@
             </apex:outputPanel>
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                        <apex:outputPanel rendered="{!ShowReturnButton}">
                         <a Class="btn-lightning btn-lg" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Button_Text_Color__c}
-                        ;background-color:#{!appControl.Button_Color__c};float:right;font-size:16px" 
+                        ;background-color:#{!appControl.Button_Color__c};float:right;font-size:18px;font-weight:600" 
                         href="/Apply"
                         role="button"
                     >Resume an Application</a>  
+                </apex:outputPanel>
                     <h1 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:600;font-size:36px;margin-bottom:20px;margin-top:30px;display: inline;" >{!title} </h1>
                     <apex:outputPanel rendered="{!subtitle != null}" >
                     <h2 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Button_Color__c};font-weight:400;font-size:30px;margin-bottom:20px;margin-top:30px;display: inline;" >(Click on Each Category to Complete)</h2>

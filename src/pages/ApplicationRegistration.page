@@ -22,7 +22,7 @@
      
     <c:ApplicationHead />
     
-    <c:ApplicationBody title="New Application" rendered="{!NOT(ISBLANK(appCreate.appControl))}" appControl="{!appCreate.appControl}">
+    <c:ApplicationBody title="New Application" rendered="{!NOT(ISBLANK(appCreate.appControl))}" appControl="{!appCreate.appControl}" ShowReturnButton="true">
         <c:ApplicationForm section="{!appCreate.section}" appControl="{!appCreate.appControl}">
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
