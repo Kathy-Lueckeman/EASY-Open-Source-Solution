@@ -713,7 +713,7 @@ public class ApplicationQuestion {
             else if (fieldType.equals('Date'))
                 response.ValueDate__c = Date.valueOf(resp);
             else if (fieldType.equals('DateTime'))
-                response.ValueDateTime__c = Datetime.valueOf(resp);
+                response.ValueDateTime__c = Datetime.valueOfGmt(resp);
             else if (fieldType.equals('Email'))
                 response.ValueEmail__c = resp;
             else if (fieldType.equals('Number') || fieldType.equals('Decimal') || fieldType.equals('Integer'))

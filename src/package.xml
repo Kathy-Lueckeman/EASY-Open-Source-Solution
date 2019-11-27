@@ -231,5 +231,5 @@
         <members>*</members>
         <name>Settings</name>
     </types>
-    <version>38.0</version>
+    <version>45.0</version>
 </Package>
