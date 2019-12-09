@@ -54,13 +54,17 @@ public class ApplicationCreate {
         // Initialize contact and application
         con = new Contact();
         app = new Application__c(Application_Control__c = appControl.Id, Application_Status__c = appControl.Application_Start_Status__c);
-		
+		ApplicationQuestionGroup beforeGroup;
+        ApplicationQuestionGroup afterGroup;
         // List of question groups to display
         List<ApplicationQuestionGroup> groups = new List<ApplicationQuestionGroup>();
-        
+        ApplicationQuestionGroup onePageGroups = new ApplicationQuestionGroup(new List<ApplicationQuestion>());
         // Add first group to beginning
         if (firstGroup != null)
             groups.add(firstGroup);
+           
+        
+
         
         // Query for Requirement Items and Questions to display on Application Creation
         items = [SELECT Id, Requirement__r.Application_Creation_Display_Order__c, Active__c, Required__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Name, Label__c,
@@ -114,8 +118,11 @@ public class ApplicationCreate {
         // Create question groups for requirements we should display
         for (Requirement_Item__c i:items)
             if ((String.isBlank(i.Requirement__r.Application_Creation_Display_Order__c) || i.Requirement__r.Application_Creation_Display_Order__c.equals('Before Term/Program Questions')) && ApplicationFilter.filter(app, i))
+            {
+                beforeGroup= ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true);
                 groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
-        
+            }
+               
         ApplicationQuestion programQuestion;
         
         // Add term and program questions if not hidden
@@ -150,7 +157,11 @@ public class ApplicationCreate {
         // Create question groups for requirements we should display
         for (Requirement_Item__c i:items)
             if (String.isNotBlank(i.Requirement__r.Application_Creation_Display_Order__c) && i.Requirement__r.Application_Creation_Display_Order__c.equals('After Term/Program Questions') && ApplicationFilter.filter(app, i))
+            {
                 groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
+                afterGroup=ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true);
+            }
+                
         
         // Get map of Question Dependencies with Question ids as key
         Map<Id, List<Question_Dependency__c>> dQuestions = new Map<Id, List<Question_Dependency__c>>();
@@ -169,7 +180,21 @@ public class ApplicationCreate {
         // Add last group to end
         if (lastGroup != null)
             groups.add(lastGroup);
-        
+      //check if all questions should show in one page
+        if(lastGroup!=null && appControl.One_Page_Registration__c==true)
+        {
+            //copy the before or after group so dependencies work. 
+           
+                onePageGroups= beforeGroup!=null ? beforeGroup: afterGroup!=null?afterGroup:firstGroup;
+            onePageGroups.questions.clear();
+            for (ApplicationQuestionGroup AG : groups)
+            {
+                onePageGroups.questions.addAll(AG.questions);
+            }
+            groups.clear();
+           
+            groups.add(onePageGroups);
+        }
         // Create new section out of groups
         section = new ApplicationQuestionSection(groups);
         section.addDependencies(dQuestions, null);

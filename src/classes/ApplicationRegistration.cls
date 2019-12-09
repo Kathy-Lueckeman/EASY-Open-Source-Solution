@@ -33,13 +33,14 @@ public class ApplicationRegistration {
         ApplicationQuestion email = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Email__c');
         email.addQuestionObject(new Question__c(Label__c = 'Email', Required__c = appCreate.app.Application_Status__c, Active__c = true));
         ApplicationQuestion portalPassword = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'Last_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
-        portalPassword.addQuestionObject(new Question__c(Label__c = 'What password would you like to use for saving your application?', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
+        portalPassword.addQuestionObject(new Question__c(Label__c = 'Password', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
         ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'First_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
-        portalPasswordConfirmation.addQuestionObject(new Question__c(Label__c = 'Please enter your password again.', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
+        portalPasswordConfirmation.addQuestionObject(new Question__c(Label__c = 'Verify Password', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
         
         // Create question groups
         ApplicationQuestionGroup firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{firstName, lastName, email});
         ApplicationQuestionGroup lastGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{portalPassword, portalPasswordConfirmation});
+        
         
         // Setup other questions
         appCreate.setup(firstGroup, lastGroup);
@@ -66,6 +67,10 @@ public class ApplicationRegistration {
                 throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
             
             //test that password match
+            if(extraFields.Last_Name__c==null || extraFields.First_Name__c==null)
+            {
+                throw new ApplicationUtilities.ApplicationException('The password can not be left blank.', true, true);
+            }
             String pass = extraFields.Last_Name__c;
             String passConfirm = extraFields.First_Name__c;
             if(!pass.equals(passConfirm))

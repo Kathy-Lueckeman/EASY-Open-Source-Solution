@@ -75,6 +75,17 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+    <fullName>One_Page_Registration__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check if the registration page should include all questions in a consolidated page and not in sections.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check if the registration page should include all questions in a consolidated page and not in sections.</inlineHelpText>
+    <label>One Page Registration</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+    </fields>
+
+    <fields>
         <fullName>Allow_Submit_From__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Application status(es) that the &quot;Submit&quot; button shows-up for.</inlineHelpText>
