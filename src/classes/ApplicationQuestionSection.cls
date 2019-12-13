@@ -151,4 +151,31 @@ public class ApplicationQuestionSection {
             } catch (Exception e) {}
         }
     }
+
+    public void updateGroupOptions() {
+        System.debug(LoggingLevel.ERROR, 'updateOptions');
+        //this code needed to cover case when we want to filter intended program options
+        String TERM_QUESTION_FIELDNAME = 'Intended_Term_of_Entry__c';
+        String PROGRAM_QUESTION_FIELDNAME = 'Intended_Program__c';
+        String selectedTerm = NULL;
+        ApplicationQuestion programQuestion = NULL;
+
+        for (ApplicationQuestionGroup g:groups) {
+            if (g.questionGroup && g.questions != null) {
+                for (ApplicationQuestion q : g.questions) {
+                    System.debug(q.fieldName);
+                    if (q.fieldName == TERM_QUESTION_FIELDNAME) {
+                        selectedTerm = q.response.ValueText__c;
+                    }
+                    if (q.fieldName == PROGRAM_QUESTION_FIELDNAME) {
+                        programQuestion = q;
+                    }
+                }
+            }
+        }
+
+        if (programQuestion != NULL) {
+            programQuestion.updateOptions(selectedTerm);
+        }
+    }
 }
