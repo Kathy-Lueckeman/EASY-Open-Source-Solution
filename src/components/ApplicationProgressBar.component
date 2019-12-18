@@ -30,7 +30,11 @@
 	                           	
 	            }
 	        }
-
+			function previousRequirmentNoSave(){
+				console.log(window.location.href.replace("{!requirementId}","{!prevReqId}"));
+				appShowLoadingSpinner();
+	        	window.location.replace(window.location.href.replace("{!requirementId}","{!prevReqId}"));
+	        }
 	        function isNext(){
 	        	return {!nextReqId != null};
 	        }
