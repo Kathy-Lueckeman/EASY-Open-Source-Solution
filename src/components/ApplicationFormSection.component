@@ -15,6 +15,40 @@
             makeNonEditable();
         });
     </script>
+    <style>input[type="date"] {
+        position: relative;
+    }
+    
+    /* create a new arrow, because we are going to mess up the native one
+    see "List of symbols" below if you want another, you could also try to add a font-awesome icon.. */
+    input[type="date"]:after {
+        content: "\25BC"; 
+        color: #555;
+        padding: 0 5px;
+    }
+    
+    /* change color of symbol on hover */
+    input[type="date"]:hover:after {
+        color: #bf1400;
+    }
+    
+    /* make the native arrow invisible and stretch it over the whole field so you can click anywhere in the input field to trigger the native datepicker*/
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: auto;
+        height: auto;
+        color: transparent;
+        background: transparent;
+    }
+    
+    /* adjust increase/decrease button */
+    input[type="date"]::-webkit-inner-spin-button {
+        z-index: 1;
+    }</style>
     <style>
     	label {
         	font-family: sans-serif;
@@ -169,8 +203,9 @@
                     <div class="form-group" >
                         <label for="DateField" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
                         <div class="input-group" >
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            
                             <apex:input id="DateField" type="auto" value="{!question.dateValue}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}" ><apex:outputText value="{!question.helpText}" escape="false" /></p>
                     </div>
@@ -268,7 +303,7 @@
                 <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" >
                     <script>
                         var jq = jQuery.noConflict();
-                        jq(document).ready(fucntion(){
+                        jq(document).ready(function(){
                         jq('.{!question.question.Id}').attr('placeholder','{!IF(question.placeholder == null || question.placeholder == '', '(123) 456-7890', question.placeholder)}');
                         });
                     </script>
@@ -565,8 +600,9 @@
                     </style>
                     <div class="form-group" >
                         <div class="input-group" >
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            <apex:inputField id="DateField1" type="auto" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                           <apex:inputField id="DateField1" type="auto" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                           <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            
                         </div>
                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}" ><apex:outputText value="{!question.helpText}" escape="false" /></p>
                     </div>
@@ -664,7 +700,7 @@
                 <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" >
                     <script>
                         var jq = jQuery.noConflict();
-                        jq(document).ready(fucntion() {
+                        jq(document).ready(function() {
                         jq('.{!question.question.Id}').attr('placeholder','{!IF(question.placeholder == null || question.placeholder == '', '(123) 456-7890', question.placeholder)}');
                         });
                     </script>
@@ -1018,8 +1054,9 @@
                     <div class="form-group" >
                         <label for="DateField1" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
                         <div class="input-group" >
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            
                             <apex:inputField id="DateField1" type="auto" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}" ><apex:outputText value="{!question.helpText}" escape="false" /></p>
                     </div>
@@ -1120,7 +1157,7 @@
                 <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" >
                     <script>
                         var jq = jQuery.noConflict();
-                        jq(document).ready(fucntion() {
+                        jq(document).ready(function() {
                         	jq('.{!question.question.Id}').attr('placeholder','{!IF(question.placeholder == null || question.placeholder == '', '(123) 456-7890', question.placeholder)}');
                         });
                     </script>
