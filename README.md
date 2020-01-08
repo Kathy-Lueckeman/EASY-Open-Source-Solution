@@ -13,8 +13,8 @@ We welcome contributions and feedback. Read below for more information about how
 ## Installation
 You can install EASY as-is into any Developer Edition, Sandbox, Enterprise, or higher edition org using these unmanaged package links and the <a href="https://github.com/SalesforceFoundation/EASY-Open-Source-Solution/blob/master/Docs/Installation%20Guide%20-%20EASY.pdf" target="_blank">Installation Guide</a>:
 
-* <a href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04t2E000003ZQa0" target="_blank">Install EASY in a Sandbox</a>
-* <a href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04t2E000003ZQa0" target="_blank">Install EASY in a Production or Developer Org</a>
+* <a href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04t2E000003ZR5Y" target="_blank">Install EASY in a Sandbox</a>
+* <a href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04t2E000003ZR5Y" target="_blank">Install EASY in a Production or Developer Org</a>
 
 Alternatively, you can fork this repository and deploy the unmanaged version of the code into a Salesforce org of your choice.
 
