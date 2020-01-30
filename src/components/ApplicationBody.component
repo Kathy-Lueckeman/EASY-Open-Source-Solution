@@ -3,6 +3,7 @@
     <apex:attribute name="subtitle" description="The subtitle for this page" type="String" required="false" />
     <apex:attribute name="hideLogo" description="Should the logo be hidden" type="Boolean" required="false" />
     <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
+    <apex:attribute name="loadingText" description="The text to display when save is occuring" type="String" required="false" default="Processing..." />
     <style>
         .glyphicon.spinning {
             animation: spin 1s infinite linear;
@@ -95,8 +96,8 @@
                 <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
                     &nbsp;
                 </div>
-                <div style="position: fixed; left: 50%; top: 50%; z-index: 1001;font-size:30px;" >
-                    <span class='glyphicon glyphicon-refresh spinning'></span> Processing...
+                <div style="position: fixed; width: 100%; top: 50%; z-index: 1001;font-size:30px;" >
+                    <center><span class='glyphicon glyphicon-refresh spinning'></span> {!loadingText}</center>
                 </div>
         </div>
         <div style="display:none" id="confirmation">

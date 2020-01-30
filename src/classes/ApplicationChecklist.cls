@@ -67,29 +67,29 @@ public class ApplicationChecklist {
         }
         
         checkRequirementCompletion();
-        for (Requirement_Response__c rr:[SELECT Id, Requirement_Item__r.Required__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,Fulfilled_On__c,Incomplete_Questions__c,Question_Group_Requirement_Fulfilled_On__c,HasDocument__c,Document_Requirement_Fulfilled_On__c,Has_Child_Requirement__c,Child_Requirement_Fulfilled_On__c,Send_Reminder__c,External_Email__c,Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c from Requirement_Response__c WHERE Application__c = :applicationId and Requirement_Item__r.Requirement__c in :reqIds]){
+        for (Requirement_Response__c rr:[SELECT Id, Requirement_Item__r.Required__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,Fulfilled_On__c,Incomplete_Questions__c,Question_Group_Requirement_Fulfilled_On__c, HasDocument__c, Waive_Requirement__c, Document_Requirement_Fulfilled_On__c,Has_Child_Requirement__c,Child_Requirement_Fulfilled_On__c,Send_Reminder__c,External_Email__c,Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c from Requirement_Response__c WHERE Application__c = :applicationId and Requirement_Item__r.Requirement__c in :reqIds]){
             if (riIds.contains(rr.Requirement_Item__c)) {
                 Boolean itemCompleted = true;
                 if (!completedRequirement.containsKey(rr.Requirement_Item__r.Requirement__c))
                     completedRequirement.put(rr.Requirement_Item__r.Requirement__c, true);
                 
-                if (!rr.Viewed__c && rr.Requirement_Item__r.Viewing_Requirement_Formula__c) {
+                if (!rr.Waive_Requirement__c && !rr.Viewed__c && rr.Requirement_Item__r.Viewing_Requirement_Formula__c) {
                     completedRequirement.put(rr.Requirement_Item__r.Requirement__c, false);
                     viewedRequirement.put(rr.Requirement_Item__r.Requirement__c, false);
                     itemCompleted = false;                    
                 }
                 
-                if (rr.Incomplete_Questions__c > 0) {
+                if (!rr.Waive_Requirement__c && rr.Incomplete_Questions__c > 0) {
                     completedRequirement.put(rr.Requirement_Item__r.Requirement__c,false);
                     itemCompleted = false;
                 }
                 
-                if (rr.Requirement_Item__r.RecordType.DeveloperName == 'Document_Upload' && rr.HasDocument__c == false && String.isNotBlank(rr.Requirement_Item__r.Required__c) && new Set<String>(rr.Requirement_Item__r.Required__c.split(';')).contains(app.Application_Status__c)) {
+                if (!rr.Waive_Requirement__c && rr.Requirement_Item__r.RecordType.DeveloperName == 'Document_Upload' && rr.HasDocument__c == false && String.isNotBlank(rr.Requirement_Item__r.Required__c) && new Set<String>(rr.Requirement_Item__r.Required__c.split(';')).contains(app.Application_Status__c)) {
                     completedRequirement.put(rr.Requirement_Item__r.Requirement__c,false);
                     itemCompleted = false;
                 }
                 
-                if (rr.Requirement_Item__r.RecordType.DeveloperName == 'Related_Object' && rr.Has_Child_Requirement__c == false) {
+                if (!rr.Waive_Requirement__c && rr.Requirement_Item__r.RecordType.DeveloperName == 'Related_Object' && rr.Has_Child_Requirement__c == false) {
                     completedRequirement.put(rr.Requirement_Item__r.Requirement__c,false);
                     itemCompleted = false;
                 }
@@ -155,7 +155,7 @@ public class ApplicationChecklist {
 
         // Requirement Responses
         Map<Id, List<Requirement_Response__c>> rrMap = new Map<Id, List<Requirement_Response__c>>();
-        for (Requirement_Response__c rr:[SELECT Id, Requirement_Item__r.Requirement__c, Requirement_Item__c, ValueTextEntry__c, Incomplete_Questions__c, Question_Group_Requirement_Fulfilled_On__c, HasDocument__c, Document_Requirement_Fulfilled_On__c, Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c, Application__c, Application__r.Contact__c, External_Email__c, Hashcode__c, Send_Reminder__c, (SELECT Id, IsPopulated__c, PopulatedOn__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c FROM Question_Responses__r), (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks) FROM Requirement_Response__c WHERE Requirement_Item__r.Requirement__c in :requirementIds AND Application__c = :applicationId]){
+        for (Requirement_Response__c rr:[SELECT Id, Requirement_Item__r.Requirement__c, Requirement_Item__c, ValueTextEntry__c, Incomplete_Questions__c, Question_Group_Requirement_Fulfilled_On__c, HasDocument__c, Waive_Requirement__c, Document_Requirement_Fulfilled_On__c, Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c, Application__c, Application__r.Contact__c, External_Email__c, Hashcode__c, Send_Reminder__c, (SELECT Id, IsPopulated__c, PopulatedOn__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c FROM Question_Responses__r), (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks) FROM Requirement_Response__c WHERE Requirement_Item__r.Requirement__c in :requirementIds AND Application__c = :applicationId]){
             
             if (!rrMap.containsKey(rr.Requirement_Item__r.Requirement__c))
                 rrMap.put(rr.Requirement_Item__r.Requirement__c, new List<Requirement_Response__c>());
