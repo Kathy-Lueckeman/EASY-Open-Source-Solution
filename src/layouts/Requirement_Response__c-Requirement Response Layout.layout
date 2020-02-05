@@ -69,6 +69,10 @@
                 <behavior>Edit</behavior>
                 <field>Viewed__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Waive_Requirement__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

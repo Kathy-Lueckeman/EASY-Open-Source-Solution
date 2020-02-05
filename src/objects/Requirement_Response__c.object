@@ -316,6 +316,16 @@ null)</formula>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <fields>
+        <fullName>Waive_Requirement__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, this Requirement Response will be marked as complete, regardless of whether or not anything is filled-in.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, this Requirement Response will be marked as complete, regardless of whether or not anything is filled-in.</inlineHelpText>
+        <label>Waive Requirement</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Requirement Response</label>
     <listViews>
         <fullName>All</fullName>
