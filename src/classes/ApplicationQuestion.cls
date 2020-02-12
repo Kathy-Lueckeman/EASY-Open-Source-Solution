@@ -347,7 +347,7 @@ public class ApplicationQuestion {
             
             if (obj != null && String.isNotBlank(question.Related_Object_Field__c))
                 obj.put(question.Related_Object_Field__c, null);
-            
+            System.debug('**** Contact fields: '+ question.Contact_Field__c);
             if (String.isNotBlank(question.Contact_Field__c) && !fieldType.equals('Address')) {
                 if (obj != null && obj instanceof Contact) obj.put(question.Contact_Field__c, null);
                 if (contact != null) contact.put(question.Contact_Field__c, null);
@@ -401,6 +401,7 @@ public class ApplicationQuestion {
             this.contact = (Contact)obj;
             if (String.isNotBlank(question.Contact_Field__c))
                 fieldName = question.Contact_Field__c;
+                System.debug('**** field type: '+fieldName+ ' Field Name'+ fieldName );
             if (String.isNotBlank(question.Contact_Field__c) && String.isNotBlank(question.Hardcoded_Value__c)) {
                 this.response.ValueText__c = question.Hardcoded_Value__c;
                 this.contact.put(question.Contact_Field__c, question.Hardcoded_Value__c);
@@ -499,7 +500,7 @@ public class ApplicationQuestion {
     }
     
     public void populateContactFieldOnResponse() {
-        
+        System.debug('**** entering populateContactFieldOnResponse');
         try {
         	if (String.isNotBlank(fieldName) && response != null) {
             	
@@ -513,6 +514,7 @@ public class ApplicationQuestion {
                     	response.State__c = (String)contact.get(prefix + (stateAndCountryPicklistEnabled ? 'StateCode' : 'State'));
                     	response.Country__c = (String)contact.get(prefix + (stateAndCountryPicklistEnabled ? 'CountryCode' : 'Country'));
                     } else {
+                        System.debug('**** Field from contact: '+ fieldName);
                     	writeResponse(String.valueOf(contact.get(fieldName)));
                     }
                 } else if (application != null && application.get(fieldName) != null) {
@@ -704,6 +706,7 @@ public class ApplicationQuestion {
     
     // Writes a string to the response based on the questions type
     public void writeResponse(String resp) {
+        System.debug('****Entering writeResponse, field type:'+fieldType + 'Response '+ resp.replace('-', '/'));
         try {
             
             if (fieldType.equals('Checkbox') && (resp.toLowerCase().equals('true') || resp.toLowerCase().equals('false')))
@@ -711,7 +714,7 @@ public class ApplicationQuestion {
             else if (fieldType.equals('Currency'))
                 response.ValueCurrency__c = Double.valueOf(resp);
             else if (fieldType.equals('Date'))
-                response.ValueDate__c = date.parse(resp);
+                response.ValueDate__c = date.valueOf(resp);
             else if (fieldType.equals('DateTime'))
                 response.ValueDateTime__c = dateTime.parse(resp);
             else if (fieldType.equals('Email'))
