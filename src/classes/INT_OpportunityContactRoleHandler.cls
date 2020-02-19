@@ -1,110 +1,81 @@
 /*****************************************
 * File: INT_OpportunityContactRoleHandler
-* Author: Sierra-Cedar
+* Author: Kyle Schmid, Huron Consulting Group
+* Description: Creates/updates primary Opportunity Contact Roles based on the Contact__c lookup field.
+* Re-worked from Sierra-Cedar's implementation included in the Interactions for Student Recruitment package.
 ******************************************/
 public class INT_OpportunityContactRoleHandler {
-    public void run(List<SObject> newlist, List<SObject> oldlist) {
+    
+    @testVisible private static final String ROLE_NAME = 'Opportunity Contact'; // Value to set the Role picklist on Opportunity Contact Role
+    
+    // Set of Opportunity Record Type IDs that are excluded from processing based on the OpportunityContactRoleExclusion__c custom setting
+    private static Set<Id> excludeTypeIds {
+        get {
+            if (excludeTypeIds == null) {
+                excludeTypeIds = new Set<Id>(); // Instantiate new set
+                
+                // Get record type name map for Opportunity and retain all exclusion names from custom setting
+                Map<String, Schema.RecordTypeInfo> opportunityRecordTypes = Opportunity.SObjectType.getDescribe().getRecordTypeInfosByName();
+                opportunityRecordTypes.keySet().retainAll(OpportunityContactRoleExclusion__c.getAll().keySet());
+                
+                // Loop over record types that still exist and add record type id to exclusion set
+                for (Schema.RecordTypeInfo recordType:opportunityRecordTypes.values())
+                    excludeTypeIds.add(recordType.getRecordTypeId());
+            }
+            
+            return excludeTypeIds;
+        } private set;
+    }
+    
+    public static void run(List<Opportunity> newList) {
         
-        List<OpportunityContactRole> rolesToInsert = new List<OpportunityContactRole>();
+        // Get list of non-excluded opportunities
         List<Opportunity> nonExcludedOpps = new List<Opportunity>();
-        List<Opportunity> allOpportunities = new List<Opportunity>();
-        Map<String, String> contactAccountIdMap = new Map<String, String>();
-        List<String> contactIds = new List<String>();
-
-        // Select all of the custom setting exclusions and gather the names in a list
-        List<String> exclusionNames = new List<String>();
-
-        for (OpportunityContactRoleExclusion__c anExclusion : OpportunityContactRoleExclusion__c.getall().values()) {
-            exclusionNames.add(anExclusion.Name);
-        }
-
-        // Find the record types which match the names
-        Map<String, RecordType> excludeTypeMap = new Map<String, RecordType>();
-
-        // Add exclude record types to map
-        for (RecordType aType : [
-            SELECT Id, Name, SobjectType
-            FROM RecordType
-            WHERE SobjectType = 'Opportunity'
-            AND Name IN :exclusionNames
-        ]) {
-            excludeTypeMap.put(aType.Id, aType);
-        }
-
-        for (SObject anSObject : newlist) {
-            Opportunity anOpportunity = (Opportunity) anSObject;
-            allOpportunities.add(anOpportunity);
-
-            if (anOpportunity.Contact__c != null) {
-                contactIds.add(anOpportunity.Contact__c);
+        for (Opportunity opp:newList)
+            if (!excludeTypeIds.contains(opp.RecordTypeId))
+            	nonExcludedOpps.add(opp);
+        
+        // Exit if nothing to do here
+        if (nonExcludedOpps.isEmpty()) return;
+        
+        // Re-query opportunities to get existing Opportunity Contact Roles from child relationship
+        Map<Id, Opportunity> oppsWithRoles = new Map<Id, Opportunity>([SELECT Id, (SELECT Id, ContactId, IsPrimary, Role FROM OpportunityContactRoles) FROM Opportunity WHERE Id IN :nonExcludedOpps]);
+        
+        List<OpportunityContactRole> rolesToUpsert = new List<OpportunityContactRole>(); // List of Opportunity Contact Roles to upsert
+        List<OpportunityContactRole> rolesToDelete = new List<OpportunityContactRole>(); // List of Opportunity Contact Roles to delete
+        
+        // Loop over opportunities and add roles to upsert/delete lists
+        for (Opportunity opp:nonExcludedOpps) {
+            
+            // Get list of existing roles for opportunity
+            List<OpportunityContactRole> existingRoles = oppsWithRoles.get(opp.Id).OpportunityContactRoles;
+            
+            // Delete all existing roles if Contact on Opportunity is null
+            if (opp.Contact__c == null) {
+                rolesToDelete.addAll(existingRoles);
+                continue;
+            }
+            
+            // Create new Opportunity Contact Role
+            OpportunityContactRole role = new OpportunityContactRole(OpportunityId = opp.Id, ContactId = opp.Contact__c);
+            
+            // Loop over existing roles and add to delete list if different Contact or identify existing role for contact
+            for (OpportunityContactRole ocr:existingRoles) {
+                if (ocr.ContactId == opp.Contact__c && role.Id == null)
+                    role = ocr;
+                else
+                    rolesToDelete.add(ocr);
+            }
+            
+            // Add to upsert list if new role or need to set IsPrimary to true or Role not ROLE_NAME
+            if (role.Id == null || !role.IsPrimary || role.Role != ROLE_NAME) {
+                role.IsPrimary = true;
+                role.Role = ROLE_NAME;
+                rolesToUpsert.add(role);
             }
         }
-
-        if (contactIds.size() > 0) {
-            for (Contact aContact : [SELECT AccountId FROM Contact WHERE Id IN :contactIds]) {
-                contactAccountIdMap.put(aContact.Id, aContact.AccountId);
-            }
-        }
-
-        for (SObject anSObject : newlist) {
-            Opportunity anOpportunity = (Opportunity) anSObject;
-
-            if (anOpportunity.Contact__c != null && excludeTypeMap.get(anOpportunity.recordTypeId) == null) {
-                nonExcludedOpps.add(anOpportunity);
-                OpportunityContactRole newRole = new OpportunityContactRole(
-                    ContactId = anOpportunity.Contact__c,
-                    OpportunityId = anOpportunity.Id,
-                    IsPrimary = true,
-                    Role = 'Opportunity Contact'
-                );
-                rolesToInsert.add(newRole);
-            }
-        }
-
-        // Identify roles to delete
-        List<OpportunityContactRole> rolesToDelete = [
-            SELECT Id, ContactId, IsPrimary, OpportunityId, Role
-            FROM OpportunityContactRole
-            WHERE OpportunityId IN :nonExcludedOpps
-        ];
-
-        // Insert Opportunity Contact Roles
-        insert rolesToInsert;
-
-        // Retrieve Inserted Role Ids to upate primary, doesn't work in same context as Lead Convert
-        // Keep an eye on Idea Exchange below, @future context is handling this for now
-        // https://success.salesforce.com/ideaview?id=08730000000HKbnAAG
-        List<String> roleIds = new List<String>();
-
-        for (OpportunityContactRole aRole : rolesToInsert) {
-            roleIds.add(aRole.Id);
-        }
-
-        if (roleIds.size() > 0) {
-            if (System.isBatch()) {
-                updateRoles(roleIds);
-            } else {
-                updateRolesFuture(roleIds);
-            }
-        }
-
-        // Delete the roles
-        delete rolesToDelete;
-    }
-
-    // Update opportunity contact roles in another context, Salesforce currently not setting primary
-    @future
-    public static void updateRolesFuture(List<String> roleIds) {
-        updateRoles(roleIds);
-    }
-
-    public static void updateRoles(List<String> roleIds) {
-        List<OpportunityContactRole> roles = [SELECT Id, IsPrimary FROM OpportunityContactRole WHERE Id IN :roleIds];
-
-        for (OpportunityContactRole aRole : roles) {
-            aRole.IsPrimary = true;
-        }
-
-        update roles;
+        
+		delete rolesToDelete; // Delete Opportunity Contact Roles
+        upsert rolesToUpsert; // Upsert Opportunity Contact Roles
     }
 }
