@@ -6,9 +6,15 @@
         </apex:outputPanel>
         <c:ApplicationBody title="Document Upload - {!objName}" appControl="{!appControl}">
             <div class="row" >
+            
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
                     <div data-interval="false" data-wrap="false" >
+                            <apex:outputPanel rendered="{!objName=='Residency'}">   
+                                    Please upload full scans of your proofs of residency as entered on the previous screen.    
+                                <div> <br></br> </div>
+                            </apex:outputPanel>    
                         <div class="row" style="display:flex;" >
+                                
                             <div class="col-lg-8 col-xs-10" >
                                 <div role="listbox">
                                     <div class="item active" >

@@ -109,7 +109,7 @@ public class ApplicationRequirement {
                 		appFields.add(q.Application_Field__c.toLowerCase());
             
             String query = 'SELECT ' + String.join(new List<String>(appFields), ',') + ' FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId';
-            
+            System.debug('**** Query of application fields: '+ query);
             app = ((List<Application__c>)Database.query(query)).get(0);
             appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
         }
@@ -123,12 +123,17 @@ public class ApplicationRequirement {
 	        else
 	            contactFields.addAll(new Set<String>{'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'});
 	        for (Requirement_Item__c ri:items)
-	            for (Question__c q:ri.Questions__r)
-	            	if (String.isNotBlank(q.Contact_Field__c))
-	            		contactFields.add(q.Contact_Field__c.toLowerCase());
+                for (Question__c q:ri.Questions__r)
+                {
+                    System.debug('**** Field: '+q.Contact_Field__c +' '+ ri.name);
+                    if (String.isNotBlank(q.Contact_Field__c))
+                    contactFields.add(q.Contact_Field__c.toLowerCase());
+                }
+	            	
 	            
 	        // Query for contact
-	        String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
+            String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
+            System.debug('**** Query of contact fields: '+ query);
 	        if (contactId != null)
 	        	con = ((List<Contact>)Database.query(query)).get(0);
         }

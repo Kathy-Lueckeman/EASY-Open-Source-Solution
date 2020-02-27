@@ -102,8 +102,10 @@ public class ApplicationCreate {
         		else
             		contactFields.addAll(new Set<String>{'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'});
                 String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
+                System.debug('****1) Query of contact fields: '+ query);
                 con = ((List<Contact>)Database.query(query)).get(0);
             }
+            
         }
         
         // Get map of requirement responses
