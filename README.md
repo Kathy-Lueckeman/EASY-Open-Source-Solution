@@ -18,7 +18,7 @@ You can install EASY as-is into any Developer Edition, Sandbox, Enterprise, or h
 
 Alternatively, you can fork this repository and deploy the unmanaged version of the code into a Salesforce org of your choice.
 
-* Fork the repository by clicking on the "Fork" button in the upper-righthand corner. This creates your own copy of EASY for your Github user.
+* Fork the repository by clicking on the "Fork" button in the upper-righthand corner. This creates your own copy of EASY for your GitHub user.
 * Clone your fork to your local machine via the command line
 ```sh
 $ git clone https://github.com/SalesforceFoundation/EASY-Open-Source-Solution.git
@@ -40,7 +40,7 @@ $ ant deploy
 ```
 
 ## Maintenance and Collaboration
-Thank you for your interest in EASY. This project's code is provided as-is, and is not actively maintained. The developers invite you to peruse their code and even use it in your next project, provided you follow the included license. There is no guarantee of support for the code (including submitted Issues). There is no guarantee that pull requests will be reviewed or merged. It's open-source, so forking is permitted; just be sure to give credit where it's due.
+Thank you for your interest in EASY. This project's code is provided as-is and is not actively maintained. The developers invite you to peruse their code and even use it in your next project, provided you follow the included license. There is no guarantee of support for the code (including submitted Issues). There is no guarantee that pull requests will be reviewed or merged. It's open-source, so forking is permitted; just be sure to give credit where it's due.
 
 If you are interested in learning about the project roles, roadmap, how to become a collaborator, and/or where to find the community surrounding this project, then please review our <a href="https://github.com/SalesforceFoundation/EASY-Open-Source-Solution/blob/master/Maintenance-Policy.md" target="_blank">Maintenance Policy</a>.
 
@@ -56,7 +56,7 @@ EASY comes with a wealth of documentation and other resources to help admins, de
 
 EASY includes a modified version of University of Miami’s <a href="https://github.com/SalesforceFoundation/Interactions-for-Student-Recruitment" target="_blank">Interactions for Student Recruitment package</a>. Specifically, any references to HEDA objects in the codebase have been abstracted to first test for the existence of those objects before executing the code. Also, the Plan__c object has been renamed to Program__c in EASY. If you’re installing EASY after first installing/implementing Interactions for Student Recruitment, this may mean you need to migrate all Plan__c records over to the Program__c object.
 
-Much more information, including the Documentation Guides that explain the use and benefit of Interactions for Student Recruitment, can be found on the Salesforce Foundation GIT Respository <a href="https://github.com/SalesforceFoundation/Interactions-for-Student-Recruitment" target="_blank">here</a>.
+Much more information, including the Documentation Guides that explain the use and benefit of Interactions for Student Recruitment, can be found on the Salesforce Foundation GIT Repository <a href="https://github.com/SalesforceFoundation/Interactions-for-Student-Recruitment" target="_blank">here</a>.
 
 ## License
 
@@ -70,13 +70,13 @@ Some jurisdictions may not allow the exclusion of certain warranties or the limi
 
 ## Acknowledgements
 
-Thanks to the following individuals in the Github community who helped shape the README.md:
+Thanks to the following individuals in the GitHub community who helped shape the README.md:
 
 * <a href="https://gist.github.com/jxson" target="_blank">@jxson</a> for the <a href="https://gist.github.com/jxson/1784669" target="_blank"> readme </a> example
 * <a href="https://github.com/potch" target="_blank">@potch</a> for the <a href="https://github.com/potch/unmaintained.tech"> No Maintenance Intended </a> example
-* <a href="https://guides.github.com/" target="_blank">Github Guides</a>
-    * <a href="https://guides.github.com/introduction/getting-your-project-on-github/" target="_blank">Getting your project on Github</a>
-    * <a href="https://guides.github.com/features/wikis/#creating-a-readme" target="_blank">Documenting your projects on Github</a>
+* <a href="https://guides.github.com/" target="_blank">GitHub Guides</a>
+    * <a href="https://guides.github.com/introduction/getting-your-project-on-github/" target="_blank">Getting your project on GitHub</a>
+    * <a href="https://guides.github.com/features/wikis/#creating-a-readme" target="_blank">Documenting your projects on GitHub</a>
     * <a href="https://guides.github.com/features/mastering-markdown/" target="_blank">Mastering Markdown</a>
     * <a href="https://guides.github.com/introduction/flow/" target="_blank">Understanding the GitHub Flow</a>
-* <a href="https://help.github.com/articles/github-glossary/" target="_blank">Github Glossary</a>
+* <a href="https://help.github.com/articles/github-glossary/" target="_blank">GitHub Glossary</a>
