@@ -1,10 +1,15 @@
 {
   "orgName": "EASY Open Source Solution - Release Test Org",
   "edition": "Enterprise",
-  "orgPreferences" : {
-    "enabled": [
-      "S1DesktopEnabled",
-      "ChatterEnabled"
-    ]
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "chatterSettings": {
+      "enableChatter": true
+    },
+    "languageSettings": {
+      "enableTranslationWorkbench": true
+    }
   }
 }
