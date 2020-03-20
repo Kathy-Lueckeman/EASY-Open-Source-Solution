@@ -39,7 +39,7 @@ public class ApplicationChecklist {
             contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
         
-        app = [SELECT Id, Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c, Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Residency__c, Degree_Type__c, Application_Control__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Application__c WHERE Id = :applicationId];
+        app = [SELECT Id, Intended_Program__r.Name,Actual_Program__r.Name,Actual_Program__r.Program_Name_on_Application__c, Intended_Program__r.Program_Name_on_Application__c,Actual_Term_of_Entry__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c, Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Residency__c, Degree_Type__c, Application_Control__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Application__c WHERE Id = :applicationId];
         appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
         
         allowCancel = String.isNotBlank(appControl.Allow_Cancel_From__c) && new Set<String>(appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c);
