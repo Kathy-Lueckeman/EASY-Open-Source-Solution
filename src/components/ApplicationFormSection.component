@@ -138,13 +138,13 @@
                                 <div class="form-group" >
                                     <label for="state" >{!question.label} State/Province{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
                                     <div class="statePicklist {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" >
-                                        <apex:inputField id="state" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
+                                        <apex:inputField id="state" value="{!question.response.State__c}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;" />
                                     </div>
                                 </div>
                             </apex:outputPanel>
                                 <div class="form-group" >
                                 <label for="country" >{!question.label} Country{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                <apex:inputField id="country" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingCountryCode','MailingCountry')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
+                                <apex:inputField id="country" value="{!question.response.Country__c}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
                             </div>
 
                             <apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}" >

@@ -112,11 +112,13 @@ public class ApplicationQuestionSection {
         Set<String> allApplicationFields = new Set<String>();
         Map<String, Object> contactValues = new Map<String, Object>();
         Map<String, Object> applicationValues = new Map<String, Object>();
+        System.debug('***In pushValuesToObjects- ');
         for (ApplicationQuestionGroup g:groups) {
             if (g.questionGroup && g.questions != null) {
                 for (ApplicationQuestion q:g.questions) {
-                    if (q.question != null && (String.isNotBlank(q.question.Contact_Field__c) || String.isNotBlank(q.question.Application_Field__c))) {
-                        
+                    if (q.question != null && (String.isNotBlank(q.question.Contact_Field__c) || String.isNotBlank(q.question.Application_Field__c)) && q.question.Contact_Field__c<>'MailingAddress') {
+                        System.debug('***Contact_Field__c- '+q.question.Contact_Field__c);
+                        System.debug('***Application_Field__c- '+q.question.Application_Field__c);
                         if (con != null && String.isNotBlank(q.question.Contact_Field__c))
                             allContactFields.add(q.question.Contact_Field__c.toLowerCase());
                         if (application != null && String.isNotBlank(q.question.Application_Field__c))
@@ -141,7 +143,9 @@ public class ApplicationQuestionSection {
         
         for (String f:allContactFields) {
             try {
+                System.debug('***contactValues- ' + f);
                 con.put(f, contactValues.get(f));
+                System.debug('***contactValues.get(f)- ' + contactValues.get(f));
             } catch (Exception e) {}
         }
         

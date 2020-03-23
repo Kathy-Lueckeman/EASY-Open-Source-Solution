@@ -104,6 +104,7 @@ public class ApplicationCreate {
                 String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
                 System.debug('****1) Query of contact fields: '+ query);
                 con = ((List<Contact>)Database.query(query)).get(0);
+                System.debug('****Contact: '+ con);
             }
             
         }
@@ -259,7 +260,11 @@ public class ApplicationCreate {
                         question.processValue();
                         
                         if (question.question != null && String.isNotBlank(question.question.Required__c) && question.ShowQuestion && String.isBlank(String.valueOf(question.resp)))
+                        {
+                            System.debug('***question- '+ question);
                             return question.label + ' is required to start your application.';
+                        }
+                           
                     }
                 }
             } else if (aqg.relatedObject) {

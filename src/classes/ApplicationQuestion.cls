@@ -505,14 +505,18 @@ public class ApplicationQuestion {
         	if (String.isNotBlank(fieldName) && response != null) {
             	
                 if (contact != null && contact.get(fieldName) != null) {
-                    
+                    System.debug('***fieldName-'+ fieldName);
                     if (fieldName == 'MailingAddress' || fieldName == 'OtherAddress') {
-                        String prefix = question.Contact_Field__c.equals('MailingAddress') ? 'Mailing' : 'Other';
+                        String prefix = fieldName.equals('MailingAddress') ? 'Mailing' : 'Other';
                     	response.Street__c = (String)contact.get(prefix + 'Street');
                     	response.City__c = (String)contact.get(prefix + 'City');
-                    	response.PostalCode__c = (String)contact.get(prefix + 'PostalCode');
-                    	response.State__c = (String)contact.get(prefix + (stateAndCountryPicklistEnabled ? 'StateCode' : 'State'));
-                    	response.Country__c = (String)contact.get(prefix + (stateAndCountryPicklistEnabled ? 'CountryCode' : 'Country'));
+                        response.PostalCode__c = (String)contact.get(prefix + 'PostalCode');
+                        System.debug('*** stateAndCountryPicklistEnabled- ' +(stateAndCountryPicklistEnabled ? 'StateCode' : 'State'));
+                        System.debug('*** stateAndCountryPicklistEnabled- ' +(stateAndCountryPicklistEnabled ? 'CountryCode' : 'Country'));
+                        response.State__c = (String)contact.get(prefix + (stateAndCountryPicklistEnabled ? 'StateCode' : 'State'));
+                        System.debug('***response.State__c- '+response.State__c);
+                        response.Country__c = (String)contact.get(prefix + (stateAndCountryPicklistEnabled ? 'CountryCode' : 'Country'));
+                        System.debug('***response.Country__c- '+response.Country__c);
                     } else {
                         System.debug('**** Field from contact: '+ fieldName);
                     	writeResponse(String.valueOf(contact.get(fieldName)));
@@ -631,8 +635,8 @@ public class ApplicationQuestion {
         if (response != null) {
             
             if (fieldType.equals('Address')) {
-                response.State__c = (String)con.get(stateAndCountryPicklistEnabled ? 'MailingStateCode' : 'MailingState');
-                response.Country__c = (String)con.get(stateAndCountryPicklistEnabled ? 'MailingCountryCode' : 'MailingCountry');
+                //response.State__c = (String)con.get(stateAndCountryPicklistEnabled ? 'MailingStateCode' : 'MailingState');
+                //response.Country__c = (String)con.get(stateAndCountryPicklistEnabled ? 'MailingCountryCode' : 'MailingCountry');
                 
                 if (contact != null && question != null && (question.Contact_Field__c == 'MailingAddress' || question.Contact_Field__c == 'OtherAddress')) {
                     String prefix = question.Contact_Field__c.equals('MailingAddress') ? 'Mailing' : 'Other';
@@ -655,7 +659,7 @@ public class ApplicationQuestion {
                 response.PopulatedOn__c = System.NOW();
             
             response.IsPopulated__c = resp != null;
-            if (obj != null) {
+            if (obj != null && fieldName<>'MailingAddress') {
                 try {
                     obj.put(fieldName, resp);
                 } catch (Exception e) {}
