@@ -185,6 +185,21 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Applicant_Age__c</fullName>
+        <description>Age from Contact record</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.Age__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Age from Contact record</inlineHelpText>
+        <label>Applicant Age</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Applicant_Type__c</fullName>
         <description>Type of applicant this is.</description>
         <externalId>false</externalId>
@@ -238,14 +253,35 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Domestic</fullName>
+                    <fullName>U.S. Citizen</fullName>
                     <default>false</default>
-                    <label>Domestic</label>
+                    <label>U.S. Citizen</label>
+                </value>
+                <value>
+                    <fullName>U.S. Dual Citizen</fullName>
+                    <default>false</default>
+                    <label>U.S. Dual Citizen</label>
+                </value>
+                <value>
+                    <fullName>U.S. Permanent Resident</fullName>
+                    <default>false</default>
+                    <label>U.S. Permanent Resident</label>
+                </value>
+                <value>
+                    <fullName>Asylee/Refugee</fullName>
+                    <default>false</default>
+                    <label>Asylee/Refugee</label>
                 </value>
                 <value>
                     <fullName>International</fullName>
                     <default>false</default>
                     <label>International</label>
+                </value>
+                <value>
+                    <fullName>Domestic</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Domestic</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -362,6 +398,54 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Future_ACT_SAT_Times__c</fullName>
+        <description>Future ACT/SAT Times</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Future ACT/SAT Times</inlineHelpText>
+        <label>Future ACT/SAT Times</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Future_Test_Date__c</fullName>
+        <description>Intended Date of Test</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Intended Date of Test</inlineHelpText>
+        <label>Future Test Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Generic_Filter_1__c</fullName>
         <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
         <externalId>false</externalId>
@@ -381,7 +465,7 @@
         <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
         <externalId>false</externalId>
         <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
-        <label>Generic Filter 2</label>
+        <label>Applicant Under 25</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackTrending>false</trackTrending>
@@ -497,6 +581,127 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Self_Reported_Test_Acknowledgement_Date__c</fullName>
+        <description>By providing the information below, I understand that my self-reported test scores will be used for admission and merit scholarship processes.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>By providing the information below, I understand that my self-reported test scores will be used for admission and merit scholarship processes.</inlineHelpText>
+        <label>Self Reported Test Acknowledgement Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Self_Reported_Test_Acknowledgement__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>By providing the information below, I understand that my self-reported test scores will be used for admission and merit scholarship processes.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>By providing the information below, I understand that my self-reported test scores will be used for admission and merit scholarship processes.</inlineHelpText>
+        <label>Self Reported Test Acknowledgement</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Self_Reported_Test_Score__c</fullName>
+        <description>Which text scores would you like to self-report?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Which text scores would you like to self-report?</inlineHelpText>
+        <label>Self Reported Test Score?</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ACT</fullName>
+                    <default>false</default>
+                    <label>ACT</label>
+                </value>
+                <value>
+                    <fullName>SAT</fullName>
+                    <default>false</default>
+                    <label>SAT</label>
+                </value>
+                <value>
+                    <fullName>Both</fullName>
+                    <default>false</default>
+                    <label>Both</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Self_Reported_Test_Scores_Times_Taken__c</fullName>
+        <description>How many times have you taken the ACT/SAT?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>How many times have you taken the ACT/SAT?</inlineHelpText>
+        <label>Self Reported Test Scores Times Taken</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Student_Type__c</fullName>
         <description>Type of the student applying.</description>
         <externalId>false</externalId>
@@ -508,6 +713,33 @@
         <valueSet>
             <restricted>true</restricted>
             <valueSetName>Student_Types</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Take_ACT_SAT__c</fullName>
+        <description>Applicant is self reporting test scores</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Applicant is self reporting test scores</inlineHelpText>
+        <label>Take ACT/SAT</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>I have taken the ACT/SAT and will share my scores below</fullName>
+                    <default>false</default>
+                    <label>I have taken the ACT/SAT and will share my scores below</label>
+                </value>
+                <value>
+                    <fullName>I haven&apos;t taken the ACT or SAT yet, or have not received my scores</fullName>
+                    <default>false</default>
+                    <label>I haven&apos;t taken the ACT or SAT yet, or have not received my scores</label>
+                </value>
+            </valueSetDefinition>
         </valueSet>
     </fields>
     <fields>

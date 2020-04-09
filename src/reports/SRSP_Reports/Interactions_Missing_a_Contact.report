@@ -15,10 +15,12 @@
     <filter>
         <criteriaItems>
             <column>Interaction__c.Contact__c</column>
+            <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value></value>
         </criteriaItems>
+        <language>en_US</language>
     </filter>
     <format>Matrix</format>
     <groupingsAcross>
@@ -39,6 +41,8 @@
     <reportType>CustomEntity$Interaction__c</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Interaction__c.Birthdate__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

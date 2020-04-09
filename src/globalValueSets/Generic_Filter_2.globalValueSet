@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Generic Value 1</fullName>
+        <fullName>Applicant under 25</fullName>
         <default>false</default>
-        <label>Generic Value 1</label>
+        <label>Applicant under 25</label>
     </customValue>
     <customValue>
-        <fullName>Generic Value 2</fullName>
+        <fullName>Applicant 25 or over</fullName>
         <default>false</default>
-        <label>Generic Value 2</label>
+        <label>Applicant 25 or over</label>
     </customValue>
-    <masterLabel>Generic Filter 2</masterLabel>
+    <description>Calculated using birthdate of applicant</description>
+    <masterLabel>Applicant Under 25</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

@@ -507,6 +507,28 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>RI_UID__c</fullName>
+        <description>EASY Setup Field</description>
+        <externalId>false</externalId>
+        <label>RI-UID</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>R_UID__c</fullName>
+        <description>EASY Setup Field</description>
+        <externalId>false</externalId>
+        <label>R-UID</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Related_List_Object_Master_Field__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>API name of the field that the related object uses to look-up to another object (e.g. Contact__c)</inlineHelpText>
@@ -567,6 +589,21 @@
                     <fullName>Employment_History__c</fullName>
                     <default>false</default>
                     <label>Employment_History__c</label>
+                </value>
+                <value>
+                    <fullName>hed__Contact_Language__c</fullName>
+                    <default>false</default>
+                    <label>hed__Contact_Language__c</label>
+                </value>
+                <value>
+                    <fullName>hed__Attribute__c</fullName>
+                    <default>false</default>
+                    <label>hed__Attribute__c</label>
+                </value>
+                <value>
+                    <fullName>hed__Test__c</fullName>
+                    <default>false</default>
+                    <label>hed__Test__c</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -713,6 +750,30 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_UGFR</fullName>
+        <columns>Requirement__c</columns>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>UGFR</value>
+        </filters>
+        <label>All - UGFR</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Requirement Item Name</label>
         <type>Text</type>
@@ -726,7 +787,11 @@
         <picklistValues>
             <picklist>Applicant_Type__c</picklist>
             <values>
-                <fullName>Freshman</fullName>
+                <fullName>DFC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>First-Year</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -734,7 +799,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer DFC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -792,11 +865,23 @@
         <picklistValues>
             <picklist>Citizenship__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
+                <fullName>Asylee%2FRefugee</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Dual Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Permanent Resident</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -819,7 +904,31 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Education Specialist</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Juris Doctor %28JD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Licensure</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Master%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post-Masters Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre-Professional Program</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -926,15 +1035,19 @@
                 <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Test%7CTest%7CTest</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Generic_Filter_2__c</picklist>
             <values>
-                <fullName>Generic Value 1</fullName>
+                <fullName>Applicant 25 or over</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Generic Value 2</fullName>
+                <fullName>Applicant under 25</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -979,6 +1092,10 @@
             <picklist>Related_List_Object__c</picklist>
             <values>
                 <fullName>Education_History%5F%5Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>hed%5F%5FContact_Language%5F%5Fc</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1102,6 +1219,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>College of Education%2C Leadership and Counseling</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>College of Health Professions</fullName>
                 <default>false</default>
             </values>
@@ -1110,11 +1231,39 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>School of Business</fullName>
+                <fullName>Graduate School of Professional Psychology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opus College of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Law</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Social Work</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Murray Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Saint Paul Seminary School of Divinity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Undergraduate</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1138,7 +1287,11 @@
         <picklistValues>
             <picklist>Applicant_Type__c</picklist>
             <values>
-                <fullName>Freshman</fullName>
+                <fullName>DFC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>First-Year</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1146,7 +1299,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer DFC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1204,11 +1365,23 @@
         <picklistValues>
             <picklist>Citizenship__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
+                <fullName>Asylee%2FRefugee</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Dual Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Permanent Resident</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1231,7 +1404,31 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Education Specialist</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Juris Doctor %28JD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Licensure</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Master%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post-Masters Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre-Professional Program</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1338,15 +1535,19 @@
                 <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Test%7CTest%7CTest</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Generic_Filter_2__c</picklist>
             <values>
-                <fullName>Generic Value 1</fullName>
+                <fullName>Applicant 25 or over</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Generic Value 2</fullName>
+                <fullName>Applicant under 25</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1391,6 +1592,10 @@
             <picklist>Related_List_Object__c</picklist>
             <values>
                 <fullName>Education_History%5F%5Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>hed%5F%5FContact_Language%5F%5Fc</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1514,6 +1719,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>College of Education%2C Leadership and Counseling</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>College of Health Professions</fullName>
                 <default>false</default>
             </values>
@@ -1522,11 +1731,39 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>School of Business</fullName>
+                <fullName>Graduate School of Professional Psychology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opus College of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Law</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Social Work</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Murray Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Saint Paul Seminary School of Divinity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Undergraduate</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1549,7 +1786,11 @@
         <picklistValues>
             <picklist>Applicant_Type__c</picklist>
             <values>
-                <fullName>Freshman</fullName>
+                <fullName>DFC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>First-Year</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1557,7 +1798,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer DFC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1615,11 +1864,23 @@
         <picklistValues>
             <picklist>Citizenship__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
+                <fullName>Asylee%2FRefugee</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Dual Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Permanent Resident</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1642,7 +1903,31 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Education Specialist</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Juris Doctor %28JD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Licensure</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Master%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post-Masters Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre-Professional Program</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1749,15 +2034,19 @@
                 <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Test%7CTest%7CTest</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Generic_Filter_2__c</picklist>
             <values>
-                <fullName>Generic Value 1</fullName>
+                <fullName>Applicant 25 or over</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Generic Value 2</fullName>
+                <fullName>Applicant under 25</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1808,6 +2097,18 @@
                 <fullName>Employment_History%5F%5Fc</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>hed%5F%5FAttribute%5F%5Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>hed%5F%5FContact_Language%5F%5Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>hed%5F%5FTest%5F%5Fc</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Required_Supporting_Documentation__c</picklist>
@@ -1929,6 +2230,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>College of Education%2C Leadership and Counseling</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>College of Health Professions</fullName>
                 <default>false</default>
             </values>
@@ -1937,11 +2242,39 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>School of Business</fullName>
+                <fullName>Graduate School of Professional Psychology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opus College of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Law</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Social Work</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Murray Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Saint Paul Seminary School of Divinity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Undergraduate</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

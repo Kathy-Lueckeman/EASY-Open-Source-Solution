@@ -217,6 +217,30 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Application_Fee_Amount__c</fullName>
+        <description>Graduate Application Fee Amount</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Graduate Application Fee Amount</inlineHelpText>
+        <label>Application Fee Amount</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Banner_Program_Code__c</fullName>
+        <description>Banner Program Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Banner Program Code</inlineHelpText>
+        <label>Banner Program Code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>CIP_Code__c</fullName>
         <externalId>false</externalId>
         <label>CIP Code</label>
@@ -267,6 +291,18 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Concentration_Code__c</fullName>
+        <description>Banner Concentration Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Banner Concentration Code</inlineHelpText>
+        <label>Concentration Code</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Degree_Type__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Degree type(s) this program applies to (applies to all if blank)</inlineHelpText>
@@ -293,29 +329,129 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
+                    <fullName>Bachelor&apos;s Degree Program</fullName>
+                    <default>false</default>
+                    <label>Bachelor&apos;s Degree Program</label>
+                </value>
+                <value>
+                    <fullName>Certificate</fullName>
+                    <default>false</default>
+                    <label>Certificate</label>
+                </value>
+                <value>
+                    <fullName>Doctorate</fullName>
+                    <default>false</default>
+                    <label>Doctorate</label>
+                </value>
+                <value>
+                    <fullName>Education Specialist</fullName>
+                    <default>false</default>
+                    <label>Education Specialist</label>
+                </value>
+                <value>
+                    <fullName>Licensure</fullName>
+                    <default>false</default>
+                    <label>Licensure</label>
+                </value>
+                <value>
+                    <fullName>Master in the Study of Law (MSL)</fullName>
+                    <default>false</default>
+                    <label>Master in the Study of Law (MSL)</label>
+                </value>
+                <value>
+                    <fullName>Master of Arts</fullName>
+                    <default>false</default>
+                    <label>Master of Arts</label>
+                </value>
+                <value>
+                    <fullName>Master of Science</fullName>
+                    <default>false</default>
+                    <label>Master of Science</label>
+                </value>
+                <value>
+                    <fullName>Non-Degree</fullName>
+                    <default>false</default>
+                    <label>Non-Degree</label>
+                </value>
+                <value>
+                    <fullName>Post-Masters Certificate</fullName>
+                    <default>false</default>
+                    <label>Post-Masters Certificate</label>
+                </value>
+                <value>
+                    <fullName>Juris Doctor (JD)</fullName>
+                    <default>false</default>
+                    <label>Juris Doctor (JD)</label>
+                </value>
+                <value>
+                    <fullName>Master of Business Communication</fullName>
+                    <default>false</default>
+                    <label>Master of Business Communication</label>
+                </value>
+                <value>
+                    <fullName>Master of Divinity</fullName>
+                    <default>false</default>
+                    <label>Master of Divinity</label>
+                </value>
+                <value>
+                    <fullName>Master of Software Design and Development</fullName>
+                    <default>false</default>
+                    <label>Master of Software Design and Development</label>
+                </value>
+                <value>
+                    <fullName>Master of Software Systems</fullName>
+                    <default>false</default>
+                    <label>Master of Software Systems</label>
+                </value>
+                <value>
+                    <fullName>Master of Laws (LLM)</fullName>
+                    <default>false</default>
+                    <label>Master of Laws (LLM)</label>
+                </value>
+                <value>
+                    <fullName>Master of Business Administration</fullName>
+                    <default>false</default>
+                    <label>Master of Business Administration</label>
+                </value>
+                <value>
+                    <fullName>Pre-Professional Program</fullName>
+                    <default>false</default>
+                    <label>Pre-Professional Program</label>
+                </value>
+                <value>
+                    <fullName>Master of Social Work</fullName>
+                    <default>false</default>
+                    <label>Master of Social Work</label>
+                </value>
+                <value>
                     <fullName>BA</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>BA</label>
                 </value>
                 <value>
                     <fullName>BS</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>BS</label>
                 </value>
                 <value>
                     <fullName>MA</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>MA</label>
-                </value>
-                <value>
-                    <fullName>MS</fullName>
-                    <default>false</default>
-                    <label>MS</label>
                 </value>
                 <value>
                     <fullName>MBA</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>MBA</label>
+                </value>
+                <value>
+                    <fullName>MS</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>MS</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -471,12 +607,23 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Major_Code__c</fullName>
+        <description>Banner Major Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Banner Major Code</inlineHelpText>
+        <label>Major Code</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Number_of_Applications_Limit__c</fullName>
         <description>One Application (Any other applications, don&apos;t allow creation)
 One Application Per Term (Only one application for the selected term)
 One Application Per Program (Only one application for the selected program)
-One Application Per Term Per Program (Only one application for the selected term or selected program)
-One Application Per Term and Program (Only one application for the selected term and selected program combination)
+One Application Per Term Per Program (Only one application for the selected term and selected program)
 ~Blank~ No Restrictions</description>
         <externalId>false</externalId>
         <label>Number of Applications Limit</label>
@@ -516,6 +663,16 @@ One Application Per Term and Program (Only one application for the selected term
         </valueSet>
     </fields>
     <fields>
+        <fullName>Pre_Professional_Program__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used primarily for undergraduate records to indicate this degree is considered a Pre-Professional major.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used primarily for undergraduate records to indicate this degree is considered a Pre-Professional major.</inlineHelpText>
+        <label>Pre-Professional Program</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Program_Code__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>A checkbox to mark whether or not a Program is active.</description>
@@ -529,11 +686,40 @@ One Application Per Term and Program (Only one application for the selected term
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>Program_Major_Concentration__c</fullName>
+        <description>Banner_Program_Code__c &amp; &quot;|&quot;&amp; Major_Code__c &amp; &quot;|&quot; &amp;  Concentration_Code__c</description>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK(Banner_Program_Code__c),&quot;&quot;, Banner_Program_Code__c ) &amp;
+
+IF( ISBLANK(Major_Code__c),&quot;&quot;, &quot;|&quot; &amp; Major_Code__c ) &amp;
+
+IF( ISBLANK(Concentration_Code__c),&quot;&quot;, &quot;|&quot; &amp; Concentration_Code__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Banner_Program_Code__c &amp; &quot;|&quot;&amp; Major_Code__c &amp; &quot;|&quot; &amp;  Concentration_Code__c</inlineHelpText>
+        <label>Program|Major|Concentration</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Program_Name_on_Application__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Name of the program to display on the application</inlineHelpText>
         <label>Program Name on Application</label>
         <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Program_Offered_Name__c</fullName>
+        <description>Banner Program Offered Name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Banner Program Offered Name</inlineHelpText>
+        <label>Program Offered Name</label>
+        <length>100</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -622,6 +808,106 @@ One Application Per Term and Program (Only one application for the selected term
         </valueSet>
     </fields>
     <fields>
+        <fullName>STEM_Major__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used primarily for undergraduate records to indicate this degree is considered a STEM major.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used primarily for undergraduate records to indicate this degree is considered a STEM major.</inlineHelpText>
+        <label>STEM Major</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>STVMAJR_CIPC_CODE__c</fullName>
+        <description>Banner STVMAJR_CIPC_CODE</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Banner STVMAJR_CIPC_CODE</inlineHelpText>
+        <label>STVMAJR_CIPC_CODE</label>
+        <length>6</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STVMAJR_VALID_CONCENTRATN_IND__c</fullName>
+        <description>Banner STVMAJR_VALID_CONCENTRATN_IND</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Banner STVMAJR_VALID_CONCENTRATN_IND</inlineHelpText>
+        <label>STVMAJR_VALID_CONCENTRATN_IND</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Y</fullName>
+                    <default>false</default>
+                    <label>Y</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>N</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>STVMAJR_VALID_MAJOR_IND__c</fullName>
+        <description>Banner STVMAJR_VALID_MAJOR_IND</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Banner STVMAJR_VALID_MAJOR_IND</inlineHelpText>
+        <label>STVMAJR_VALID_MAJOR_IND</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Y</fullName>
+                    <default>false</default>
+                    <label>Y</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>N</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>STVMAJR_VALID_MINOR_IND__c</fullName>
+        <description>Banner STVMAJR_VALID_MINOR_IND</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Banner STVMAJR_VALID_MINOR_IND</inlineHelpText>
+        <label>STVMAJR_VALID_MINOR_IND</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Y</fullName>
+                    <default>false</default>
+                    <label>Y</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>N</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>School_College__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>School/College this program is a part of</inlineHelpText>
@@ -648,6 +934,18 @@ One Application Per Term and Program (Only one application for the selected term
         </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
+    <fields>
+        <fullName>UG_Integration_Program_Code__c</fullName>
+        <description>Program Code used for UG Programs for integration to Banner</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Program Code used for UG Programs for integration to Banner</inlineHelpText>
+        <label>UG Integration Program Code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>Program</label>
     <listViews>
         <fullName>Academic_Programs</fullName>
@@ -670,12 +968,18 @@ One Application Per Term and Program (Only one application for the selected term
         <columns>NAME</columns>
         <columns>Degree__c</columns>
         <columns>Career__c</columns>
-        <columns>Department__c</columns>
-        <columns>Recruitment_Program__c</columns>
+        <columns>School_College__c</columns>
+        <columns>Banner_Program_Code__c</columns>
         <columns>Program_Code__c</columns>
+        <columns>Program_Major_Concentration__c</columns>
+        <columns>Recruitment_Program__c</columns>
+        <columns>Application_Fee_Amount__c</columns>
+        <columns>Pre_Professional_Program__c</columns>
+        <columns>STEM_Major__c</columns>
         <columns>Active__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>All1</fullName>
@@ -719,7 +1023,11 @@ One Application Per Term and Program (Only one application for the selected term
         <picklistValues>
             <picklist>Applicant_Type__c</picklist>
             <values>
-                <fullName>Freshman</fullName>
+                <fullName>DFC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>First-Year</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -727,7 +1035,15 @@ One Application Per Term and Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer DFC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -745,11 +1061,23 @@ One Application Per Term and Program (Only one application for the selected term
         <picklistValues>
             <picklist>Citizenship__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
+                <fullName>Asylee%2FRefugee</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Dual Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Permanent Resident</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -772,30 +1100,110 @@ One Application Per Term and Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
+                <fullName>Education Specialist</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Juris Doctor %28JD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Licensure</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Master%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post-Masters Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre-Professional Program</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Degree__c</picklist>
             <values>
-                <fullName>BA</fullName>
+                <fullName>Bachelor%27s Degree Program</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>BS</fullName>
+                <fullName>Certificate</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MA</fullName>
+                <fullName>Doctorate</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MBA</fullName>
+                <fullName>Education Specialist</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MS</fullName>
+                <fullName>Juris Doctor %28JD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Licensure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master in the Study of Law %28MSL%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Arts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Business Administration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Business Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Divinity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Laws %28LLM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Science</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Social Work</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Software Design and Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Software Systems</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post-Masters Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre-Professional Program</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -824,15 +1232,19 @@ One Application Per Term and Program (Only one application for the selected term
                 <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Test%7CTest%7CTest</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Generic_Filter_2__c</picklist>
             <values>
-                <fullName>Generic Value 1</fullName>
+                <fullName>Applicant 25 or over</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Generic Value 2</fullName>
+                <fullName>Applicant under 25</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -861,7 +1273,11 @@ One Application Per Term and Program (Only one application for the selected term
         <picklistValues>
             <picklist>Hide_Applicant_Type__c</picklist>
             <values>
-                <fullName>Freshman</fullName>
+                <fullName>DFC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>First-Year</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -869,18 +1285,38 @@ One Application Per Term and Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer DFC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Hide_Citizenship__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
+                <fullName>Asylee%2FRefugee</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Dual Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Permanent Resident</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -956,9 +1392,46 @@ One Application Per Term and Program (Only one application for the selected term
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STVMAJR_VALID_CONCENTRATN_IND__c</picklist>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STVMAJR_VALID_MAJOR_IND__c</picklist>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STVMAJR_VALID_MINOR_IND__c</picklist>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>School_College__c</picklist>
             <values>
                 <fullName>College of Arts and Sciences</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>College of Education%2C Leadership and Counseling</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -970,11 +1443,39 @@ One Application Per Term and Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
-                <fullName>School of Business</fullName>
+                <fullName>Graduate School of Professional Psychology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opus College of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Law</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Social Work</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Murray Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Saint Paul Seminary School of Divinity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Undergraduate</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1009,7 +1510,11 @@ One Application Per Term and Program (Only one application for the selected term
         <picklistValues>
             <picklist>Applicant_Type__c</picklist>
             <values>
-                <fullName>Freshman</fullName>
+                <fullName>DFC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>First-Year</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1017,7 +1522,15 @@ One Application Per Term and Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer DFC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1035,11 +1548,23 @@ One Application Per Term and Program (Only one application for the selected term
         <picklistValues>
             <picklist>Citizenship__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
+                <fullName>Asylee%2FRefugee</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Dual Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Permanent Resident</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1062,30 +1587,110 @@ One Application Per Term and Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
+                <fullName>Education Specialist</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Juris Doctor %28JD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Licensure</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Master%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post-Masters Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre-Professional Program</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Degree__c</picklist>
             <values>
-                <fullName>BA</fullName>
+                <fullName>Bachelor%27s Degree Program</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>BS</fullName>
+                <fullName>Certificate</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MA</fullName>
+                <fullName>Doctorate</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MBA</fullName>
+                <fullName>Education Specialist</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MS</fullName>
+                <fullName>Juris Doctor %28JD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Licensure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master in the Study of Law %28MSL%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Arts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Business Administration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Business Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Divinity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Laws %28LLM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Science</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Social Work</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Software Design and Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master of Software Systems</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post-Masters Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre-Professional Program</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1114,15 +1719,19 @@ One Application Per Term and Program (Only one application for the selected term
                 <fullName>Generic Value 2</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Test%7CTest%7CTest</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Generic_Filter_2__c</picklist>
             <values>
-                <fullName>Generic Value 1</fullName>
+                <fullName>Applicant 25 or over</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Generic Value 2</fullName>
+                <fullName>Applicant under 25</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1151,7 +1760,11 @@ One Application Per Term and Program (Only one application for the selected term
         <picklistValues>
             <picklist>Hide_Applicant_Type__c</picklist>
             <values>
-                <fullName>Freshman</fullName>
+                <fullName>DFC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>First-Year</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1159,18 +1772,38 @@ One Application Per Term and Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer DFC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Hide_Citizenship__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
+                <fullName>Asylee%2FRefugee</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Dual Citizen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Permanent Resident</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1246,9 +1879,46 @@ One Application Per Term and Program (Only one application for the selected term
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STVMAJR_VALID_CONCENTRATN_IND__c</picklist>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STVMAJR_VALID_MAJOR_IND__c</picklist>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STVMAJR_VALID_MINOR_IND__c</picklist>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>School_College__c</picklist>
             <values>
                 <fullName>College of Arts and Sciences</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>College of Education%2C Leadership and Counseling</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1260,11 +1930,39 @@ One Application Per Term and Program (Only one application for the selected term
                 <default>false</default>
             </values>
             <values>
-                <fullName>School of Business</fullName>
+                <fullName>Graduate School of Professional Psychology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opus College of Business</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>School of Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Law</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>School of Social Work</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Murray Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Saint Paul Seminary School of Divinity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Undergraduate</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1285,8 +1983,8 @@ One Application Per Term and Program (Only one application for the selected term
         <customTabListAdditionalFields>Career__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Department__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Program_Code__c</customTabListAdditionalFields>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Active__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Career__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Program_Code__c</lookupDialogsAdditionalFields>

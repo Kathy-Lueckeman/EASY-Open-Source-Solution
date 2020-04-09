@@ -16,14 +16,54 @@
         <label>Graduate</label>
     </customValue>
     <customValue>
-        <fullName>School of Business</fullName>
+        <fullName>Opus College of Business</fullName>
         <default>false</default>
-        <label>School of Business</label>
+        <label>Opus College of Business</label>
     </customValue>
     <customValue>
         <fullName>School of Education</fullName>
         <default>false</default>
         <label>School of Education</label>
+    </customValue>
+    <customValue>
+        <fullName>School of Engineering</fullName>
+        <default>false</default>
+        <label>School of Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>School of Law</fullName>
+        <default>false</default>
+        <label>School of Law</label>
+    </customValue>
+    <customValue>
+        <fullName>The Saint Paul Seminary School of Divinity</fullName>
+        <default>false</default>
+        <label>The Saint Paul Seminary School of Divinity</label>
+    </customValue>
+    <customValue>
+        <fullName>The Murray Institute</fullName>
+        <default>false</default>
+        <label>The Murray Institute</label>
+    </customValue>
+    <customValue>
+        <fullName>Undergraduate</fullName>
+        <default>false</default>
+        <label>Undergraduate</label>
+    </customValue>
+    <customValue>
+        <fullName>School of Social Work</fullName>
+        <default>false</default>
+        <label>School of Social Work</label>
+    </customValue>
+    <customValue>
+        <fullName>College of Education, Leadership and Counseling</fullName>
+        <default>false</default>
+        <label>College of Education, Leadership and Counseling</label>
+    </customValue>
+    <customValue>
+        <fullName>Graduate School of Professional Psychology</fullName>
+        <default>false</default>
+        <label>Graduate School of Professional Psychology</label>
     </customValue>
     <masterLabel>School / College</masterLabel>
     <sorted>false</sorted>

@@ -386,8 +386,8 @@
         <customTabListAdditionalFields>Interaction_Source_Field_API_Name__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Insert_Null__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Skip_Mapping__c</customTabListAdditionalFields>
-        <excludedStandardButtons>Accept</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Active__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Target_Object_API_Name__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Target_Field_API_Name__c</lookupDialogsAdditionalFields>

@@ -409,6 +409,11 @@
         <type>Url</type>
     </fields>
     <label>Question Response</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <displayFormat>QR-{0000000}</displayFormat>
         <label>Question Response Number</label>

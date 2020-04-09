@@ -5490,8 +5490,8 @@ IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Graduate&quot;), AND(ISBLAN
         <customTabListAdditionalFields>Opportunity__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Lead_Source__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
-        <excludedStandardButtons>Accept</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Contact__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Lead__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Interaction_Status__c</lookupDialogsAdditionalFields>

@@ -25,6 +25,36 @@
         <default>false</default>
         <label>Certificate</label>
     </customValue>
+    <customValue>
+        <fullName>Education Specialist</fullName>
+        <default>false</default>
+        <label>Education Specialist</label>
+    </customValue>
+    <customValue>
+        <fullName>Juris Doctor (JD)</fullName>
+        <default>false</default>
+        <label>Juris Doctor (JD)</label>
+    </customValue>
+    <customValue>
+        <fullName>Licensure</fullName>
+        <default>false</default>
+        <label>Licensure</label>
+    </customValue>
+    <customValue>
+        <fullName>Non-Degree</fullName>
+        <default>false</default>
+        <label>Non-Degree</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-Masters Certificate</fullName>
+        <default>false</default>
+        <label>Post-Masters Certificate</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-Professional Program</fullName>
+        <default>false</default>
+        <label>Pre-Professional Program</label>
+    </customValue>
     <description>Types of a degree.</description>
     <masterLabel>Degree Types</masterLabel>
     <sorted>false</sorted>

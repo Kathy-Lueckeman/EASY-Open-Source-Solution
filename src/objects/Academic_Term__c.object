@@ -177,10 +177,42 @@ Activate_Application_Date__c &lt;=  TODAY() &amp;&amp; End_Application_Date__c  
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Banner_Term_Code__c</fullName>
+        <description>STVTERM_CODE</description>
+        <externalId>false</externalId>
+        <inlineHelpText>STVTERM_CODE</inlineHelpText>
+        <label>Banner Term Code</label>
+        <length>6</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>End_Application_Date__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Date in which applications for this term close.</inlineHelpText>
         <label>End Application Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Housing_End_Date__c</fullName>
+        <description>STVTERM_HOUSING_END_DATE</description>
+        <externalId>false</externalId>
+        <inlineHelpText>STVTERM_HOUSING_END_DATE</inlineHelpText>
+        <label>Housing End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Housing_Start_Date__c</fullName>
+        <description>STVTERM_HOUSING_START_DATE</description>
+        <externalId>false</externalId>
+        <inlineHelpText>STVTERM_HOUSING_START_DATE</inlineHelpText>
+        <label>Housing Start Date</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
