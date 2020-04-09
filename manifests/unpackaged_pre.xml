@@ -4,5 +4,5 @@
         <members>OpportunityType</members>
         <name>StandardValueSet</name>
     </types>
-    <version>42.0</version>
+    <version>47.0</version>
 </Package>
