@@ -3,7 +3,7 @@
 @author Huron Consulting Group
 *******************************************************************************/
 public class ApplicationCreate {
-	
+    
     public Id contactId {get;set;}
     public Contact con {get;set;}
     public Application__c app {get;set;}
@@ -12,7 +12,7 @@ public class ApplicationCreate {
     public Map<Id, Program__c> intendedPrograms {get;set;}
     public transient String additionalDataString {get;set;}
     public Set<String> contactFields {get;set;}
-   	
+    
     public Application_Control__c appControl {
         get {
             if (appControl == null)
@@ -25,7 +25,7 @@ public class ApplicationCreate {
     * @description Initialize the page - Sets up requirements
     ********************************************************************************/
     public PageReference init() {
-		
+        
         // Exit if there is no Application Control to reference
         if (appControl == null)
             return null;
@@ -40,7 +40,7 @@ public class ApplicationCreate {
         app.Contact__c = contactId; // Assign contact to application
         
         // Take user straight to checklist if we don't want to ask any questions
-		if (section.groups.isEmpty())
+        if (section.groups.isEmpty())
             return save();
         
         return null; // Return null by default
@@ -54,7 +54,7 @@ public class ApplicationCreate {
         // Initialize contact and application
         con = new Contact();
         app = new Application__c(Application_Control__c = appControl.Id, Application_Status__c = appControl.Application_Start_Status__c);
-		
+        
         // List of question groups to display
         List<ApplicationQuestionGroup> groups = new List<ApplicationQuestionGroup>();
         
@@ -84,19 +84,19 @@ public class ApplicationCreate {
         if (contactId != null) {
             
             // Loop over questions and get contact fields
-        	contactFields = new Set<String>();
-        	for (Requirement_Item__c ri:items)
-            	for (Question__c q:ri.Questions__r)
-            		if (String.isNotBlank(q.Contact_Field__c))
-            			contactFields.add(q.Contact_Field__c.toLowerCase());
+            contactFields = new Set<String>();
+            for (Requirement_Item__c ri:items)
+                for (Question__c q:ri.Questions__r)
+                    if (String.isNotBlank(q.Contact_Field__c))
+                        contactFields.add(q.Contact_Field__c.toLowerCase());
             
             // Query for contact
             if (!contactFields.isEmpty()) {
                 contactFields.addAll(new Set<String>{'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode'});
-        		if (Account.sObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode'))
-            		contactFields.addAll(new Set<String>{'mailingstatecode', 'mailingcountrycode', 'otherstatecode', 'othercountrycode'});
-        		else
-            		contactFields.addAll(new Set<String>{'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'});
+                if (Account.sObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode'))
+                    contactFields.addAll(new Set<String>{'mailingstatecode', 'mailingcountrycode', 'otherstatecode', 'othercountrycode'});
+                else
+                    contactFields.addAll(new Set<String>{'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'});
                 String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
                 con = ((List<Contact>)Database.query(query)).get(0);
             }
@@ -122,7 +122,7 @@ public class ApplicationCreate {
         if (!appControl.Hide_Term_Program__c) {
             
             // Get map of intended programs with id as key
-            List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true ORDER BY Name ASC];
+            List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Application_Control__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true AND Application_Control__c = :appControl.Id ORDER BY Name ASC];
             intendedPrograms = new Map<Id, Program__c>(progs);
             
             // Create new program question and add to list
@@ -155,8 +155,8 @@ public class ApplicationCreate {
         // Get map of Question Dependencies with Question ids as key
         Map<Id, List<Question_Dependency__c>> dQuestions = new Map<Id, List<Question_Dependency__c>>();
         for (Question_Dependency__c dq:[SELECT Id, Question__c, Controlling_Question__c, Value__c, ValueCheckbox__c, RecordType.DeveloperName
-                                		FROM Question_Dependency__c WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appControl.Id
-                                		AND Question__r.Requirement_Item__r.Requirement__r.Show_on_Application_Creation__c = :true]) {
+                                        FROM Question_Dependency__c WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appControl.Id
+                                        AND Question__r.Requirement_Item__r.Requirement__r.Show_on_Application_Creation__c = :true]) {
             
             // Add new list to map if we don't have one yet
             if (!dQuestions.containsKey(dq.Question__c))
@@ -177,7 +177,7 @@ public class ApplicationCreate {
         if (programQuestion != null)
             programQuestion.section = section;
     }
-	
+    
     /*******************************************************************************
     * @description Saves a new application based on the answers from the VisualForce page
     ********************************************************************************/
@@ -209,7 +209,7 @@ public class ApplicationCreate {
             
         } catch (Exception err) {
             if (!dmlException) {
-            	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getMessage()));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getMessage()));
                 Database.rollback(sp);
             }
             dmlException = false;

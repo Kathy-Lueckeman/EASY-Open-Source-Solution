@@ -217,6 +217,20 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Application_Control__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Which Application Control will be used for this Program&apos;s Application?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Which Application Control will be used for this Program&apos;s Application?</inlineHelpText>
+        <label>Application Control</label>
+        <referenceTo>Application_Control__c</referenceTo>
+        <relationshipLabel>Programs</relationshipLabel>
+        <relationshipName>Programs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Application_Fee_Amount__c</fullName>
         <description>Graduate Application Fee Amount</description>
         <externalId>false</externalId>
