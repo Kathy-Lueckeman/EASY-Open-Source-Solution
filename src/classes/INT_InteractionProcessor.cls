@@ -246,7 +246,7 @@ public class INT_InteractionProcessor {
 
         // Cleanup converted Leads.
         if (leadsToDelete.size() > 0) {
-            Database.delete(leadsToDelete, false);
+        //    Database.delete(leadsToDelete, false);
         }
     }
 

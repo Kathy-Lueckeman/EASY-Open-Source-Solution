@@ -111,7 +111,7 @@ public class ApplicationRegistration {
             // Create user
             Id uId;
             if (!Test.isRunningTest()) {
-                uId = Site.createExternalUser(u, con.AccountId, pass, true);
+                uId = Site.createExternalUser(u, con.AccountId, pass, false);
                 if (uId == null)
                     throw new ApplicationUtilities.ApplicationException('', true, true);
                 loginUser = new User(Id = uId, Username = u.Username);
