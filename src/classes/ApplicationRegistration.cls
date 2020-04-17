@@ -109,6 +109,7 @@ public class ApplicationRegistration {
            //10/14/19 Idan Lahat, removed becasue it is not throwing an error to do a rollback and only add a massage. createExternalUser will tes tthe password strength.
            // if (!Test.isRunningtest()) Site.validatePassword(u, pass, passConfirm);
             // Create user
+            // 4/17/20 Riley Schill, Setting the flag from true to false so a second registration email isnt sent
             Id uId;
             if (!Test.isRunningTest()) {
                 uId = Site.createExternalUser(u, con.AccountId, pass, false);
