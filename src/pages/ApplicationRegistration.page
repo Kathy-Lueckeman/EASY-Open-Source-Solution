@@ -34,11 +34,22 @@
                     <button Class="btn btn-lg navButton left  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c}; float:left; margin: 10px;" 
                         role="button" data-slide="prev"
                     >Back</button>
-                    <apex:commandLink styleClass="btn btn-lg appCreateSave" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c};float:right;margin: 10px;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
-                    <button Class="btn btn-lg navButton right  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c}; float:right; margin: 10px;" 
+                    <div style="text-align: center">
+                        <apex:commandLink styleClass="btn btn-lg appCreateSave" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c};margin: 10px;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                    </div>
+                    <button Class="btn btn-lg navButton right  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c};float:right;  margin: 10px;" 
                         role="button" data-slide="next"
                     >Next</button>
-                </div>
+                    <div class="h5">
+                   <b>
+                        <p>Florida Polytechnic University does not discriminate in offering access to any educational programs or activities on the basis of race, color, national origin, marital status, sex, religion, age, disability, sexual orientation, gender identity, gender expression, or veteran status (each hereinafter referred to as a &#8220;protected class&#8221;) or any other legally protected class or basis under applicable federal and/or state laws. </p>
+                        <br></br>
+                        <p>To report sex discrimination, including sexual harassment under Title IX please contact our Title IX Coordinator, 4700 Research Way, ASC East, Lakeland, FL 33805, email: <a href="mailto:titleixcoordinator@floridapoly.edu">titleixcoordinator@floridapoly.edu</a>, call: 863-874-8484, or <a href="https://cm.maxient.com/reportingform.php?FloridaPoly&layout_id=2">our online report form.</a></p>
+                        <br></br>
+                        <p>If you wish to request a reasonable accommodation under the ADA/Section 504 of the Rehabilitation Act for completing the admissions process please contact our Coordinator of Disability Services, Kelly Morgan, by email: <a href="mailto:disabilityservices@floridapoly.edu">disabilityservices@floridapoly.edu</a> or call: 863-874-8770</p>                                               
+                   </b>
+                    </div>
+                 </div>
             </div>
         </c:ApplicationForm>
     </c:ApplicationBody>
