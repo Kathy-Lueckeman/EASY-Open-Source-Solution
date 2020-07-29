@@ -230,7 +230,8 @@
                 	<script>
                     	var jq = jQuery.noConflict();
                     	jq(document).ready(function() {
-                        	jq('.{!question.question.Id}').attr('placeholder','{!question.placeholder}');
+                            // Riley Schill 7/29/2020 DHD-3555 
+                            jq('.{!question.question.Id}').attr('placeholder','{!IF(question.placeholder == null || question.placeholder == '', '', question.placeholder)}');
                     	});
                    </script>
                     <div class="form-group" >
@@ -626,7 +627,8 @@
                     <script>
                     	var jq = jQuery.noConflict();
                     	jq(document).ready(function(){
-                        	jq('.{!question.question.Id}').attr('placeholder','{{!question.placeholder}}');
+                        	// Riley Schill 7/29/2020 DHD-3555 
+                            jq('.{!question.question.Id}').attr('placeholder','{!IF(question.placeholder == null || question.placeholder == '', '', question.placeholder)}');
                         	jq('.{!question.question.Id}').attr('maxlength','{!question.length}');
                     	});
                    </script>
@@ -1081,7 +1083,8 @@
                     <script>
                     	var jq = jQuery.noConflict();
                     	jq(document).ready(function() {
-                        	jq('.{!question.question.Id}').attr('placeholder','{{!question.placeholder}}');
+                        	// Riley Schill 7/29/2020 DHD-3555 
+                            jq('.{!question.question.Id}').attr('placeholder','{!IF(question.placeholder == null || question.placeholder == '', '', question.placeholder)}');
                         	jq('.{!question.question.Id}').attr('maxlength','{!question.length}');
                     	});
                     </script>
