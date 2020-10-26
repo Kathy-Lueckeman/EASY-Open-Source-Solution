@@ -30,7 +30,7 @@ public class ApplicationRegistration {
         firstName.addQuestionObject(new Question__c(Label__c = 'First Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
         ApplicationQuestion lastName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Last_Name__c');
         lastName.addQuestionObject(new Question__c(Label__c = 'Last Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
-        ApplicationQuestion email = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Email__c');
+        ApplicationQuestion email = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'Email__c');
         email.addQuestionObject(new Question__c(Label__c = 'Email', Required__c = appCreate.app.Application_Status__c, Active__c = true));
         ApplicationQuestion portalPassword = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'Last_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
         portalPassword.addQuestionObject(new Question__c(Label__c = 'Password', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
@@ -52,7 +52,9 @@ public class ApplicationRegistration {
     public void submit() {
         
         System.SavePoint sp = Database.setSavepoint();
+      
         Boolean dmlException = false;
+       
         interaction.Id = null;
         interaction.Contact__c = null;
         loginUser = null;
@@ -60,7 +62,7 @@ public class ApplicationRegistration {
         loginUrl = null;
         
         try {
-            
+            //Idan- for testing String test11= extraFields.Email__c;
             // Throw exception if not all required fields have been filled-out
             String errorMessage = appCreate.checkFields();
             if (errorMessage != null)
@@ -77,16 +79,22 @@ public class ApplicationRegistration {
             {
                 throw new ApplicationUtilities.ApplicationException(' Password do not match.', true, true);
             }
+            // Exit and roll-back if User with Email or Contact already exists
+           if (![SELECT Id FROM User WHERE Username = :extraFields.Email__c LIMIT 1].isEmpty())
+                throw new ApplicationUtilities.ApplicationException(' An account with that email already exists.<br>To continue, please either  <a href="https://floridapoly.force.com/Apply/login">click here to resume your previously saved application</a> OR continue with a new application using a different email address.<br>', true, true);
             
             // Insert interaction to create/update Contact
+            //Idan 10/26/20- Update to use extraField 
+            interaction.Email__c=extraFields.Email__c;
             insert interaction;
             interaction = [SELECT Id, Contact__c, First_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
             Contact con = [SELECT Id, FirstName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
             appCreate.con.Id = con.Id;
             
+            //Removed by Idan 10/26/20 moved to line 82
             // Exit and roll-back if User with Email or Contact already exists
-            if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty())
-                throw new ApplicationUtilities.ApplicationException(' An account with that email already exists.<br>To continue, please either  <a href="https://floridapoly.force.com/Apply/login">click here to resume your previously saved application</a> OR continue with a new application using a different email address.<br>', true, true);
+           // if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty())
+              //  throw new ApplicationUtilities.ApplicationException(' An account with that email already exists.<br>To continue, please either  <a href="https://floridapoly.force.com/Apply/login">click here to resume your previously saved application</a> OR continue with a new application using a different email address.<br>', true, true);
             
             // Update Account owner to Site admin if owner is current user (guest user)
             if (con.Account.OwnerId == UserInfo.getUserId())
