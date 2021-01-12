@@ -308,11 +308,21 @@ public class ApplicationCreate {
         
         // Get list of requirement responses to insert
         List<Requirement_Response__c> rrLst = new List<Requirement_Response__c>();
+        List<List<Question_Response__c>> qrReqList = new List<List<Question_Response__c>>();
         for (ApplicationQuestionGroup aqg:section.groups) {
+            
             if (aqg.response != null) {
+                
                 aqg.response.Application__c = app.Id;
-                aqg.response.Id = null;
-                rrLst.add(aqg.response);
+                rrLst.add(aqg.response.clone(false, true, false, false));
+                
+                List<Question_Response__c> reqQuestionResponses = new List<Question_Response__c>();
+                qrReqList.add(reqQuestionResponses);
+                
+                if (aqg.questionGroup && aqg.questions != null)
+                    for (ApplicationQuestion q:aqg.questions)
+                        if (q.response != null)
+                            reqQuestionResponses.add(q.response.clone(false, true, false, false));
             }
         }
         
@@ -320,17 +330,14 @@ public class ApplicationCreate {
         
         // Get list of question responses to insert
         List<Question_Response__c> qResponses = new List<Question_Response__c>();
-        List<SObject> relatedObjects = new List<SObject>();
-        for (ApplicationQuestionGroup g:section.groups) {
-            if (g.questionGroup && g.response != null && g.questions != null) {
-                for (ApplicationQuestion q:g.questions) {
-                    if (q.response != null) {
-                        q.response.Requirement_Response__c = g.response.Id;
-                        q.response.Id = null;
-                        qResponses.add(q.response);
-                    }
-                }
-            }
+        for (Integer i = 0; i < rrLst.size(); i++) {
+            
+            Id rrId = rrLst[i].Id;
+            
+            for (Question_Response__c qr:qrReqList[i])
+                qr.Requirement_Response__c = rrId;
+            
+            qResponses.addAll(qrReqList[i]);
         }
         
         upsert qResponses; // Insert question responses
