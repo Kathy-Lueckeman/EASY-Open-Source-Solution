@@ -219,6 +219,21 @@ public class ApplicationRequirement {
             insert newResponses;
 		
         section = new ApplicationQuestionSection(con, app, riLst, dQuestions, responses, dResponses, relatedFieldDescribes);
+        
+        // Clone Question Response records and store ID if this is an external user
+        // in order to get around restriction of external users being able to edit objects
+        if (isExternalUser) {
+            for (ApplicationQuestionGroup aqg:section.groups) {
+                if (aqg.questionGroup && aqg.questions != null) {
+                    for (ApplicationQuestion aq:aqg.questions) {
+                        if (aq.response != null && aq.response.Id != null) {
+                            aq.responseId = aq.response.Id;
+                            aq.response = aq.response.clone(false, true, false, false);
+                        }
+                    }
+                }
+            }
+        }
     }
     
     /*******************************************************************************
@@ -321,11 +336,26 @@ public class ApplicationRequirement {
             upsert rrLst;
             
             qResponses = new List<Question_Response__c>();
-            for (ApplicationQuestionGroup g:section.groups)
-                if (g.questionGroup == true && g.questions != null && g.isEditable)
-                    for (ApplicationQuestion q : g.questions)
-                        if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null)
-                            qResponses.add(q.response);
+            for (ApplicationQuestionGroup g:section.groups) {
+                if (g.questionGroup == true && g.questions != null && g.isEditable) {
+                    for (ApplicationQuestion q : g.questions) {
+                        if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null) {
+                            
+                            Question_Response__c qResp = q.response;
+                            
+                            // Clone Question Response and apply ID if this is an external user
+                            // in order to get around the restriction of external users not being
+                            // able to edit objects.
+                            if (isExternalUser) {
+                                qResp = q.response.clone(false, true, false, false);
+                                qResp.Id = q.responseId;
+                            }
+                            
+                            qResponses.add(qResp);
+                        }
+                    }
+                }
+            }
             
             upsert qResponses;
             

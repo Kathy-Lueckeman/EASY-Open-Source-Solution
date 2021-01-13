@@ -99,6 +99,7 @@ public class ApplicationQuestion {
     }
     private Boolean tableBased {get;set;}
     public Question_Response__c response {get;set;}
+    public Id responseId {get;set;}
     public String helpText {get;set;}
 	
     public Contact contact {get;set;}
