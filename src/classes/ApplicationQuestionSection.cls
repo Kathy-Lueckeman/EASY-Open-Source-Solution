@@ -151,4 +151,47 @@ public class ApplicationQuestionSection {
             } catch (Exception e) {}
         }
     }
+
+    public void updateGroupOptions() {
+        System.debug(LoggingLevel.ERROR, 'updateOptions');
+        //this code needed to cover case when we want to filter intended program options
+        String TERM_QUESTION_FIELDNAME = 'Intended_Term_of_Entry__c';
+        String PROGRAM_QUESTION_FIELDNAME = 'Intended_Program__c';
+        String STARTDATE_QUESTION_FIELDNAME = 'Generic_Filter_1__c';
+        String APPLICANT_TYPE_FIELDNAME = 'Applicant_Type__c';
+        String selectedTerm = NULL;
+        ApplicationQuestion programQuestion = NULL;
+        String selectedProgram = NULL;
+        ApplicationQuestion startDateQuestion = NULL;
+        String selectedApplicantType = NULL;
+
+        for (ApplicationQuestionGroup g : groups) {
+            for (ApplicationQuestion q : g.questions) {
+                if (q.fieldName == TERM_QUESTION_FIELDNAME) {
+                    selectedTerm = q.response.ValueText__c;
+                }
+                if (q.fieldName == PROGRAM_QUESTION_FIELDNAME) {
+                    programQuestion = q;
+                    selectedProgram = q.response.ValueText__c;
+                }
+                if (q.fieldName == STARTDATE_QUESTION_FIELDNAME) {
+                    startDateQuestion = q;
+                }
+                if (q.fieldName == APPLICANT_TYPE_FIELDNAME) {
+                    selectedApplicantType = q.response.ValueText__c;
+                }
+            }
+        }
+        if (programQuestion != NULL) {
+            programQuestion.updateOptions(selectedTerm, selectedApplicantType);
+        }
+        if (startDateQuestion != NULL) {
+            if (String.isNotBlank(selectedTerm) && String.isNotBlank(selectedProgram)) {
+                startDateQuestion.updateOptions(selectedTerm + ';' + selectedProgram, selectedApplicantType);
+            } else {
+                startDateQuestion.updateOptions('DEFAULT', selectedApplicantType);
+            }
+
+        }
+    }
 }

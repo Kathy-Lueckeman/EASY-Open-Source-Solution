@@ -65,9 +65,13 @@
                             <div class="{!if(hidePaging,'','carousel-inner')}" role="listbox">
                                 <apex:variable var="itemCount" value="0"/>
                                 <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}" />
+                                <apex:commandLink id="updateGroupOptions" value="" style="display:none;" action="{!section.updateGroupOptions}" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}" />
                                 <script>
                                 	function reRenderAllGroups() {
                                         document.getElementById('{!$Component.reRenderGroups}').click();
+                                    }
+                                    function updateGroupOptions() {
+                                        document.getElementById('{!$Component.updateGroupOptions}').click();
                                     }
                                 </script>
                                 <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}" >

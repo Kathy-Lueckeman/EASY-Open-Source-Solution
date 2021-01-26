@@ -142,9 +142,21 @@ public class ApplicationCreate {
             ApplicationQuestion termQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Term_of_Entry__c');
             termQuestion.addQuestionObject(new Question__c(Label__c = 'What term are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Term'));
             termQuestion.setReferenceOptions(termIds, termNames);
+                        
+            
+            // Create silent start date question
+            String silentStartDate; 
+            silentStartDate = app.Generic_Filter_1__c;
+          //  app.Generic_Filter_1__c = silentStartDate;
+         
+            // Create new startdate question and add to list
+             ApplicationQuestion startDateQuestion = new ApplicationQuestion(con, app, '', app, 'Generic_Filter_1__c');
+             startDateQuestion.addQuestionObject(new Question__c(Label__c = 'Select a Start Date', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'StartDate'));
+             startDateQuestion.writeResponse(silentStartDate); 
+            
             
             // Create question group out of term/program questions and add to list
-            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{termQuestion, programQuestion}));
+            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{ termQuestion, programQuestion, startDateQuestion}));
         }
         
         // Create question groups for requirements we should display

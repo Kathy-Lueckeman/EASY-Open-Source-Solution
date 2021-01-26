@@ -498,7 +498,81 @@ public class ApplicationQuestion {
         
         populateContactFieldOnResponse();
     }
-    
+    public void updateOptions(String gfilter, String applicantType) {
+        System.debug('gfilter: ' + gfilter);
+        System.debug('FIELD: ' + this.fieldName);
+        if (String.isBlank(gfilter)) return;
+
+        if (this.fieldName == 'Intended_Program__c') {
+            Academic_Term__c at = [SELECT Id, Name, Term_Start_Date__c, Term_End_Date__c FROM Academic_Term__c WHERE Id = :gfilter];
+
+            String q = 'SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c,'+
+                    'Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c,'+
+                    'Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c,'+
+                    'Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c '+
+                    'FROM Program__c '+
+                    'WHERE Hide_from_Application__c = false AND Active__c = true ';
+
+            List<String> dateStrings = new List<String>{
+                    '\'In the future\'', '\'Right away\''
+            };
+            if (String.isNotBlank(applicantType)) {
+                q += 'AND Career__c = :applicantType ';
+            }
+            if (!'Undecided-- show me all programs'.equalsIgnoreCase(at.Name)) {
+                while (at.Term_Start_Date__c <= at.Term_End_Date__c) {
+                    dateStrings.add('\'' + at.Term_Start_Date__c.format() + '\'');
+                    at.Term_Start_Date__c = at.Term_Start_Date__c.addDays(1);
+                }
+                System.debug(dateStrings);
+                q +=
+                String.format('AND Generic_Filter_1__c INCLUDES ({0}) ORDER BY Name ASC',
+                    new List<String> {
+                            String.join(dateStrings, ',')
+                    });
+            } else {
+                q += 'ORDER BY Name ASC';
+            }
+
+            System.debug(q);
+            List<Program__c> progs = Database.query(q);
+
+            this.addIntendedProgramFilteringList(progs);
+        } else if (this.fieldName == 'Generic_Filter_1__c') {// to update options for start date
+
+            Map<String, String> optionsMap = new Map<String, String> {
+                    'In the future' => 'In the future',
+                    'Right away' => 'Right away'
+            };
+
+            List<String> term_program_ids = gfilter.split(';');
+            if (term_program_ids.size() < 2) {
+                System.debug('__DEBUG__');
+                this.setPicklistOptions(optionsMap);
+                return;
+            }
+            Id termId = term_program_ids.get(0);
+            Id programId = term_program_ids.get(1);
+
+            Academic_Term__c at = [SELECT Id, Term_Start_Date__c, Term_End_Date__c FROM Academic_Term__c WHERE Id = :termId];
+            List<String> dateStrings = new List<String>();
+            while(at.Term_Start_Date__c <= at.Term_End_Date__c) {
+                dateStrings.add(at.Term_Start_Date__c.format());
+                at.Term_Start_Date__c = at.Term_Start_Date__c.addDays(1);
+            }
+            System.debug(JSON.serialize(dateStrings));
+            Program__c p = [SELECT Generic_Filter_1__c FROM Program__c  WHERE Id = :programId ORDER BY Name ASC];
+            System.debug(p.Generic_Filter_1__c);
+
+            for (String d : dateStrings) {
+                if (p.Generic_Filter_1__c.contains(d)) {
+                    optionsMap.put(d, d);
+                }
+            }
+            this.setPicklistOptions(optionsMap);
+        }
+
+    }
     public void populateContactFieldOnResponse() {
         
         try {
