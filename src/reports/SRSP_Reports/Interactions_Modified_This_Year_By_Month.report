@@ -46,6 +46,8 @@
     <reportType>CustomEntity$Interaction__c</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CUST_LAST_UPDATE</dateColumn>
         <interval>INTERVAL_CURY</interval>

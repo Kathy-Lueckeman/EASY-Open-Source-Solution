@@ -43,6 +43,10 @@
                 <behavior>Edit</behavior>
                 <field>Display_on_Checklist__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>R_IUD__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -164,6 +168,7 @@
         <fields>Degree_Type__c</fields>
         <fields>Instructions__c</fields>
         <fields>Active__c</fields>
+        <fields>Display_Order__c</fields>
         <relatedList>Requirement_Item__c.Requirement__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -172,7 +177,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1U00000370wy</masterLabel>
+        <masterLabel>00h630000019N8b</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

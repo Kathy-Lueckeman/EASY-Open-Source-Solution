@@ -150,7 +150,11 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Active__c</fields>
+        <fields>Label__c</fields>
+        <fields>Display_Order__c</fields>
         <relatedList>Requirement__c.Application_Control__c</relatedList>
+        <sortField>Display_Order__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -158,7 +162,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000YIMz</masterLabel>
+        <masterLabel>00h630000019N8P</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

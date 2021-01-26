@@ -9,9 +9,9 @@ public class INT_InteractionMappingService {
 
     public INT_InteractionMappingService() {
         for (Interaction_Mapping__c mapping : [
-            SELECT Skip_Mapping__c, Insert_Null__c, Target_Object_API_Name__c, Interaction_Source_Field_API_Name__c, Target_Field_API_Name__c
-            FROM Interaction_Mapping__c
-            WHERE Active__c = true
+                SELECT Skip_Mapping__c, Insert_Null__c, Target_Object_API_Name__c, Interaction_Source_Field_API_Name__c, Target_Field_API_Name__c
+                FROM Interaction_Mapping__c
+                WHERE Active__c = true
         ]) {
             if (!intMappingMap.containsKey(mapping.Target_Object_API_Name__c)) {
                 intMappingMap.put(mapping.Target_Object_API_Name__c, new List<Interaction_Mapping__c>{mapping});
@@ -27,17 +27,17 @@ public class INT_InteractionMappingService {
     }
 
     /**
-     * @description Checks to see if field has an excluded source 
+     * @description Checks to see if field has an excluded source
      * @param mappingId, the Interaction_Mapping__c record Id to pull the record from the Map.
      * @param interactionSource, the value of the Interaction.Interaction_Source__c field.
-     * @param skipOrPreserveSourcesMap, the Map containing the Skip Mapping 
+     * @param skipOrPreserveSourcesMap, the Map containing the Skip Mapping
      * @return a Boolean determining whether or not the field is excluded or overwrite if blank.
      */
     private Boolean isSkipOrPreserveSourceField(
-        String mappingId, String interactionSource, Map<String, Set<String>> skipOrPreserveSourcesMap
+            String mappingId, String interactionSource, Map<String, Set<String>> skipOrPreserveSourcesMap
     ) {
         Set<String> sourcesToCheck = (skipOrPreserveSourcesMap.containsKey(mappingId)
-            ? skipOrPreserveSourcesMap.get(mappingId) : new Set<String>());
+                ? skipOrPreserveSourcesMap.get(mappingId) : new Set<String>());
 
         return sourcesToCheck.contains(interactionSource);
     }
@@ -57,9 +57,9 @@ public class INT_InteractionMappingService {
                 if (isSkipOrPreserveSourceField(mapping.Id, interaction.Interaction_Source__c, skipMappingMap)) {
                     continue; // Prevent mapping of field if it's a skip field or a preserve target source
                 } else if (mapping.Insert_Null__c
-                    || (interaction.get(mapping.Interaction_Source_Field_API_Name__c) != null
+                        || (interaction.get(mapping.Interaction_Source_Field_API_Name__c) != null
                         && interaction.get(mapping.Interaction_Source_Field_API_Name__c) != '')
-                ) {
+                        ) {
                     theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Interaction_Source_Field_API_Name__c));
                 }
 

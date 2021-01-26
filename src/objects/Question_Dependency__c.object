@@ -217,6 +217,28 @@
         <unique>false</unique>
     </fields>
     <label>Question Dependency</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_UGFR</fullName>
+        <columns>NAME</columns>
+        <columns>Question__c</columns>
+        <columns>Controlling_Question__c</columns>
+        <columns>ValueCheckbox__c</columns>
+        <columns>Value__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Question__c</field>
+            <operation>contains</operation>
+            <value>UGFR</value>
+        </filters>
+        <label>All - UGFR</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>QD-{000000}</displayFormat>
         <label>Question Dependency Number</label>

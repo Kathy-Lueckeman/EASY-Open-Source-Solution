@@ -409,6 +409,20 @@
         <type>Url</type>
     </fields>
     <label>Question Response</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
+        <columns>State__c</columns>
+        <columns>Street__c</columns>
+        <columns>City__c</columns>
+        <columns>Country__c</columns>
+        <columns>IsPopulated__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>QR-{0000000}</displayFormat>
         <label>Question Response Number</label>

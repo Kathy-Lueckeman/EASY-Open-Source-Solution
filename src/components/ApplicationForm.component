@@ -1,50 +1,54 @@
-<apex:component id="applicationFormComponent" >
+<apex:component id="applicationFormComponent">
 
-    <apex:attribute name="section" description="ApplicationQuestionSection for this page" type="ApplicationQuestionSection" required="false" />
-    <apex:attribute name="hidePaging" description="Hide carousel paging" type="Boolean" default="false" required="false" />
-    <apex:attribute name="preventUpdates" description="Set the page to output only" type="Boolean" default="false" required="false" />
-    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" />
-    <apex:attribute name="nextId" description="ApplicationSettings" type="Id" required="false" />    
-    <apex:attribute name="prevId" description="ApplicationSettings" type="Id" required="false" />
+    <apex:attribute name="section" description="ApplicationQuestionSection for this page" type="ApplicationQuestionSection" required="false"/>
+    <apex:attribute name="hidePaging" description="Hide carousel paging" type="Boolean" default="false" required="false"/>
+    <apex:attribute name="preventUpdates" description="Set the page to output only" type="Boolean" default="false" required="false"/>
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true"/>
+    <apex:attribute name="nextId" description="ApplicationSettings" type="Id" required="false"/>
+    <apex:attribute name="prevId" description="ApplicationSettings" type="Id" required="false"/>
     <apex:attribute name="requirementId" description="Current requirement" type="String" required="false"/>
     <apex:attribute name="reqs" description="All rquirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
-    <apex:attribute name="isExternalUser" description="Boolean that is true if this is an external user" type="Boolean" required="false" default="false" />
-   
+    <apex:attribute name="isExternalUser" description="Boolean that is true if this is an external user" type="Boolean" required="false" default="false"/>
+
     <script>
-    var jq = jQuery.noConflict();
-        if({!hidePaging} == false){
-        
-        var checkitem = function() {
-            //Added by Chris 5-15
-                if (jq("#myCarousel .carousel-inner .item:first").hasClass("active") && !isPrev()){
+        var jq = jQuery.noConflict();
+        if ({!hidePaging} == false
+        )
+        {
+
+            var checkitem = function () {
+                //Added by Chris 5-15
+                if (jq("#myCarousel .carousel-inner .item:first").hasClass("active") && !isPrev()) {
                     jq(".leftNav").hide();
                 } else {
                     jq(".leftNav").show();
-                } if (jq("#myCarousel .carousel-inner .item:last").hasClass("active") && !isNext()) {
+                }
+                if (jq("#myCarousel .carousel-inner .item:last").hasClass("active") && !isNext()) {
                     jq(".rightNav").hide();
                     jq(".appCreateSave").show();
-                    jq(".checklistNav").css('float','right');
+                    jq(".checklistNav").css('float', 'right');
                     jq(".checklistNav").html('Review and Submit');
                 } else {
                     jq(".rightNav").show();
                     jq(".appCreateSave").hide();
-                    jq(".checklistNav").css('float','left');
-                    jq(".checklistNav").html('Back to Checklist'); 
+                    jq(".checklistNav").css('float', 'left');
+                    jq(".checklistNav").html('Back to Checklist');
                 }
 
-                if (jq("#myCarousel .carousel-inner .item:first").hasClass("active")){
+                if (jq("#myCarousel .carousel-inner .item:first").hasClass("active")) {
                     jq(".left.createSlide").hide();
                 } else {
                     jq(".left.createSlide").show();
-                } if (jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
+                }
+                if (jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
                     jq(".right.createSlide").hide();
                 } else {
-                    jq(".right.createSlide").show(); 
+                    jq(".right.createSlide").show();
                 }
 
             };
-            jQuery(function(){
+            jQuery(function () {
                 checkitem();
                 jq("#myCarousel").on("slid.bs.carousel", "", checkitem);
             })
@@ -52,25 +56,27 @@
 
 
     </script>
-    <apex:form id="theForm" >
-    <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}" />
-        <apex:outputPanel id="formPageMessages">
-            <apex:pageMessages />
+    <apex:form id="theForm">
+        <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>
+        <apex:outputPanel id="formPageMessages" styleClass="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+                <apex:pageMessages/>
+            </div>
         </apex:outputPanel>
-        <div class="row" >
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                <div id="myCarousel" class="{!if(hidePaging,'','carousel')} slide" data-interval="false" data-wrap="false" >
-                    <div class="row" >
-                        <div class="col-lg-10 col-lg-offset-1" >
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+                <div id="myCarousel" class="{!if(hidePaging,'','carousel')} slide" data-interval="false" data-wrap="false">
+                    <div class="row">
+                        <div class="col-lg-10 col-lg-offset-1">
                             <div class="{!if(hidePaging,'','carousel-inner')}" role="listbox">
                                 <apex:variable var="itemCount" value="0"/>
-                                <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}" />
+                                <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
                                 <script>
-                                	function reRenderAllGroups() {
+                                    function reRenderAllGroups() {
                                         document.getElementById('{!$Component.reRenderGroups}').click();
                                     }
                                 </script>
-                                <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}" >
+                                <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}">
                                     <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
                                         <c:ApplicationFormSection id="theFormSectionComponent" groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appControl="{!appControl}"/>
                                     </div>
@@ -82,11 +88,11 @@
                 </div>
             </div>
         </div>
-        <div class="row" >
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+                <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;"/>
             </div>
         </div>
-        <apex:componentBody />
+        <apex:componentBody/>
     </apex:form>
 </apex:component>

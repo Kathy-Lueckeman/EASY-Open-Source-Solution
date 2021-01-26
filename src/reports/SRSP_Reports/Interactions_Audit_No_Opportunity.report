@@ -34,16 +34,19 @@
     <filter>
         <criteriaItems>
             <column>Interaction__c.Opportunity_Key__c</column>
+            <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Interaction__c.Opportunity__c</column>
+            <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value></value>
         </criteriaItems>
+        <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
@@ -59,6 +62,8 @@
     <reportType>CustomEntity$Interaction__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CUST_LAST_UPDATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

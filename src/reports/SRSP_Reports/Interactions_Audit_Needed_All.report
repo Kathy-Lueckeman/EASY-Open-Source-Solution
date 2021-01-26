@@ -34,10 +34,12 @@
     <filter>
         <criteriaItems>
             <column>Interaction__c.Interaction_Status__c</column>
+            <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Audit Required</value>
         </criteriaItems>
+        <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
@@ -53,6 +55,8 @@
     <reportType>CustomEntity$Interaction__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CUST_LAST_UPDATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

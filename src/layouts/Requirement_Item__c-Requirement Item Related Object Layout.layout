@@ -52,6 +52,14 @@
                 <behavior>Edit</behavior>
                 <field>Required_Supporting_Documentation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>R_UID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RI_UID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -229,6 +237,7 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Active__c</fields>
         <fields>RECORDTYPE</fields>
         <fields>Label__c</fields>
         <fields>Display_Order__c</fields>
@@ -236,7 +245,7 @@
         <fields>Citizenship__c</fields>
         <fields>Degree_Type__c</fields>
         <relatedList>Question__c.Requirement_Item__c</relatedList>
-        <sortField>NAME</sortField>
+        <sortField>Display_Order__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -245,7 +254,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1U00000370xA</masterLabel>
+        <masterLabel>00h630000019N8n</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

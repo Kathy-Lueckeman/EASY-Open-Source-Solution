@@ -392,6 +392,11 @@ Activate_Application_Date__c  &lt;=  TODAY() &amp;&amp; End_Application_Date__c 
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <label>Intended Program Term Name</label>
         <type>Text</type>

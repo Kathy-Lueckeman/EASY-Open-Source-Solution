@@ -408,6 +408,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>R_IUD__c</fullName>
+        <description>EASY Setup Field</description>
+        <externalId>false</externalId>
+        <label>R-IUD</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Residency__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Residency type that this requirement applies to (applies to all if blank)</inlineHelpText>
@@ -493,6 +504,40 @@
         <fullName>All1</fullName>
         <filterScope>Everything</filterScope>
         <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_UGFR</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>Display_Order__c</columns>
+        <columns>Application_Control__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>URL_Parameter__c</field>
+            <operation>equals</operation>
+            <value>UGFR</value>
+        </filters>
+        <label>All - UGFR</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_UGTR</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>Display_Order__c</columns>
+        <columns>Application_Control__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>URL_Parameter__c</field>
+            <operation>equals</operation>
+            <value>UGTR</value>
+        </filters>
+        <label>All - UGTR</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Requirement Name</label>

@@ -10,6 +10,11 @@
         <default>false</default>
         <label>Generic Value 2</label>
     </customValue>
-    <masterLabel>Generic Filter 1</masterLabel>
+    <customValue>
+        <fullName>Test|Test|Test</fullName>
+        <default>false</default>
+        <label>Test|Test|Test</label>
+    </customValue>
+    <masterLabel>Program|Major|Concentration</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

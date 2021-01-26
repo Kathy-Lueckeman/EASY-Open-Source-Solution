@@ -25,10 +25,12 @@
     <filter>
         <criteriaItems>
             <column>Interaction__c.Interaction_Status__c</column>
+            <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Imported</value>
         </criteriaItems>
+        <language>en_US</language>
     </filter>
     <format>Matrix</format>
     <groupingsAcross>
@@ -54,6 +56,8 @@
     <reportType>CustomEntity$Interaction__c</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CUST_LAST_UPDATE</dateColumn>
         <interval>INTERVAL_CURY</interval>
