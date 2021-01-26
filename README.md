@@ -11,6 +11,11 @@ The solution includes an unmanaged package (the EASY Package), resource document
 We welcome contributions and feedback. Read below for more information about how to get involved!
 
 ## Installation
+<a href="https://githubsfdeploy.herokuapp.com">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
+
 You can install EASY as-is into any Developer Edition, Sandbox, Enterprise, or higher edition org using these unmanaged package links and the <a href="https://github.com/SalesforceFoundation/EASY-Open-Source-Solution/blob/master/Docs/Installation%20Guide%20-%20EASY.pdf" target="_blank">Installation Guide</a>:
 
 * <a href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04t2E000003kXlt" target="_blank">Install EASY in a Sandbox</a>

@@ -315,9 +315,8 @@
                 <apex:outputPanel rendered="{!question.fieldType == 'Reference'}" >
                     <div class="form-group" >
                         <label for="referenceField" >{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                        <apex:selectList id="referenceField" value="{!question.response.ValueText__c}" size="1" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" >
+                        <apex:selectList id="referenceField" onChange="updateGroupOptions();" value="{!question.response.ValueText__c}" size="1" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" >
                             <apex:selectOptions value="{!question.options}" />
-                            <apex:actionSupport event="onchange" reRender="questionGroup" />
                         </apex:selectList>
                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}" ><apex:outputText value="{!question.helpText}" escape="false" /></p>
                     </div>
